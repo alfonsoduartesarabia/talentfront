@@ -15,7 +15,7 @@
 
 | Student Name | Student Email | GitHub Username |
 |    :---:     |     :---:     |     :---:       |
-| member1      |               |                 |
+| Austin Wimberley | awimberley@mail.sfsu.edu | pachecosf |
 | member2      |               |                 |
 | member3      |               |                 |
 | member4      |               |                 |
