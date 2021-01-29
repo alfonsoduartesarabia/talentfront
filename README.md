@@ -17,7 +17,7 @@
 |    :---:     |     :---:     |     :---:       |
 | Austin Wimberley | awimberley@mail.sfsu.edu | pachecosf |
 | Alfonso Duarte-Sarabia | asarabi2@mail.sfsu.edu | alfonsoduartesarabia |
-| member3      |               |                 |
+| Ezra Player |eplayer@mail.sfsu.edu | ezra5512 |
 | member4      |               |                 |
 | member5      |               |                 |
 | member6      |               |                 |
