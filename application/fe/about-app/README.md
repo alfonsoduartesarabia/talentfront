@@ -14,7 +14,11 @@ css anyway you'd like on the page.
 
 ## Running Locally
 
-Information About running locally
+Information About running locally:
+
+### `yarn install`
+
+Before you can run any of the other yarn commands you have to install
 
 ### `yarn start`
 
