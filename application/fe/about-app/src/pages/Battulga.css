@@ -1,0 +1,22 @@
+.tulga-about-container {
+  display: flex;
+  align-items: center;
+  padding-top: 5vh;
+  flex-direction: column;
+  background: #f6f8fa;
+}
+
+.tulga-avatar {
+  width: 150px;
+  border-radius: 75px;
+}
+
+.about-info-container {
+  margin-top: 20px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #06b6f91f;
+  border-radius: 10px;
+}

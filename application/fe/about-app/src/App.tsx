@@ -5,6 +5,7 @@ import {Route, Router, Switch, Link} from 'react-router-dom';
 import history from './utils/history';
 import React from "react";
 import {Austin} from "./pages/Austin";
+import AboutBattulga from './pages/Battulga'
 
 export default function App() {
   return (
@@ -15,6 +16,9 @@ export default function App() {
           </Route>
           <Route exact path='/about/austin/'>
             <Austin/>
+          </Route>
+          <Route exact path='/about/tulga/'>
+            <AboutBattulga/>
           </Route>
         </Switch>
       </Router>
@@ -33,6 +37,7 @@ function About() {
             About page for Team 5.
           </p>
           <Link to='/about/austin/'>Austin Wimberley</Link>
+          <Link to='/about/tulga/'>Battulga Tsogtgerel</Link>
         </div>
       </div>
   );

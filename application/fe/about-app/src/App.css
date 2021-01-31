@@ -18,3 +18,8 @@
   padding-left: 10%;
   font-size: calc(10px + 2vmin);
 }
+
+
+html {
+  font-family: sans-serif;
+}
