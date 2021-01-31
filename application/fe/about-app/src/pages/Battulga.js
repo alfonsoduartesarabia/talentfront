@@ -7,7 +7,7 @@ function AboutBattulga () {
     <div className="tulga-about-container">
       <h1>Battulga Tsogtgerel</h1>
       <img alt="avatar" className="tulga-avatar" src={avatarUrl} />
-      <div className="about-info-container">
+      <div className="tulga-about-info-container">
         <div> Student ID: 920203983 </div>
       </div>
     </div>

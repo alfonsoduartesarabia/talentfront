@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #D9D7DD;
+  background-color: #f6f8fa;
   background-size: 90%;
   align-content: center;
   height: 90%;
@@ -15,8 +15,13 @@
   flex-direction: column;
   font-family: Work Sans, sans-serif;
   text-align: left;
-  padding-left: 10%;
+  padding: 0 5vw;
   font-size: calc(10px + 2vmin);
+}
+
+.about-header {
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -25,4 +30,19 @@ html {
 }
 body {
   margin: 0;
+}
+
+.about-info-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.about-info-container a {
+  text-decoration: none;
+  color: #0066CC;
+}
+
+.team-info-container {
+  display: flex;
+  flex-direction: column;
 }
