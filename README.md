@@ -18,7 +18,7 @@
 | Austin Wimberley | awimberley@mail.sfsu.edu | pachecosf |
 | Alfonso Duarte-Sarabia | asarabi2@mail.sfsu.edu | alfonsoduartesarabia |
 | Ezra Player |eplayer@mail.sfsu.edu | ezra5512 |
-| member4      |               |                 |
+| Battulga Tsogtgerel  |  btsogtgerel@mail.sfsu.edu  | thetulga      |
 | member5      |               |                 |
 | member6      |               |                 |
 
