@@ -19,7 +19,7 @@
 | Alfonso Duarte-Sarabia | asarabi2@mail.sfsu.edu | alfonsoduartesarabia |
 | Ezra Player |eplayer@mail.sfsu.edu | ezra5512 |
 | Battulga Tsogtgerel  |  btsogtgerel@mail.sfsu.edu  | thetulga      |
-| member5      |               |                 |
+| Yuhua Wu      | ywu23@mail.sfsu.edu|  yuhua21223               |
 | member6      |               |                 |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
