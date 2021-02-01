@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+
+  # About react app
+  about:
+    image: about-app
+    container_name: about
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - reverse-proxy
+    networks:
+      - app-network
+  #Nginx Service
+  reverse-proxy:
+    image: reverse-proxy
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
