@@ -29,6 +29,6 @@ jobs:
         push: true
         tags: team-5/reverse-proxy:latest
         context: .
-        file: ./application/Nginx/Dockerfile
+        file: ./application/nginx/Dockerfile
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
