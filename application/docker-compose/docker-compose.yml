@@ -3,7 +3,7 @@ services:
 
   # About react app
   about:
-    image: about-app
+    image: pachecosf/about-app:latest
     container_name: about
     restart: always
     ports:
@@ -14,7 +14,7 @@ services:
       - app-network
   #Nginx Service
   reverse-proxy:
-    image: reverse-proxy
+    image: pachecosf/reverse-proxy:latest
     restart: always
     ports:
       - 80:80

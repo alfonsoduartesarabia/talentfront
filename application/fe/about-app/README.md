@@ -3,10 +3,6 @@ Everyone in the group for Milestone 0, has to make their own Page, which should 
 should be in folder ./src/pages/{your_name}. You should learn how to route from the App.tsx to your page and your welcome to play with
 css anyway you'd like on the page.
 
-## Docker
-1. build the image locally: `docker build -t about-app .`
-2. run it and port forward to localhost/3000 `docker run -it --expose 3000 -p 3000:3000 about-app`
-
 ## Requirements
 * Node
 * NPM 
