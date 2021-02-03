@@ -7,6 +7,7 @@ import React from "react";
 import {Austin} from "./pages/Austin";
 import AboutBattulga from './pages/Battulga'
 import About from './pages/About'
+import AboutEzra from './pages/Ezra'
 
 export default function App() {
   return (
@@ -20,6 +21,9 @@ export default function App() {
           </Route>
           <Route exact path='/about/tulga/'>
             <AboutBattulga/>
+          </Route>
+          <Route exact path='/about/ezra/'>
+            <AboutEzra/>
           </Route>
         </Switch>
       </Router>
