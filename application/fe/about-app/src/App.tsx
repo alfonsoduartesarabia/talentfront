@@ -7,7 +7,7 @@ import React from "react";
 import {Austin} from "./pages/Austin";
 import AboutBattulga from './pages/Battulga'
 import About from './pages/About'
-import AboutEzra from './pages/Ezra'
+import {AboutEzra} from "./pages/Ezra";
 
 export default function App() {
   return (
