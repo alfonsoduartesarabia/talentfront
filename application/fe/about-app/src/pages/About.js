@@ -20,7 +20,8 @@ function About() {
                 About page for Team 5.
               </p>
               <Link to='/about/austin/'>Austin Wimberley</Link>
-              <Link to='/about/tulga/'>Battulga Tsogtgerel</Link>  
+              <Link to='/about/tulga/'>Battulga Tsogtgerel</Link>
+              <Link to='/about/ezra/'>Ezra Player</Link>  
             </div>
           </div>
         </div>
