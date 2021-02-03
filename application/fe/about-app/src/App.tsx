@@ -6,6 +6,7 @@ import history from './utils/history';
 import React from "react";
 import {Austin} from "./pages/Austin";
 import AboutBattulga from './pages/Battulga'
+import AboutAlfonso from './pages/Alfonso'
 import About from './pages/About'
 import {AboutEzra} from "./pages/Ezra";
 
@@ -24,6 +25,9 @@ export default function App() {
           </Route>
           <Route exact path='/about/ezra/'>
             <AboutEzra/>
+          </Route>
+          <Route exact path='/about/alfonso/'>
+            <AboutAlfonso/>
           </Route>
         </Switch>
       </Router>

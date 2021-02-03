@@ -21,7 +21,8 @@ function About() {
               </p>
               <Link to='/about/austin/'>Austin Wimberley</Link>
               <Link to='/about/tulga/'>Battulga Tsogtgerel</Link>
-              <Link to='/about/ezra/'>Ezra Player</Link>  
+              <Link to='/about/ezra/'>Ezra Player</Link> 
+              <Link to='/about/alfonso'>Alfonso Duarte-Sarabia</Link> 
             </div>
           </div>
         </div>
