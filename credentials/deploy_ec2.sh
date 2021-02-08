@@ -1,6 +1,6 @@
 #!/bin/bash
 echo 'Running deployment'
-ssh ubuntu@ec2-3-141-100-219.us-east-2.compute.amazonaws.com " sudo docker image prune -f 
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i team-5.pem ubuntu@ec2-3-14-4-192.us-east-2.compute.amazonaws.com " sudo docker image prune -f 
         cd csc648-02-sp21-team-05/application/docker-compose
         sudo docker-compose down
         git checkout master
@@ -10,6 +10,6 @@ ssh ubuntu@ec2-3-141-100-219.us-east-2.compute.amazonaws.com " sudo docker image
         echo 'Pulling newer docker images'
         sudo docker-compose pull
         sudo docker-compose up -d
+        sudo docker-compose ps
         "
 echo 'Deployment completed successfully'
-
