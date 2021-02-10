@@ -23,6 +23,7 @@ function About() {
               <Link to='/about/tulga/'>Battulga Tsogtgerel</Link>
               <Link to='/about/ezra/'>Ezra Player</Link> 
               <Link to='/about/alfonso'>Alfonso Duarte-Sarabia</Link> 
+             <Link to='/about/utkrisht'>UTKRISHT SHARMA (meme lord)</Link>
             </div>
           </div>
         </div>

@@ -6,10 +6,10 @@ import history from './utils/history';
 import React from "react";
 import {Austin} from "./pages/Austin";
 import AboutBattulga from './pages/Battulga'
+import AboutUtkrisht from './pages/utkrisht'
 import AboutAlfonso from './pages/Alfonso'
 import About from './pages/About'
 import {AboutEzra} from "./pages/Ezra";
-
 export default function App() {
   return (
       <Router history={history}>
@@ -28,6 +28,9 @@ export default function App() {
           </Route>
           <Route exact path='/about/alfonso/'>
             <AboutAlfonso/>
+          </Route>
+          <Route exact path='/about/utkrisht/'>
+            <AboutUtkrisht/>
           </Route>
         </Switch>
       </Router>
