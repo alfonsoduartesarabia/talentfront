@@ -12,7 +12,7 @@ services:
       - reverse-proxy
     networks:
       - app-network
-  #Nginx Service
+  # Nginx Service
   reverse-proxy:
     image: pachecosf/reverse-proxy:latest
     restart: always
@@ -20,6 +20,25 @@ services:
       - 80:80
     networks:
       - app-network
+  # Mysql
+  mysql-db:
+    image: mysql:5.7
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'be-service'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'belphagor'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'belphagorRoot'
+    ports:
+      - 3306:3306
+    volumes:
+      - datavolume:/var/lib/mysql
+
+volumes:
+  datavolume:
 
 networks:
   app-network:
