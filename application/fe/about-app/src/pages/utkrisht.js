@@ -1,11 +1,11 @@
 
-import "./Alfonso.css"
+import "./Alfonsoo.css"
 
 function AboutUtkrisht () {
 
     return (
       <div className="alfonso-about-container">
-        <h1>Alfonso Duarte-Sarabia</h1>
+        <h1>UTKRISHT SHARMA</h1>
         <div className="alfonso-duarte-container">
         <div className="contact-container">Contact Information</div>
           <p> Student ID: 920887913 </p>
@@ -15,12 +15,8 @@ function AboutUtkrisht () {
         </div>
         <div className="about-me">
           <p>
-            I am a SFSU computer science student who has little to no experience in the industry
-            but is willing to learn the latest and popular technologies and can quickly adapt. I am
-            most experience with Java and C and somewhat comfortable with C++. Hobbies include 
-            listening to music and going for walks. I also enjoy consuming content whether it be
-            on Youtube, Twitch, Netflix, etc.
-            I hope to either become a software developer or get a Master's degree and become a teacher. </p>
+            YO,I AM UTKRISHT SHARMA AKA Meme-Lord i was born a and raised to be diffrent and funny .the best thing about me is i am a great learner and
+ enjoy learning new  things .this website is going to be best project i ever made</p>
         </div>
       </div>
     )
