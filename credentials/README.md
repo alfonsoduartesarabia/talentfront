@@ -24,4 +24,4 @@
 ## You may store the most of the above in this README.md file. DO NOT Store the SSH key or any keys in this README.md file.
 
 ## SSHing into the AWS instance
-ssh -i team-5.pem ubuntu@ec2-3-14-4-192.us-east-2.compute.amazonaws.com
+ssh -i team-5.pem ubuntu@ec2-3-17-191-42.us-east-2.compute.amazonaws.com
