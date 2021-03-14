@@ -28,7 +28,7 @@ services:
     restart: always
     environment:
       - MYSQL_DATABASE=db
-      - MYSQL_USER=some-be-service
+      - MYSQL_USER=freya
       - MYSQL_PASSWORD=belphagor
       - MYSQL_ROOT_PASSWORD=belphagorRoot
       - MYSQL_ROOT_HOST=%
@@ -53,7 +53,7 @@ services:
     command: -url=jdbc:mysql://mysql-db:3306/db?verifyServerCertificate=false&useSSL=true -schemas=db -user=root -password=belphagorRoot migrate
     container_name: flyway_migration
     volumes:
-      - ../sql:/flyway/sql
+      - ../be/freya/src/main/resources:/flyway/sql
     depends_on: 
       mysql-db:
         condition: service_healthy
@@ -64,7 +64,7 @@ services:
     restart: on-failure
     command: -url=jdbc:mysql://mysql-db:3306/test_db?verifyServerCertificate=false&useSSL=true -schemas=test_db -user=root -password=belphagorRoot migrate
     volumes:
-      - ../sql:/flyway/sql
+      - ../be/freya/src/main/resources:/flyway/sql
     depends_on: 
       mysql-db:
         condition: service_healthy
