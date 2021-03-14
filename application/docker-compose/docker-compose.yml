@@ -20,32 +20,54 @@ services:
       - 80:80
     networks:
       - app-network
-  # Mysql
+
+  # Mysql Instance
   mysql-db:
     image: mysql:5.7 
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    container_name: mysql-db
     restart: always
     environment:
       - MYSQL_DATABASE=db
-      - MYSQL_USER=be-service
+      - MYSQL_USER=some-be-service
       - MYSQL_PASSWORD=belphagor
-      # Password for root access
       - MYSQL_ROOT_PASSWORD=belphagorRoot
       - MYSQL_ROOT_HOST=%
+    # The mysql default image only supports one db in the MYSQL_DATABASE var, so below is to create a second database on startup
+    entrypoint:
+      sh -c "
+        echo 'CREATE DATABASE IF NOT EXISTS db; CREATE DATABASE IF NOT EXISTS test_db;' > /docker-entrypoint-initdb.d/init.sql;
+        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      "
     ports:
       - 3306:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=belphagorRoot --execute \"SHOW DATABASES;\""
     volumes:
       - datavolume:/var/lib/mysql
+
+
   # Migration to get database set up
   migration:
     image: boxfuse/flyway:latest
+    restart: on-failure
     command: -url=jdbc:mysql://mysql-db:3306/db?verifyServerCertificate=false&useSSL=true -schemas=db -user=root -password=belphagorRoot migrate
     container_name: flyway_migration
     volumes:
       - ../sql:/flyway/sql
     depends_on: 
-      - mysql-db
+      mysql-db:
+        condition: service_healthy
+
+  # Migration to get database set up for a test db using the same migrations
+  migration-test-db:
+    image: boxfuse/flyway:latest
+    restart: on-failure
+    command: -url=jdbc:mysql://mysql-db:3306/test_db?verifyServerCertificate=false&useSSL=true -schemas=test_db -user=root -password=belphagorRoot migrate
+    volumes:
+      - ../sql:/flyway/sql
+    depends_on: 
+      mysql-db:
+        condition: service_healthy
 
 volumes:
   datavolume:
