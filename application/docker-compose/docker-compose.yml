@@ -22,20 +22,30 @@ services:
       - app-network
   # Mysql
   mysql-db:
-    image: mysql:5.7
+    image: mysql:5.7 
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'be-service'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'belphagor'
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=be-service
+      - MYSQL_PASSWORD=belphagor
       # Password for root access
-      MYSQL_ROOT_PASSWORD: 'belphagorRoot'
+      - MYSQL_ROOT_PASSWORD=belphagorRoot
+      - MYSQL_ROOT_HOST=%
     ports:
       - 3306:3306
     volumes:
       - datavolume:/var/lib/mysql
+  # Migration to get database set up
+  migration:
+    image: boxfuse/flyway:latest
+    command: -url=jdbc:mysql://mysql-db:3306/db?verifyServerCertificate=false&useSSL=true -schemas=db -user=root -password=belphagorRoot migrate
+    container_name: flyway_migration
+    volumes:
+      - ../sql:/flyway/sql
+    depends_on: 
+      - mysql-db
 
 volumes:
   datavolume:
