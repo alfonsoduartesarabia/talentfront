@@ -50,8 +50,7 @@ const HomeScreen = (props) => {
   })
 
   return (
-    <div>
-      HOME
+    <div className="home-container">
       <div className="searchbar-container">
         <form onSubmit={handleSubmit}>
           <div className="searchbar-options-container">
