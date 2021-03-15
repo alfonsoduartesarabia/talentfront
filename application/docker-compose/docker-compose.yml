@@ -69,6 +69,18 @@ services:
       mysql-db:
         condition: service_healthy
 
+  # Migration to get database set up
+  freya:
+    image: pachecosf/freya:latest
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - DB_LOCATION=mysql-db
+    depends_on: 
+      mysql-db:
+        condition: service_healthy
+
 volumes:
   datavolume:
 
