@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import "./home.css"
 import axios from 'axios'
 
+
+
 const HomeScreen = (props) => {
   const [searchString, setSearchString] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [filter, setFilter] = useState("");
+
+
+  const BASE_URL = window.origin 
 
   const handleRadioButtonChange = (e) => {
     setFilter(e.target.value)
@@ -19,7 +24,8 @@ const HomeScreen = (props) => {
       "searchTerm": searchString
     }
     console.log("MAKING API CALL with this DATA", data)
-    axios.post('http://localhost/backend/api/search', data)
+    axios.post(BASE_URL + '/api/search', data)
+    // axios.post('http://localhost/backend/api/search', data)
     .then(function (response) {
       console.log(response);
       setSearchResult(response.data.entries)
