@@ -1,0 +1,10 @@
+server:
+  port: 8080
+app:
+  host-name: ${HOSTNAME:localhost}
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_LOCATION:localhost}:3306/db?verifyServerCertificate=false&useSSL=true
+    username: freya
+    password: belphagor
+    driverclassnamee: com.mysql.jdbc.Driver
