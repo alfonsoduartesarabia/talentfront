@@ -40,6 +40,8 @@ services:
       "
     ports:
       - 3306:3306
+    networks:
+      - app-network
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=belphagorRoot --execute \"SHOW DATABASES;\""
     volumes:
@@ -54,6 +56,8 @@ services:
     container_name: flyway_migration
     volumes:
       - ../be/freya/src/main/resources:/flyway/sql
+    networks:
+      - app-network
     depends_on: 
       mysql-db:
         condition: service_healthy
@@ -65,13 +69,16 @@ services:
     command: -url=jdbc:mysql://mysql-db:3306/test_db?verifyServerCertificate=false&useSSL=true -schemas=test_db -user=root -password=belphagorRoot migrate
     volumes:
       - ../be/freya/src/main/resources:/flyway/sql
+    networks:
+      - app-network
     depends_on: 
       mysql-db:
         condition: service_healthy
 
-  # Migration to get database set up
+  # backend springboot service
   freya:
     image: pachecosf/freya:latest
+    container_name: freya
     restart: always
     ports:
       - 8080:8080
@@ -80,6 +87,8 @@ services:
     depends_on: 
       mysql-db:
         condition: service_healthy
+    networks:
+      - app-network
 
 volumes:
   datavolume:

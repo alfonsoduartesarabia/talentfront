@@ -15,5 +15,6 @@ data class Entry(
 
 enum class EntryType {
     USER,
-    POSTING
+    POSTING,
+    COMPANY
 }
