@@ -32,7 +32,7 @@ CREATE INDEX `user_type_id_fk` ON `user` (`user_type_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `user_Info`
+-- Table `user_info`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user_info` (
   `user_info_id` INT NOT NULL AUTO_INCREMENT,
@@ -48,6 +48,25 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 ENGINE = InnoDB;
 
 CREATE INDEX `user_id_fk` ON `user_info` (`user_id` ASC);
+
+-- -----------------------------------------------------
+-- Table `user_education`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `user_education` (
+    `user_education_id` INT NOT NULL AUTO_INCREMENT,
+    `school` TEXT(256) NOT NULL,
+    `degree_type` TEXT(256) NOT NULL,
+    `state` TEXT(256) NOT NULL,
+    `user_id` INT NOT NULL,
+    PRIMARY KEY (`user_education_id`),
+    CONSTRAINT `user_education_user_id_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
+
+CREATE INDEX `user_id_fk` ON `user_education` (`user_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -116,6 +135,9 @@ CREATE TABLE IF NOT EXISTS `posting` (
   `created_dt` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
   `job_title` VARCHAR(45) NOT NULL,
+  `state` VARCHAR(2),
+  `city` VARCHAR(256),
+  `zip_code` INT,
   PRIMARY KEY (`posting_id`),
   CONSTRAINT `posting_user_id_fk`
     FOREIGN KEY (`user_id`)
