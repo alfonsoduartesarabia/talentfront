@@ -24,8 +24,7 @@ const HomeScreen = (props) => {
       "searchTerm": searchString
     }
     console.log("MAKING API CALL with this DATA", data)
-    axios.post(BASE_URL + '/api/search', data)
-    // axios.post('http://localhost/backend/api/search', data)
+    axios.post(BASE_URL + 'backend/api/search', data)
     .then(function (response) {
       console.log(response);
       setSearchResult(response.data.entries)
