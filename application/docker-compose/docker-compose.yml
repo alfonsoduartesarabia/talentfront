@@ -90,6 +90,16 @@ services:
     networks:
       - app-network
 
+  # my-app
+  my-app:
+    image: pachecosf/my-app:latest
+    container_name: my-app
+    restart: always
+    ports:
+      - 3001:3000
+    networks:
+      - app-network
+
 volumes:
   datavolume:
 
