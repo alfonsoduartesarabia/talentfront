@@ -11,4 +11,5 @@
 
 .search-results-container {
   padding: 0 100px;
+  white-space: pre-wrap;
 }
