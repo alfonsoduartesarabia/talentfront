@@ -2,21 +2,9 @@ import React, { useState } from 'react'
 import "./home.css"
 import axios from 'axios'
 
-export default function (props) {
+const HomeScreen = (props) => {
   const [searchString, setSearchString] = useState("");
-  const [searchResult, setSearchResult] = useState([
-    {
-        "type": "USER",
-        "title": "mike johnson",
-        "description": "Is pursuing an undergraduate degree from San Francisco State University",
-        "link": "/posting/1"
-    },{
-        "type": "USER",
-        "title": "john mikeson",
-        "description": "Is pursuing an undergraduate degree from San Francisco State University",
-        "link": "/posting/2"
-    }
-  ]);
+  const [searchResult, setSearchResult] = useState([]);
   const [filter, setFilter] = useState("");
 
   const handleRadioButtonChange = (e) => {
@@ -31,10 +19,10 @@ export default function (props) {
       "searchTerm": searchString
     }
     console.log("MAKING API CALL with this DATA", data)
-    axios.post('localhost:8080/api/search', data)
+    axios.post('http://localhost/backend/api/search', data)
     .then(function (response) {
       console.log(response);
-      setSearchResult(response.data)
+      setSearchResult(response.data.entries)
     })
     .catch(function (error) {
       console.log(error);
@@ -82,13 +70,18 @@ export default function (props) {
       </div> 
 
 
-      <div>
+      <div className="search-results-container">
         {renderedResult}
       </div>
     </div>
     
   )
 }
+
+export default HomeScreen
+
+//docker-compose pull
+//docker-compose up
 
 // LOCAL => localhost:8080
 
@@ -118,3 +111,4 @@ export default function (props) {
     ]
 }
 */
+
