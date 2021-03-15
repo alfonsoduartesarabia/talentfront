@@ -15,3 +15,8 @@ inside of the application. All the files under ./src/main/java/models are all ge
 ### Code Style
 Before committing any code please run: `./gradlew spotlessApply`<br />This runs a script to format all the code in this
 repository to make sure it meets our styleguide standards.
+
+### Docker Build
+1. ./gradlew clean build
+2. docker build -t pachecosf/freya .
+3. docker push pachecosf/freya
