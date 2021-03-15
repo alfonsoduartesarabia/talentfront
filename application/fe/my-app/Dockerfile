@@ -5,6 +5,6 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package.json ./
 COPY ./yarn.lock ./
 RUN yarn install --silent
-COPY ./my-app/. ./
+COPY . ./
 RUN apk update && apk add yarn
 CMD ["yarn", "start"]
