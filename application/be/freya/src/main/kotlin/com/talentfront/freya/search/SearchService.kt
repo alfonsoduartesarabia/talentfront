@@ -28,9 +28,13 @@ class SearchService(
             Filter.TALENT -> entries.searchTalent(searchRequest.searchTerm, seek, pageSize)
             Filter.PROFESSOR -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
             Filter.ORGANIZATION -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
-            else -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
+            else -> entries.searchAll(searchRequest.searchTerm, seek, pageSize)
         }
         return SearchResult(entries = entries, request = searchRequest, nextPage = "/$SEARCH_PATH?page=${page + 1}")
+    }
+    fun MutableList<Entry>.searchAll(searchTerm: String?, seek: Int, limit: Int) {
+        this.searchPostings(searchTerm, seek, pageSize)
+        this.searchTalent(searchTerm, seek, pageSize)
     }
 
     fun determineFilter(filter: String?): Filter? {
