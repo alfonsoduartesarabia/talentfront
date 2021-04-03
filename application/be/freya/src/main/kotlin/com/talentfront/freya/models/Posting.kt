@@ -16,7 +16,7 @@ data class Posting(
     val jobTitle: String? = null,
     val state: String? = null,
     val city: String? = null,
-    val zipCode: Int? = null,
+    val zipCode: Int? = null
 ) {
     fun toEntry(): Entry {
         return Entry(type = EntryType.POSTING.name, title = this.jobTitle, description = this.description, link = "/posting/${this.id}")
