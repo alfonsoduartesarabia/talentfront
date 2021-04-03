@@ -64,7 +64,7 @@ const HomeScreen = (props) => {
               <input type="radio" checked={filter === "jobPosting" } onChange={handleRadioButtonChange} value="jobPosting" />Job Posting
               <input type="radio" checked={filter === "talent" } onChange={handleRadioButtonChange} value="talent"/>Talent
               <input type="radio" checked={filter === "professor" } onChange={handleRadioButtonChange} value="professor"/>Professor
-              <input type="radio" checked={filter === "organization" } onChange={handleRadioButtonChange} value="organization"/>Organization  
+              <input type="radio" checked={filter === "organization" } onChange={handleRadioButtonChange} value="organization"/>Organization   
             </div>
           </div>
           <button type="submit">
