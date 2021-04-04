@@ -1,0 +1,114 @@
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  background: purple;
+  height: 100px;
+}
+
+test {
+  flex-shrink: 1;
+  background: #cccccc;
+}
+
+.generic-button {
+  box-sizing: border-box;
+  width: 100%;
+  
+  display:inline-block;
+  transition: all 0.2s;
+}
+
+.personal-info-edit {
+  display:flex;
+  flex-direction: column;
+}
+
+.description-box {
+  background: #cccccc;
+  border-radius: 14px;
+  padding: 5%;
+
+
+  /* User_Info -> description */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+
+  color: #000000;
+}
+
+h2 {
+  display: flex;
+  flex-shrink: 1;
+  font-family: Roboto;
+}
+
+article {
+  flex-shrink: 1;
+}
+
+section {
+  display: flex;
+  margin-left:10%;
+  margin-right:10%;
+  flex-wrap: nowrap;
+  flex-shrink: 1;
+}
+
+personals {
+display: flex;
+flex-direction: column;
+flex-shrink: 1;
+width: 25%;
+padding: 2%;
+}
+
+img {
+  padding: 5%;
+  border-radius: 50%;
+}
+
+content {
+  width: 75%;
+}
+
+.article-head {
+  display: flex; 
+  justify-content: space-between;
+  padding-left: 2%;
+}
+
+.article-date {
+  display: flex;
+}
+
+.personal-info-bit {
+  font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+margin: 2%;
+text-align: center;
+}
+
+.article-content {
+background: #cccccc;
+border-radius: 14px;
+
+padding: 2%;
+
+
+/* User_Info -> description */
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+
+color: #000000;
+width: 100%;
+}

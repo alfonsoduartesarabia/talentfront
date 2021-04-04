@@ -73,7 +73,6 @@ const HomeScreen = (props) => {
         </form> 
       </div> 
 
-
       <div className="search-results-container">
         {renderedResult}
       </div>

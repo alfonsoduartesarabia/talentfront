@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import ProfileScreen from './screens/profile/profile.js'
 
 function App() {
   return (
