@@ -7,5 +7,6 @@ data class UserImage(
     val userId: Int? = null,
     val img: ByteArray? = null,
     val title: String? = null,
+    val contentType: String? = null,
     val created_dt: LocalDateTime? = null
 )
