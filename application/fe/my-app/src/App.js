@@ -33,6 +33,11 @@ function App() {
         <LoginTalent />
       </Route>
 
+
+      <Route path="/profile">
+        <ProfileScreen />
+      </Route>
+
       <Route path="/" exact>
         <HomeScreen />
       </Route>

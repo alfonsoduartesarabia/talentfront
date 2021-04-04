@@ -1,6 +1,10 @@
 // import react from 'react'
 import './navbar.sass'
 
+import {
+  Link
+} from "react-router-dom";
+
 const Navbar = (props) => {
   return (
     <div className="navbar">
@@ -11,7 +15,7 @@ const Navbar = (props) => {
         CENTER
       </div>
       <div>
-        RIGHT
+        <Link to="/profile">PROFILE</Link> 
       </div>
     </div>
   )
