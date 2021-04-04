@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.sass';
 import HomeScreen from './screens/home'
 import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'
