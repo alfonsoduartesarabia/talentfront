@@ -29,7 +29,8 @@ class UserImageController(
             UserImage(
                 userId = userId,
                 img = data,
-                title = "Profile"
+                title = "Profile",
+                contentType = image.contentType
             )
         )
         return ResponseEntity.ok("looks good boss made img with id: $id")
@@ -37,10 +38,15 @@ class UserImageController(
 
     @GetMapping(value = ["$GET_USER_IMAGE/{userId}"])
     fun getUserImage(@PathVariable userId: Int): ResponseEntity<*> {
-        val userImage = userImageDao.getUserImage(userId)?.img
-        if (userImage != null) {
-            val data = imageCompressor.decompressBytes(userImage)
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(data)
+        val userImage = userImageDao.getUserImage(userId)
+        if (userImage?.img != null) {
+            val data = imageCompressor.decompressBytes(userImage.img)
+            val mediaType = when (userImage.contentType) {
+                "image/png" -> MediaType.IMAGE_PNG
+                "image/jpeg" -> MediaType.IMAGE_JPEG
+                else -> MediaType.IMAGE_PNG
+            }
+            return ResponseEntity.ok().contentType(mediaType).body(data)
         }
         return ResponseEntity.ok("No image found")
     }

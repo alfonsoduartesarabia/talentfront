@@ -17,6 +17,7 @@ class UserImageDao(
             img = userImage.img
             title = userImage.title
             createdDt = LocalDateTime.now()
+            contentType = userImage.contentType
         }
         userImageRecord.store()
         return userImageRecord.userImageId
@@ -32,7 +33,7 @@ class UserImageDao(
             .into(USER_IMAGE)
 
         return if (record != null) {
-            UserImage(id = record.userImageId, userId = record.userId, img = record.img, title = record.title, created_dt = record.createdDt)
+            UserImage(id = record.userImageId, userId = record.userId, img = record.img, title = record.title, created_dt = record.createdDt, contentType = record.contentType)
         } else {
             null
         }

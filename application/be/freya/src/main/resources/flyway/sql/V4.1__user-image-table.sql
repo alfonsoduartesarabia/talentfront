@@ -4,6 +4,7 @@
 CREATE TABLE IF NOT EXISTS `user_image` (
                                        `user_image_id` INT NOT NULL AUTO_INCREMENT,
                                        `user_id` INT NOT NULL,
+                                       `content_type` VARCHAR(256) NOT NULL,
                                        `img` LONGBLOB NOT NULL,
                                        `title` VARCHAR(256) NOT NULL,
                                        `created_dt` DATETIME NOT NULL,
