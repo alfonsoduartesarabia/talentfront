@@ -9,7 +9,6 @@ import java.util.zip.Inflater
 
 @Component
 class ImageCompressor {
-    private val inflater = Inflater()
 
     fun compressImage(data: ByteArray): ByteArray {
         val deflater = Deflater()
