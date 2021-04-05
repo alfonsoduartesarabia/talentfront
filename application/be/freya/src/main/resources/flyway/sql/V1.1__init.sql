@@ -15,8 +15,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(256) NOT NULL,
-  `salt_password_hash` VARCHAR(512) NOT NULL,
-  `salt` VARCHAR(512) NOT NULL,
+  `salt_password_hash` blob NOT NULL,
+  `salt` blob NOT NULL,
   `user_type_id` INT NOT NULL,
   `first_name` VARCHAR(90) NULL,
   `last_name` VARCHAR(90) NULL,
