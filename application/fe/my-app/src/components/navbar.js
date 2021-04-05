@@ -12,7 +12,7 @@ const Navbar = (props) => {
         <input type="text" />
       </div>
       <div>
-        CENTER
+        <Link to="/postings">JOBS</Link> 
       </div>
       <div>
         <Link to="/profile">PROFILE</Link> 

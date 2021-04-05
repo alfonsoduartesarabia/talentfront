@@ -10,7 +10,7 @@ const HomeScreen = (props) => {
   const [filter, setFilter] = useState("");
 
 
-  const BASE_URL = window.origin 
+  const BASE_URL = "http://localhost:8080"
 
   const handleRadioButtonChange = (e) => {
     setFilter(e.target.value)

@@ -1,0 +1,31 @@
+.job-posts-container {
+  display: flex;
+  margin: 0 100px;
+  
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.job-post {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0 0 1px black;
+  margin-bottom: 10px;
+  height: 250px;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+.job-post-left {
+  width: 50%;
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    white-space: pre-wrap;
+  }
+}
+.job-post-right {
+  width: 50%;
+}

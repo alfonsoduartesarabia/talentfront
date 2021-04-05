@@ -5,11 +5,12 @@ import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'
 import LoginProfessor from './screens/login-professor'
 import LoginTalent from './screens/login-talent'
+import PostingsScreen from './screens/postings/postings'
 import {
   BrowserRouter as Router,
-  Switch,
+  // Switch,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
 import ProfileScreen from './screens/profile/profile.js'
 
@@ -37,7 +38,9 @@ function App() {
       <Route path="/profile">
         <ProfileScreen />
       </Route>
-
+      <Route path="/postings">
+        <PostingsScreen />
+      </Route>
       <Route path="/" exact>
         <HomeScreen />
       </Route>
