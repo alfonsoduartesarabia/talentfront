@@ -1,4 +1,4 @@
-import react, { useState, useEffect} from 'react'
+import { useState, useEffect} from 'react'
 import Navbar from '../../components/navbar'
 import axios from 'axios'
 import "./postings.scss"
@@ -27,11 +27,28 @@ const PostingsScreen = (props) => {
     return (
       <div className="job-post" key={index}>
         <div className="job-post-left">
-          <h1>{job.title}</h1>
+          <div className="job-post-header">
+            <div className="job-title">
+              <h3>{job.title}</h3>  
+              <span>Company Name</span>
+            </div>
+            Salary Est. 50k - 70k
+          </div>
           <p> { job.description } </p>  
         </div>
         <div className="job-post-right">
-          <h1>{job.type}</h1>
+          <h3> Requirements</h3>
+          <ul>
+            <li> JavaScript </li>
+            <li> Java </li>
+            <li> C++ </li>
+            <li> GoLang </li>
+          </ul>
+          <div className="footer">
+            <div> Posted Date: August 20, 2021 </div>
+            <button className="apply-btn"> APPLY NOW </button>  
+            
+          </div>
         </div>
       </div>
     )

@@ -1,6 +1,5 @@
 // import React, { useState } from 'react'
 // import axios from 'axios'
-import HomeScreen from './home'
 import "./registration.css"
 
 
@@ -44,7 +43,7 @@ const Registration = (props) => {
 
             <div className="bottom-page">
             <button type="submit" class="register-button">Register</button> 
-            <p>Already have an account? <a href="#">Sign in</a>.</p>
+            <p>Already have an account? Sign in.</p>
             </div>
             </form>
         </div>

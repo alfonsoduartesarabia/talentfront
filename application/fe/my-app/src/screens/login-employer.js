@@ -17,7 +17,7 @@ const LoginEmployer = (props) => {
         <br></br>
 
         <button type="submit" class="enter-button">Enter</button> 
-        <p>Already have an account? <a href="#">Sign in</a>.</p>
+        <p>Already have an account? Sign in.</p>
             
         </form>
         </div>
