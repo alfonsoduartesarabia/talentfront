@@ -5,8 +5,8 @@ import com.talentfront.jooq.tables.records.UserRecord
 data class User(
     val id: Int? = null,
     val email: String? = null,
-    val saltPasswordHash: String? = null,
-    val salt: String? = null,
+    val saltPasswordHash: ByteArray? = null,
+    val salt: ByteArray? = null,
     val userTypeId: Int? = null,
     val firstName: String? = null,
     val lastName: String? = null

@@ -1,6 +1,7 @@
 package com.talentfront.freya.daos
 
 import com.talentfront.freya.models.User
+import com.talentfront.freya.models.User.Companion.toUser
 import com.talentfront.jooq.tables.User.USER
 import org.jooq.DSLContext
 import org.springframework.stereotype.Component
@@ -19,6 +20,17 @@ class UserDao(
             lastName = user.lastName
         }
         userRecord.store()
-        return user
+        return userRecord.toUser()
+    }
+
+    fun findByEmail(email: String): User? {
+        val record = dslContext.select()
+            .from(USER)
+            .where(USER.EMAIL.eq(email))
+            .orderBy(USER.USER_ID.asc())
+            .limit(1)
+            .fetchOne()
+            .into(USER) ?: return null
+        return record.toUser()
     }
 }
