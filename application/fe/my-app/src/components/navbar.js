@@ -12,7 +12,8 @@ const Navbar = (props) => {
         <input type="text" />
       </div>
       <div>
-        CENTER
+        {/* CENTER */}
+        <Link to="/login">Login</Link>
       </div>
       <div>
         <Link to="/profile">PROFILE</Link> 

@@ -13,7 +13,7 @@
     height: 695px; 
 }
 .login-employer-container{
-  border-radius: 10px/17px; 
+    border-radius: 10px/17px; 
     box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
     border: solid 1px #cbc9c9;
     margin: 120px auto;
@@ -22,13 +22,22 @@
     height: 250px; 
 }
 .login-professor-container, .login-talent-container{
-  border-radius: 10px/17px; 
+    border-radius: 10px/17px; 
     box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
     border: solid 1px #cbc9c9;
     margin: 50px auto;
     padding-top: 20px;
     width: 500px; 
     height: 550px; 
+}
+.login-main{
+  border-radius: 10px/17px; 
+    box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+    margin: 130px auto;
+    padding-top: 20px;
+    width: 500px; 
+    height: 170px; 
 }
 input[type=text], input[type=password], select {
     width: 100%;

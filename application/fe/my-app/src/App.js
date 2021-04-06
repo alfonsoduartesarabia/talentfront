@@ -5,6 +5,7 @@ import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'
 import LoginProfessor from './screens/login-professor'
 import LoginTalent from './screens/login-talent'
+import LoginMain from './screens/login'
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,11 +28,25 @@ function App() {
             maybe dropdown would do the work.
             @Alfonso
            */
+           <LoginMain />
+
          }
-        <LoginEmployer />
+        {/* <LoginEmployer />
         <LoginProfessor />
-        <LoginTalent />
+        <LoginTalent /> */}
       </Route>
+
+      {/* <Switch>
+        <Route path="/login-talent">
+          <LoginTalent />
+        </Route>
+        <Route path="/login-professor">
+          <LoginProfessor />
+        </Route>
+        <Route path="/login-employer">
+          <LoginEmployer />
+        </Route>
+      </Switch> */}
 
 
       <Route path="/profile">
