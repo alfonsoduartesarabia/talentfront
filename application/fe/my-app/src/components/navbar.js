@@ -12,12 +12,10 @@ const Navbar = (props) => {
         <input type="text" />
       </div>
       <div>
-<<<<<<< HEAD
         {/* CENTER */}
         <Link to="/login">Login</Link>
-=======
+
         <Link to="/postings">JOBS</Link> 
->>>>>>> 41d55b486508ed358ce84bcb7cd17541062510cb
       </div>
       <div>
         <Link to="/profile">PROFILE</Link> 

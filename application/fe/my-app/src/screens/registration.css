@@ -5,12 +5,19 @@
     /* padding-left: 80px;
     padding-right: 80px; */
     /* background-color: #ebebeb;  */
+    display: flex;
+    flex-direction: column;
     border-radius: 10px/17px; 
     box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
     border: solid 1px #cbc9c9;
     margin: 7px auto;
     width: 555px; 
-    height: 695px; 
+    padding: 20px 0;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
 }
 .login-employer-container{
     border-radius: 10px/17px; 

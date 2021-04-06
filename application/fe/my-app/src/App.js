@@ -6,11 +6,8 @@ import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'
 import LoginProfessor from './screens/login-professor'
 import LoginTalent from './screens/login-talent'
-<<<<<<< HEAD
 import LoginMain from './screens/login'
-=======
 import PostingsScreen from './screens/postings/postings'
->>>>>>> 41d55b486508ed358ce84bcb7cd17541062510cb
 import {
   BrowserRouter as Router,
   // Switch,
