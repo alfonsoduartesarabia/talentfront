@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import "./registration.css"
 import {Link} from 'react-router-dom'
 
-
 const Registration = (props) => {
-    const [userType, setUserType] = useState("recent-grad")
+    const [userType, setUserType] = useState("")
     let additionalFields = "";
     
-    if (userType == "student") {
+    if (userType === "student") {
         additionalFields = 
         (<div> 
             <label for="first-name"><b>School Name</b></label>
@@ -23,7 +22,7 @@ const Registration = (props) => {
         </div>)
     }
 
-    if (userType == "recent-grad") {
+    if (userType === "recent-grad") {
         additionalFields = 
         (<div> 
             <label for="first-name"><b>Highest Earned Degree</b></label>
@@ -38,7 +37,7 @@ const Registration = (props) => {
         </div>)
     }
 
-    if (userType == "employer") {
+    if (userType === "employer") {
         additionalFields = 
         (<div> 
             <label for="first-name"><b>Company Name</b></label>
@@ -49,7 +48,7 @@ const Registration = (props) => {
             <br></br>
         </div>)
     }
-    if (userType == "teacher") {
+    if (userType === "teacher") {
         additionalFields = 
         (<div> 
             <label for="first-name"><b>School Name</b></label>
@@ -66,11 +65,10 @@ const Registration = (props) => {
 
     return(
         <div className="registration-container">
-            {/* <HomeScreen/> */}
             <h1>Registration</h1>
             <p className="info-paragraph">Please fill out the form to create account.</p>
 
-            <form className="register-form" action="/">
+        <form className="register-form" action="/">
             <label for="email"><b>Email</b></label>
             <input type="text" placeholder="Enter email" name="email" id="email"></input>
             
@@ -89,6 +87,7 @@ const Registration = (props) => {
 
             <label for="user-type"><b>Indicate Type of User</b></label>
             <select name="user-type" id="user-type" onChange={handleChange}>
+                <option value="" disabled selected>Select your option</option>
                 <option value="recent-grad">Recent Graduate</option>
                 <option value="student">Current Student</option>
                 <option value="teacher">Teacher</option>
@@ -96,12 +95,10 @@ const Registration = (props) => {
             </select>
             { additionalFields }
 
-
-            <div className="bottom-page">
             <button type="submit" class="register-button">Register</button> 
             <p>Already have an account? <Link to="/login">Sign in</Link></p>
-            </div>
-            </form>
+
+        </form>
         </div>
     )
 }

@@ -3,10 +3,7 @@ import './App.sass';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreen from './screens/home'
 import Registration from './screens/registration'
-import LoginEmployer from './screens/login-employer'
-import LoginProfessor from './screens/login-professor'
-import LoginTalent from './screens/login-talent'
-import LoginMain from './screens/login'
+import Login from './screens/login'
 import PostingsScreen from './screens/postings/postings'
 import {
   BrowserRouter as Router,
@@ -30,26 +27,12 @@ function App() {
             maybe dropdown would do the work.
             @Alfonso
            */
-           <LoginMain />
-
+           <Login />
          }
         {/* <LoginEmployer />
         <LoginProfessor />
         <LoginTalent /> */}
       </Route>
-
-      {/* <Switch>
-        <Route path="/login-talent">
-          <LoginTalent />
-        </Route>
-        <Route path="/login-professor">
-          <LoginProfessor />
-        </Route>
-        <Route path="/login-employer">
-          <LoginEmployer />
-        </Route>
-      </Switch> */}
-
 
       <Route path="/profile">
         <ProfileScreen />
