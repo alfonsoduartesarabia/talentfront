@@ -1,16 +1,21 @@
 import React from 'react';
 import './App.sass';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreen from './screens/home'
 import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'
 import LoginProfessor from './screens/login-professor'
 import LoginTalent from './screens/login-talent'
+<<<<<<< HEAD
 import LoginMain from './screens/login'
+=======
+import PostingsScreen from './screens/postings/postings'
+>>>>>>> 41d55b486508ed358ce84bcb7cd17541062510cb
 import {
   BrowserRouter as Router,
-  Switch,
+  // Switch,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
 import ProfileScreen from './screens/profile/profile.js'
 
@@ -52,7 +57,9 @@ function App() {
       <Route path="/profile">
         <ProfileScreen />
       </Route>
-
+      <Route path="/postings">
+        <PostingsScreen />
+      </Route>
       <Route path="/" exact>
         <HomeScreen />
       </Route>
