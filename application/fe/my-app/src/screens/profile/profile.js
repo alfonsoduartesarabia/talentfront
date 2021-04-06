@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./profile.css"
+import "./profile.scss"
 import axios from 'axios'
 import deafaultPic from './x.png';
 // import SELECTOR from "@redux"
@@ -9,7 +9,7 @@ const ProfileScreen = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const handleEditModeChange = () => {
-    setEditMode(true);
+    setEditMode(!editMode);
   }
 
   // 
@@ -86,15 +86,17 @@ const ProfileScreen = (props) => {
     if (!editMode) {
     result = (
     <div>
+        <img src={deafaultPic} alt="profile picture"/>
+    
         <h2 className="personal-info-bit">username</h2>
         <h2 className="personal-info-bit">student/professor</h2>
-        <h2 className="personal-info-bit">grad date</h2>
+        <h2 className="personal-infobit">grad date</h2>
         <h2 className="personal-info-bit">degree</h2>
 
       <button type="button" className="generic-button" onClick={handleEditModeChange}><p>Edit Profile</p></button> 
 
       <article>
-        <h2 className="article-title">description</h2>
+        <h2 className="article-title">Skills</h2>
         <div className="description-box">
           <p>In this box, I am defined.</p>
         </div>
@@ -104,14 +106,16 @@ const ProfileScreen = (props) => {
     } else {
       result = (
       <div className="personal-info-edit">
+          <img src={deafaultPic} alt="profile picture"/>
           <form onSubmit={handleSubmit}>
             <input type="file" onChange={handleImageSelect} />
             <button type="submit"> SUBMIT BRUH </button>
           </form>
           <input type="date" id="fname" name="fname"></input>
-          <input type="text" id="fname" name="fname"></input>
-        <h2 className="article-title">description</h2>
-        <input type="text" id="fdescription" name="fdescription"></input>
+          <input type="text" id="fname" name="fname"placeholder="Degree"></input>
+        <h2 className="article-title">Skills</h2>
+        <div className="description-box-container">
+        <textarea id="message" placeholder="Enter skills plz" className="description-box"></textarea></div>
     </div>
       )
     }
@@ -119,20 +123,51 @@ const ProfileScreen = (props) => {
     return (result)
   }
 
-  function renderArticles() {
+  function RenderArticles() {
+    var result;
+    if (editMode) {
+      result = (<div><EditMenu/>{articlesResult}</div>)
+    }
+    else {
+      result = (<div>{articlesResult}</div>)
+    }
+    return (result)
+  }
 
+  function EditMenu() {
+    return (
+    <div className="article-edit-menu">
+      <div className="article-input-fields">
+        <div className="article-edit-menu-account">
+          <input type="text" placeholder="email"></input>
+          <input type="text" placeholder="Name"></input>
+          <input type="text" placeholder="New Password"></input>
+          <input type="text" placeholder="Reenter Password"></input>
+        </div>
+        <div className="description-box-container">
+          <textarea id="message" placeholder="Put your personality into this box!" className="description-box"></textarea>
+        </div>
+      </div>
+      <div className="save-changes-buttons">
+        <button type="button" className="save-changes-button" onClick={handleEditModeChange}><p>Save Changes</p></button>
+        <button type="button" className="save-changes-button" onClick={handleEditModeChange}><p>Don't Save Changes</p></button>
+      </div>
+    </div>
+    )
+  }
+
+  function renderPersonals() {
+    
   }
 
   return (
-    <div className="test">
+    <div>
     <section>
       <personals>
-          <img src={deafaultPic} alt="profile picture"/>
-
-          <PersonalInfo name="Sara" />
+          <PersonalInfo/>
       </personals>
       <content>
-        {articlesResult}
+        <RenderArticles/>
       </content>
     </section>
     </div>
