@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.sass';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreen from './screens/home'
 import Registration from './screens/registration'
 import LoginEmployer from './screens/login-employer'

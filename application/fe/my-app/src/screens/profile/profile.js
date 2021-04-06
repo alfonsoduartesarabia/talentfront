@@ -1,22 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./profile.scss"
 import axios from 'axios'
 import deafaultPic from './x.png';
+import { Spinner } from 'react-bootstrap';
 // import SELECTOR from "@redux"
 
 const ProfileScreen = (props) => {
+  const BASE_URL = "http://localhost:8080"
   const [searchResult, setSearchResult] = useState([]);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
   const handleEditModeChange = () => {
     setEditMode(!editMode);
   }
 
-  // 
-  // const userID = SELECTOR (state.USERID)
+  let data = {
+    "filter": "",
+    "subFilter": "",
+    "searchTerm": ""
+  }
 
-
-  let renderedArticles = [
+  let dummyData = [
     {
       "title":"title",
       "description":"All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -36,6 +41,21 @@ const ProfileScreen = (props) => {
       "endDate":"1/1/2"
     }
   ];
+  useEffect( () => {
+    setSearchResult(dummyData)
+    console.log("MAKING API CALL with this DATA", data)
+    axios.post(BASE_URL + '/backend/api/search', data)
+      .then(res => {
+        setSearchResult(res.data.entries)
+        console.log(res.data)
+        setLoading(false)
+      })
+      .catch (err => {
+        console.log(err)
+      })
+  }, [])
+
+  
 
   // var formData = new FormData();
   // var imagefile = document.querySelector('#file');
@@ -46,7 +66,7 @@ const ProfileScreen = (props) => {
   //     }
   // })
 
-  let articlesResult = renderedArticles.map( (result, index) => {
+  let articlesResult = searchResult.map( (result, index) => {
     return (<article key={index}>
       <div className="article-head">
         <h2 className="article-title">{result.title}</h2>
@@ -160,12 +180,20 @@ const ProfileScreen = (props) => {
     
   }
 
+  if (loading) {
+    return(
+      <div className="spin-wrapper">
+        <Spinner animation="border" variant="primary" />  
+      </div>
+    )
+  }
+
   return (
     <div>
     <section>
-      <personals>
-          <PersonalInfo/>
-      </personals>
+      <div className="personals">
+        <PersonalInfo/>
+      </div>
       <content>
         <RenderArticles/>
       </content>

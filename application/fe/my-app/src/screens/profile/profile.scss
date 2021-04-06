@@ -47,6 +47,13 @@ article {
   flex-shrink: 1;
 }
 
+.spin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // vw for width :)
+}
+
 section {
   display: flex;
   margin-left:8%;
@@ -58,12 +65,12 @@ section {
   flex-shrink: 1;
 }
 
-personals {
-display: flex;
-flex-direction: column;
-flex-shrink: 1;
-width: 25%;
-padding: 2%;
+.personals {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  width: 25%;
+  padding: 2%;
 }
 
 .article-edit-menu {
