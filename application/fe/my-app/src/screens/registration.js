@@ -1,9 +1,39 @@
 import React, { useState } from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 import "./registration.css"
 import {Link} from 'react-router-dom'
 
 const Registration = (props) => {
+
+    /**
+     * Austin's Code for register endpoint
+     */
+    var axios = require('axios');
+    var data = JSON.stringify({
+    "email": "test-email2@tester.mail",
+    "password": "badfishsmell",
+    "userType": "talent",
+    "firstName": "mike",
+    "lastName": "smith"
+    });
+
+    var config = {
+    method: 'post',
+    url: 'http://localhost:8080/backend/api/register',
+    headers: { 
+        'Content-Type': 'application/json'
+    },
+    data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+    console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
+
     const [userType, setUserType] = useState("")
     let additionalFields = "";
     
@@ -12,13 +42,13 @@ const Registration = (props) => {
         (<div> 
             <label for="first-name"><b>School Name</b></label>
             <input type="text" placeholder="Enter your school" name="school-name" id="school-name"></input>
-            <br></br>
+   
             <label for="first-name"><b>Degree</b></label>
             <input type="text" placeholder="Enter your degree" name="degree" id="degree"></input>
-            <br></br>
+
             <label for="first-name"><b>Major</b></label>
             <input type="text" placeholder="Enter your field" name="field" id="field"></input>
-            <br></br>
+    
         </div>)
     }
 
@@ -27,13 +57,13 @@ const Registration = (props) => {
         (<div> 
             <label for="first-name"><b>Highest Earned Degree</b></label>
             <input type="text" placeholder="Enter your highest earned degree" name="degree" id="degree"></input>
-            <br></br>
+ 
             <label for="first-name"><b>Employer</b></label>
             <input type="text" placeholder="Enter your employer" name="employer" id="employer"></input>
-            <br></br>
+
             <label for="first-name"><b>Title</b></label>
             <input type="text" placeholder="Enter your title" name="job-title" id="job-title"></input>
-            <br></br>
+
         </div>)
     }
 
@@ -42,10 +72,10 @@ const Registration = (props) => {
         (<div> 
             <label for="first-name"><b>Company Name</b></label>
             <input type="text" placeholder="Enter your company name" name="company-name" id="company-name"></input>
-            <br></br>
+   
             <label for="first-name"><b>Location</b></label>
             <input type="text" placeholder="Enter your location" name="location" id="location"></input>
-            <br></br>
+
         </div>)
     }
     if (userType === "teacher") {
@@ -53,10 +83,10 @@ const Registration = (props) => {
         (<div> 
             <label for="first-name"><b>School Name</b></label>
             <input type="text" placeholder="Enter your school" name="school-name" id="school-name"></input>
-            <br></br>
+
             <label for="first-name"><b>Field</b></label>
             <input type="text" placeholder="Enter your major" name="major" id="major"></input>
-            <br></br>
+    
         </div>)
     }
     const handleChange = (event) => {

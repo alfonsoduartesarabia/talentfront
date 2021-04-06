@@ -18,6 +18,32 @@ const Login = (props) => {
     //     console.log(userType)
     // }
 
+    /**
+     * Austin's Code for login endpoint
+     */
+    var axios = require('axios');
+    var data = JSON.stringify({
+    "email": "test-email2@tester.mail",
+    "password": "badfishsmell"
+    });
+
+    var config = {
+    method: 'post',
+    url: 'http://localhost:8080/backend/api/login',
+    headers: { 
+        'Content-Type': 'application/json'
+    },
+    data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+    console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
+
     return(
         <div className="login-main">
             <form>
