@@ -20,7 +20,7 @@ const Registration = (props) => {
 
     var config = {
     method: 'post',
-    url: 'http://localhost:8080/backend/api/register',
+    url: window.origin + '/backend/api/register',
     headers: { 
         'Content-Type': 'application/json'
     },
