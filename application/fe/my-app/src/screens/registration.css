@@ -38,13 +38,16 @@
     height: 550px; 
 }
 .login-main{
-  border-radius: 10px/17px; 
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-radius: 10px/17px; 
     box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
     border: solid 1px #cbc9c9;
     margin: 130px auto;
     padding-top: 20px;
     width: 500px; 
-    height: 170px; 
+    /* height: 170px;  */
 }
 input[type=text], input[type=password], select {
     width: 100%;
@@ -55,10 +58,20 @@ input[type=text], input[type=password], select {
     background: #f1f1f1;
     font-size: medium;
   }
-  /* .bottom-page{
+  .register-button{
+    background-color: #304eaf;
+    color: white;
+    padding: 13px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    opacity: 0.9;
     position: relative;
-  } */
-  .register-button, .enter-button {
+    top: 0px;
+    /* float: right; */
+  }
+  .enter-button {
     background-color: #304eaf;
     color: white;
     padding: 13px 20px;
