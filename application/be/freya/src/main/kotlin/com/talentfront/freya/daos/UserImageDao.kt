@@ -29,11 +29,11 @@ class UserImageDao(
             .where(USER_IMAGE.USER_ID.eq(userId))
             .orderBy(USER_IMAGE.USER_IMAGE_ID.desc())
             .limit(1)
-            .fetchOne()
-            .into(USER_IMAGE)
+            .fetchOne() ?: return null
+        val userImageRecord = record.into(USER_IMAGE)
 
         return if (record != null) {
-            UserImage(id = record.userImageId, userId = record.userId, img = record.img, title = record.title, created_dt = record.createdDt, contentType = record.contentType)
+            UserImage(id = userImageRecord.userImageId, userId = userImageRecord.userId, img = userImageRecord.img, title = userImageRecord.title, created_dt = userImageRecord.createdDt, contentType = userImageRecord.contentType)
         } else {
             null
         }
