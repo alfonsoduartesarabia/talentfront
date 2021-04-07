@@ -16,6 +16,13 @@ test {
   background: #cccccc;
 }
 
+.profile-Image-Bruh {
+  border-radius: 50%;
+  width: 325px;
+  height: 325px;
+  padding: 2%;
+}
+
 .generic-button {
   box-sizing: border-box;
   width: 100%;
@@ -137,11 +144,6 @@ section {
   resize: none;
 }
 
-img {
-  border-radius: 50%;
-  width: 100%;
-  padding: 2%;
-}
 
 content {
   width: 75%;

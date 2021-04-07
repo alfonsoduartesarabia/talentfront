@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import "./profile.scss"
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 import deafaultPic from './x.png';
 import { Spinner } from 'react-bootstrap';
 import { Button} from 'react-bootstrap';
 import { InputGroup, Form, Row, Col, Card, Fade} from 'react-bootstrap';
+import { login } from '../../features/user/slice'
+import Navbar from '../../components/navbar'
 // import SELECTOR from "@redux"
+
+function GetFormattedDate(datearg) {
+    var todayTime = datearg;
+    var month = todayTime .getMonth() + 1;
+    var day = todayTime .getDate();
+    var year = todayTime .getFullYear();
+    return month + "-" + day + "-" + year;
+}
 
 const ProfileScreen = (props) => {
   const BASE_URL = "http://localhost:8080"
@@ -13,9 +24,12 @@ const ProfileScreen = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
+  const [imageUrl, setImageUrl] = useState("");
   const handleEditModeChange = () => {
     setEditMode(!editMode);
   }
+
+  let user = useSelector( state => state.user.user)
 
   let data = {
     "filter": "",
@@ -36,31 +50,26 @@ const ProfileScreen = (props) => {
       "startDate":"1/1/1",
       "endDate":"1/1/2"
     },
-    {
-      "title":"title",
-      "description":"All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.",
-      "startDate":"1/1/1",
-      "endDate":"1/1/2"
-    }
   ];
   useEffect( () => {
     setSearchResult(dummyData)
+    setLoading(false)
     console.log("MAKING API CALL with this DATA", data)
-    axios.post(BASE_URL + '/backend/api/search', data)
-      .then(res => {
-        setSearchResult(res.data.entries)
-        console.log(res.data)
-        setLoading(false)
-      })
-      .catch (err => {
-        console.log(err)
-        setLoading(false)
-        return (
-          <div>
-            <h1>something went wrong...</h1>
-          </div>
-        )
-      })
+    // axios.post(BASE_URL + '/backend/api/search', data)
+    //   .then(res => {
+    //     setSearchResult(res.data.entries)
+    //     console.log(res.data)
+    //     setLoading(false)
+    //   })
+    //   .catch (err => {
+    //     console.log(err)
+    //     setLoading(false)
+    //     return (
+    //       <div>
+    //         <h1>something went wrong...</h1>
+    //       </div>
+    //     )
+    //   })
   }, [])
 
   
@@ -78,7 +87,7 @@ const ProfileScreen = (props) => {
     var result;
     if (!editMode) {
       result = (
-        <Card className="article">
+        <Card key={index} className="article">
           <Card.Header className="card-head">
             <div className="article-head">
             <h2 className="article-title">{result.title}</h2>
@@ -95,7 +104,7 @@ const ProfileScreen = (props) => {
     } else {
 
         result = (
-          <Card className="article">
+          <Card key={index} className="article">
             <Card.Header className="card-head">
               <div className="article-head">
               <h2 className="article-title"><Form.Control placeholder="Degree" defaultValue={result.title}/></h2>
@@ -125,22 +134,23 @@ const ProfileScreen = (props) => {
   const handleImageSelect = (event) => {
     setSelectedFile(event.target.files[0]);
     console.log(event.target.files[0]);
-    handleSubmit(event)
+    handleSubmit(event.target.files[0])
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (file) => {
     // const BASE_URL = window.origin 
     //event.preventDefault()
     const BASE_URL = "http://localhost:8080"
     const form = document.querySelector('form');
     const formData = new FormData(form)
-    formData.append("file", selectedFile)
+    formData.append("image", file)
     formData.append("userId", "USER EZRA")
-    console.log("hello")
-    axios.post(BASE_URL + "/backend/api/user-image/upload/1", formData, {
+    console.log(file)
+    axios.post(BASE_URL + "/backend/api/user-image/upload/2", formData, {
       "Content-Type": "Multipart-FormData"
     }).then( res => {
-      console.log(res)
+      console.log("RECEIVED IMAGE URL", res.config.url)
+      setImageUrl(BASE_URL + "/backend/api/user-image/2")
     }).catch( err => {
       console.log(err)
     })
@@ -154,17 +164,23 @@ const ProfileScreen = (props) => {
     if (!editMode) {
     result = (
     <div>
-        <img src={deafaultPic} alt="profile picture"/>
+        {
+          // imageUrl === "" 
+          //   ? <img src={deafaultPic} alt="profile picture"/>
+          //   : <img src={} alt="profile picture"/>
+        }
+        <img className="profile-Image-Bruh" src={BASE_URL + "/backend/api/user-image/2"} alt="profile picture"/>
+
         <Card className="profile-card">
           <Card.Body>
-            <Card.Title>User</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Student</Card.Subtitle>
-            <Card.Title>Degree</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Graduates: 1/1/1</Card.Subtitle>
+            <Card.Title>{user.firstname}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">{user.userType}</Card.Subtitle>
+            <Card.Title>{user.degree}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">Graduates: {user.graduateDate.toString()}</Card.Subtitle>
             <Card className="skills-card">
                <Card.Title style={{padding:"2%"}}>Skills:</Card.Title>
               <Card.Text style={{padding:"2%"}}>
-                Javascript, C++, Python
+                {user.skills}
               </Card.Text>
             </Card>
             <Card.Link href="#" onClick={handleEditModeChange}>Edit Profile</Card.Link>
@@ -188,24 +204,24 @@ const ProfileScreen = (props) => {
           <Card className="profile-card">
             <Card.Body>
               <Card.Title>
-              User
+              {user.userType}
               </Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Student</Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">{user.firstname + " " + user.lastname}</Card.Subtitle>
               <Card.Title>
-                <Form.Control placeholder="Degree" />
+                <Form.Control defaultValue={user.degree} placeholder="Degree" />
               </Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
                 <div className="grad-date-container">
                   <div>
                   Graduates: 
                   </div>
-                <input type="date" id="grad-date" classname="date-select"></input>
+                <input value={user.graduateDate.toString()} onChange={event => {user.graduationDate = event.target.value}} type="date" id="grad-date" classname="date-select"></input>
                 </div>
               </Card.Subtitle>
               <Card className="skills-card">
                 <Card.Title style={{padding:"2%"}}>Skills:</Card.Title>
                 <Card.Text style={{padding:"2%"}}>
-                <Form.Control as="textarea" rows={10} className="description-box"/>
+                <Form.Control defaultValue={user.skills} as="textarea" rows={10} className="description-box"/>
                 </Card.Text>
               </Card>
             </Card.Body>
@@ -238,17 +254,17 @@ const ProfileScreen = (props) => {
               <Col>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control defaultValue={user.email} type="email" placeholder="Enter email" />
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                   </Form.Text>
                 </Form.Group>
                 <Row>
                   <Col>
-                    <Form.Control placeholder="First name" />
+                    <Form.Control defaultValue={user.firstname} placeholder="First name" />
                   </Col>
                   <Col>
-                    <Form.Control placeholder="Last name" />
+                    <Form.Control defaultValue={user.lastname} placeholder="Last name" />
                   </Col>
                 </Row>
 
@@ -264,7 +280,7 @@ const ProfileScreen = (props) => {
               <Col>
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>About Me</Form.Label>
-                <Form.Control as="textarea" rows={10} className="description-box"/>
+                <Form.Control defaultValue={user.about} as="textarea" rows={10} className="description-box"/>
               </Form.Group>
               </Col>
             </Row>
@@ -277,9 +293,6 @@ const ProfileScreen = (props) => {
     )
   }
 
-  function renderPersonals() {
-    
-  }
 
   if (loading) {
     return(
@@ -291,6 +304,7 @@ const ProfileScreen = (props) => {
 
   return (
     <div>
+    <Navbar />
     <section>
       <div className="personals">
         <PersonalInfo/>
