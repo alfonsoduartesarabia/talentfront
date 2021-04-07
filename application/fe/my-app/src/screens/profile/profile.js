@@ -220,7 +220,7 @@ const ProfileScreen = (props) => {
           <Form style={{padding:"2%"}}>
             <Form.File 
               id="custom-file"
-              label="test"
+              label="upload image"
               onChange={handleImageSelect}
               custom
             />
