@@ -3,6 +3,8 @@ import "./profile.scss"
 import axios from 'axios'
 import deafaultPic from './x.png';
 import { Spinner } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
+import { InputGroup, Form, Row, Col, Card, Fade} from 'react-bootstrap';
 // import SELECTOR from "@redux"
 
 const ProfileScreen = (props) => {
@@ -52,6 +54,12 @@ const ProfileScreen = (props) => {
       })
       .catch (err => {
         console.log(err)
+        setLoading(false)
+        return (
+          <div>
+            <h1>something went wrong...</h1>
+          </div>
+        )
       })
   }, [])
 
@@ -59,7 +67,7 @@ const ProfileScreen = (props) => {
 
   // var formData = new FormData();
   // var imagefile = document.querySelector('#file');
-  // formData.append("image", imagefile.files[0]);
+  // formData.append("image", imagefile.files[0]); 
   // axios.post('upload_file', formData, {
   //     headers: {
   //       'Content-Type': 'multipart/form-data'
@@ -67,30 +75,68 @@ const ProfileScreen = (props) => {
   // })
 
   let articlesResult = searchResult.map( (result, index) => {
-    return (<article key={index}>
-      <div className="article-head">
-        <h2 className="article-title">{result.title}</h2>
-        <h2 className="article-date">{result.startDate + " - " + result.endDate}</h2>
-      </div>
-        <div className="article-content">
-         <p>{result.description}</p>
-        </div>
-      </article>)
+    var result;
+    if (!editMode) {
+      result = (
+        <Card className="article">
+          <Card.Header className="card-head">
+            <div className="article-head">
+            <h2 className="article-title">{result.title}</h2>
+            <h2 className="article-date">{result.startDate + " - " + result.endDate}</h2>
+            </div>  
+          </Card.Header>
+          <Card.Body>
+            <Card.Text>
+              {result.description}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      )
+    } else {
+
+        result = (
+          <Card className="article">
+            <Card.Header className="card-head">
+              <div className="article-head">
+              <h2 className="article-title"><Form.Control placeholder="Degree" defaultValue={result.title}/></h2>
+              <h2 className="article-date"><input type="date" id="grad-date" classname="date-select"></input> - <input type="date" id="grad-date" classname="date-select"></input></h2>
+              </div>  
+            </Card.Header>
+            <Card.Body>
+              <Card.Text>
+                <Form.Control as="textarea" defaultValue={result.description} rows={10} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        )
+    }
+    return result;
+    // return (<article key={index}>
+    //   <div className="article-head">
+    //     <h2 className="article-title">{result.title}</h2>
+    //     <h2 className="article-date">{result.startDate + " - " + result.endDate}</h2>
+    //   </div>
+    //     <div className="article-content">
+    //      <p>{result.description}</p>
+    //     </div>
+    //   </article>)
   })
 
   const handleImageSelect = (event) => {
-    setSelectedFile(event.target.files[0])
+    setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+    handleSubmit(event)
   }
 
   const handleSubmit = (event) => {
     // const BASE_URL = window.origin 
+    //event.preventDefault()
     const BASE_URL = "http://localhost:8080"
-    event.preventDefault()
     const form = document.querySelector('form');
     const formData = new FormData(form)
     formData.append("file", selectedFile)
     formData.append("userId", "USER EZRA")
-
+    console.log("hello")
     axios.post(BASE_URL + "/backend/api/user-image/upload/1", formData, {
       "Content-Type": "Multipart-FormData"
     }).then( res => {
@@ -100,6 +146,8 @@ const ProfileScreen = (props) => {
     })
   }
 
+
+
   function PersonalInfo() {
     var result;
 
@@ -107,36 +155,63 @@ const ProfileScreen = (props) => {
     result = (
     <div>
         <img src={deafaultPic} alt="profile picture"/>
-    
-        <h2 className="personal-info-bit">username</h2>
-        <h2 className="personal-info-bit">student/professor</h2>
-        <h2 className="personal-infobit">grad date</h2>
-        <h2 className="personal-info-bit">degree</h2>
-
-      <button type="button" className="generic-button" onClick={handleEditModeChange}><p>Edit Profile</p></button> 
-
-      <article>
-        <h2 className="article-title">Skills</h2>
-        <div className="description-box">
-          <p>In this box, I am defined.</p>
-        </div>
-      </article>
+        <Card className="profile-card">
+          <Card.Body>
+            <Card.Title>User</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">Student</Card.Subtitle>
+            <Card.Title>Degree</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">Graduates: 1/1/1</Card.Subtitle>
+            <Card className="skills-card">
+               <Card.Title style={{padding:"2%"}}>Skills:</Card.Title>
+              <Card.Text style={{padding:"2%"}}>
+                Javascript, C++, Python
+              </Card.Text>
+            </Card>
+            <Card.Link href="#" onClick={handleEditModeChange}>Edit Profile</Card.Link>
+          </Card.Body>
+        </Card>
     </div>
     )
     } else {
       result = (
-      <div className="personal-info-edit">
+        <Fade in={editMode}>
+        <div className="personal-info-edit">
           <img src={deafaultPic} alt="profile picture"/>
-          <form onSubmit={handleSubmit}>
-            <input type="file" onChange={handleImageSelect} />
-            <button type="submit"> SUBMIT BRUH </button>
-          </form>
-          <input type="date" id="fname" name="fname"></input>
-          <input type="text" id="fname" name="fname"placeholder="Degree"></input>
-        <h2 className="article-title">Skills</h2>
-        <div className="description-box-container">
-        <textarea id="message" placeholder="Enter skills plz" className="description-box"></textarea></div>
-    </div>
+          <Form style={{padding:"2%"}}>
+            <Form.File 
+              id="custom-file"
+              label="test"
+              onChange={handleImageSelect}
+              custom
+            />
+          </Form>
+          <Card className="profile-card">
+            <Card.Body>
+              <Card.Title>
+              User
+              </Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">Student</Card.Subtitle>
+              <Card.Title>
+                <Form.Control placeholder="Degree" />
+              </Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                <div className="grad-date-container">
+                  <div>
+                  Graduates: 
+                  </div>
+                <input type="date" id="grad-date" classname="date-select"></input>
+                </div>
+              </Card.Subtitle>
+              <Card className="skills-card">
+                <Card.Title style={{padding:"2%"}}>Skills:</Card.Title>
+                <Card.Text style={{padding:"2%"}}>
+                <Form.Control as="textarea" rows={10} className="description-box"/>
+                </Card.Text>
+              </Card>
+            </Card.Body>
+          </Card>
+        </div>
+        </Fade>
       )
     }
   
@@ -156,23 +231,49 @@ const ProfileScreen = (props) => {
 
   function EditMenu() {
     return (
-    <div className="article-edit-menu">
-      <div className="article-input-fields">
-        <div className="article-edit-menu-account">
-          <input type="text" placeholder="email"></input>
-          <input type="text" placeholder="Name"></input>
-          <input type="text" placeholder="New Password"></input>
-          <input type="text" placeholder="Reenter Password"></input>
-        </div>
-        <div className="description-box-container">
-          <textarea id="message" placeholder="Put your personality into this box!" className="description-box"></textarea>
-        </div>
+      <div className="edit-menu">
+          <Form className="account-edit">
+            <Card.Header className = "account-head">Account Info</Card.Header>
+            <Row>
+              <Col>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text>
+                </Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Control placeholder="First name" />
+                  </Col>
+                  <Col>
+                    <Form.Control placeholder="Last name" />
+                  </Col>
+                </Row>
+
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>New Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" />
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" />
+                </Form.Group>
+              </Col>
+              <Col>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>About Me</Form.Label>
+                <Form.Control as="textarea" rows={10} className="description-box"/>
+              </Form.Group>
+              </Col>
+            </Row>
+            <div className="save-changes-buttons">
+              <Button variant="primary" type="button" className="save-changes-button" onClick={handleEditModeChange}>Save</Button>
+              <Button type="button" className="save-changes-button" onClick={handleEditModeChange}>Don't Save</Button>
+            </div>
+          </Form>
       </div>
-      <div className="save-changes-buttons">
-        <button type="button" className="save-changes-button" onClick={handleEditModeChange}><p>Save Changes</p></button>
-        <button type="button" className="save-changes-button" onClick={handleEditModeChange}><p>Don't Save Changes</p></button>
-      </div>
-    </div>
     )
   }
 

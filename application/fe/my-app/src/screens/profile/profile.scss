@@ -29,22 +29,15 @@ test {
   flex-direction: column;
 }
 
-.description-box {
-  background: #cccccc;
-  border-radius: 14px;
-  padding: 5%;
-
-
-  /* User_Info -> description */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-
-  color: #000000;
+.card-head {
+  background:#D4CB92;
 }
 
-article {
+.article {
   flex-shrink: 1;
+  margin: 2%;
+  background:#ECE1C5;
+  box-shadow: 1px 2px 5px;
 }
 
 .spin-wrapper {
@@ -58,8 +51,10 @@ section {
   display: flex;
   margin-left:8%;
   margin-right:8%;
+  margin-top: 1%;
   padding: 1%;
-  border: solid rgb(107, 107, 107);
+  background:#395C6B;
+  border-radius: 1vh;
   border-width: thick;
   flex-wrap: nowrap;
   flex-shrink: 1;
@@ -73,10 +68,30 @@ section {
   padding: 2%;
 }
 
-.article-edit-menu {
+.account-head {
+  background-color: #80A4ED;
+
+}
+
+.account-edit {
+  background-color: #BCD3F2;
+  padding: 2%;
+  border-radius: 1vh;
+  flex-grow: 1;
+}
+
+.grad-date-container {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  justify-content: space-between;
+}
+
+.date-select {
+  flex-grow: 1;
+}
+
+.edit-menu {
+  display:flex;
+  justify-content: center;
 }
 
 .article-input-fields {
@@ -91,7 +106,23 @@ section {
 }
 
 .save-changes-button {
-  size: 10%;
+  background-color: #304eaf;
+  color: rgb(255, 255, 255);
+  margin-left: 5%;
+  cursor: pointer;
+  /* width: 100%; */
+  opacity: 0.9;
+
+
+}
+
+.profile-card {
+  background-color: #BCD3F2;
+}
+
+.skills-card {
+  padding:"20%";
+  background-color: #ffffff;
 }
 
 .description-box-container {
@@ -101,14 +132,9 @@ section {
 }
 
 .description-box {
-  resize: none;
-  height: 100%;
   width: 100%;
-  
-}
-
-.article-edit-menu-account {
-  padding: 2%;
+  height: 100%; 
+  resize: none;
 }
 
 img {
