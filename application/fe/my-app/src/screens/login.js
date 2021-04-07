@@ -65,9 +65,10 @@ const Login = (props) => {
                         <option value="professor">Professor</option>
                         <option value="employer">Employer</option>
                     </select>*/}
-                    <input type="text" placeholder="Username" name="username" id="username"></input>
-                    <input type="text" placeholder="Password" name="password" id="password"></input>
-                    <button onClick={handleSubmit} type="submit" class="enter-button">Login</button> 
+                    <input type="text" placeholder="Username" name="username" id="username" required></input>
+                    <input type="password" placeholder="Password" name="password" id="password" required></input>
+                    <button type="submit" class="enter-button">Login</button> 
+                    {/* <button onClick={handleSubmit} type="submit" class="enter-button">Login</button>  */}
                     {/* <Link to="/register"><button type="submit" class="register-button">Signup</button> </Link> */}
                     <p>Dont' have an account? <Link to="/register">Sign up</Link></p>
                 </form>

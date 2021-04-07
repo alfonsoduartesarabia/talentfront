@@ -103,23 +103,23 @@ const Registration = (props) => {
 
             <form className="register-form" action="/">
                 <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter email" name="email" id="email"></input>
+                <input type="email" placeholder="Enter email" name="email" id="email" required></input>
                 
 
                 <label for="first-name"><b>First Name</b></label>
-                <input type="text" placeholder="Enter first name" name="first-name" id="first-name"></input>
+                <input type="text" placeholder="Enter first name" name="first-name" id="first-name" required></input>
 
                 <label for="last-name"><b>Last Name</b></label>
-                <input type="text" placeholder="Enter last name" name="last-name" id="last-name"></input>
+                <input type="text" placeholder="Enter last name" name="last-name" id="last-name" required></input>
 
                 <label for="password"><b>Password</b></label>
-                <input type="text" placeholder="Create password, max length 20" name="password" id="password"></input>
+                <input type="password" placeholder="Create password, max length 20" name="password" id="password" required></input>
 
                 <label for="confirm-password"><b>Confirm Password</b></label>
-                <input type="text" placeholder="Repeat password" name="confirm-password" id="confirm-password"></input>
+                <input type="password" placeholder="Repeat password" name="confirm-password" id="confirm-password" required></input>
 
                 <label for="user-type"><b>Indicate Type of User</b></label>
-                <select name="user-type" id="user-type" onChange={handleChange}>
+                <select name="user-type" id="user-type" onChange={handleChange} required>
                     <option value="" disabled selected>Select your option</option>
                     <option value="recent-grad">Recent Graduate</option>
                     <option value="student">Current Student</option>
