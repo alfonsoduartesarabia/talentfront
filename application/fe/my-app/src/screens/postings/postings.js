@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 
 const PostingsScreen = (props) => {
-  const BASE_URL = "http://localhost:8080"
+  const BASE_URL = window.origin
   const [jobs, setJobs] = useState([]); 
   const [loading, setLoading] = useState(true)
   // let data = {
