@@ -2,6 +2,7 @@ import { useState, useEffect} from 'react'
 import Navbar from '../../components/navbar'
 import axios from 'axios'
 import "./postings.scss"
+import { Spinner } from 'react-bootstrap';
 
 const PostingsScreen = (props) => {
   const BASE_URL = "http://localhost:8080"
@@ -56,8 +57,8 @@ const PostingsScreen = (props) => {
 
   if (loading){
     return(
-      <div>
-        LOADING
+      <div className="spin-wrapper">
+        <Spinner animation="border" variant="primary" />  
       </div>
     )
   }
