@@ -11,7 +11,7 @@ import Navbar from '../../components/navbar'
 // import SELECTOR from "@redux"
 
 const ProfileScreen = (props) => {
-  const BASE_URL = "http://localhost:8080"
+  const BASE_URL = window.origin
   const [searchResult, setSearchResult] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -164,7 +164,7 @@ const ProfileScreen = (props) => {
   const handleSubmit = (file) => {
     // const BASE_URL = window.origin 
     //event.preventDefault()
-    const BASE_URL = "http://localhost:8080"
+    const BASE_URL = window.origin
     const form = document.querySelector('form');
     const formData = new FormData(form)
     formData.append("image", file)
