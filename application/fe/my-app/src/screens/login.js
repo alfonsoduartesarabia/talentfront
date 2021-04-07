@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
+// import axios from 'axios'
 import "./registration.css"
 import Navbar from '../components/navbar'
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
+    // BrowserRouter as Router,
+    // Switch,
+    // Route,
     Link
   } from "react-router-dom";
 
