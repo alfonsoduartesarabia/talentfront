@@ -1,57 +1,81 @@
 import React, { useState, useEffect } from 'react'
 import "./profile.scss"
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import deafaultPic from './x.png';
+import { useSelector } from 'react-redux'
+// import deafaultPic from './x.png';
 import { Spinner } from 'react-bootstrap';
 import { Button} from 'react-bootstrap';
-import { InputGroup, Form, Row, Col, Card, Fade} from 'react-bootstrap';
-import { login } from '../../features/user/slice'
+import { Form, Row, Col, Card, Fade} from 'react-bootstrap';
+// import { login } from '../../features/user/slice'
 import Navbar from '../../components/navbar'
 // import SELECTOR from "@redux"
-
-function GetFormattedDate(datearg) {
-    var todayTime = datearg;
-    var month = todayTime .getMonth() + 1;
-    var day = todayTime .getDate();
-    var year = todayTime .getFullYear();
-    return month + "-" + day + "-" + year;
-}
 
 const ProfileScreen = (props) => {
   const BASE_URL = "http://localhost:8080"
   const [searchResult, setSearchResult] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [selectedFile, setSelectedFile] = useState();
-  const [imageUrl, setImageUrl] = useState("");
+  // const [selectedFile, setSelectedFile] = useState();
+  // const [imageUrl, setImageUrl] = useState("");
   const handleEditModeChange = () => {
     setEditMode(!editMode);
   }
 
   let user = useSelector( state => state.user.user)
 
-  let data = {
-    "filter": "",
-    "subFilter": "",
-    "searchTerm": ""
-  }
+  // let data = {
+  //   "filter": "",
+  //   "subFilter": "",
+  //   "searchTerm": ""
+  // }
 
-  let dummyData = [
-    {
-      "title":"title",
-      "description":"All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "startDate":"1/1/1",
-      "endDate":"1/1/2"
-    },
-    {
-      "title":"title",
-      "description":"All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.All play and no work makes jack a dull boy.",
-      "startDate":"1/1/1",
-      "endDate":"1/1/2"
-    },
-  ];
+  // let dummyData = [
+  //   {
+  //     "title":"Program Manager",
+  //     "description":"    Process mapping: saved $2.3M annually after leading end-to-end mapping of procurement process and training end-users on new SAP system. Supply chain: worked with global components manufacturer to resolve quality issues negatively impacting profitability. Lowered defect rate by 18% and improved manufacturing flow by 15%. Logistics: guided implementation of delivery tracking software. Improved outbound logistics efficiency by 25% and on-time delivery by 19%.",
+  //     "startDate":"January 2016",
+  //     "endDate":"April 2021"
+  //   },
+  //   {
+  //     "title":"Senior Technical Project Manager",
+  //     "description":"Switched company to new CRM Software and telecommunications hardware achieving a 75% reduction in call wait times and a 50% improvement in customer satisfaction. Managed project to review innovative PPE solutions for manufacturing staff resulting in a 40% reduction in workplace injuries.",
+  //     "startDate":"January 2014",
+  //     "endDate":"December 2015",
+  //   },
+  //   {
+  //     "title":"Java Developer",
+  //     "description":"Analyzed and designed program changes. Reviewed and updated requirements documentation, wrote design documents (PRD, FRD, UIRD, TRD, SRS, and SDD). Applied relevant technical skills to deliver specifications, program changes, unit test scripts, and documentation.",
+  //     "startDate":"August 2013",
+  //     "endDate":"January 2014",
+  //   }
+  // ];
   useEffect( () => {
+     let data = {
+      "filter": "",
+      "subFilter": "",
+      "searchTerm": ""
+    }
+
+    let dummyData = [
+      {
+        "title":"Program Manager",
+        "description":"    Process mapping: saved $2.3M annually after leading end-to-end mapping of procurement process and training end-users on new SAP system. Supply chain: worked with global components manufacturer to resolve quality issues negatively impacting profitability. Lowered defect rate by 18% and improved manufacturing flow by 15%. Logistics: guided implementation of delivery tracking software. Improved outbound logistics efficiency by 25% and on-time delivery by 19%.",
+        "startDate":"January 2016",
+        "endDate":"April 2021"
+      },
+      {
+        "title":"Senior Technical Project Manager",
+        "description":"Switched company to new CRM Software and telecommunications hardware achieving a 75% reduction in call wait times and a 50% improvement in customer satisfaction. Managed project to review innovative PPE solutions for manufacturing staff resulting in a 40% reduction in workplace injuries.",
+        "startDate":"January 2014",
+        "endDate":"December 2015",
+      },
+      {
+        "title":"Java Developer",
+        "description":"Analyzed and designed program changes. Reviewed and updated requirements documentation, wrote design documents (PRD, FRD, UIRD, TRD, SRS, and SDD). Applied relevant technical skills to deliver specifications, program changes, unit test scripts, and documentation.",
+        "startDate":"August 2013",
+        "endDate":"January 2014",
+      }
+    ];
     setSearchResult(dummyData)
     setLoading(false)
     console.log("MAKING API CALL with this DATA", data)
@@ -84,7 +108,7 @@ const ProfileScreen = (props) => {
   // })
 
   let articlesResult = searchResult.map( (result, index) => {
-    var result;
+    // var result;
     if (!editMode) {
       result = (
         <Card key={index} className="article">
@@ -132,7 +156,7 @@ const ProfileScreen = (props) => {
   })
 
   const handleImageSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
+    // setSelectedFile(event.target.files[0]);
     console.log(event.target.files[0]);
     handleSubmit(event.target.files[0])
   }
@@ -146,11 +170,11 @@ const ProfileScreen = (props) => {
     formData.append("image", file)
     formData.append("userId", "USER EZRA")
     console.log(file)
-    axios.post(BASE_URL + "/backend/api/user-image/upload/3", formData, {
+    axios.post(BASE_URL + "/backend/api/user-image/upload/" + user.userID, formData, {
       "Content-Type": "Multipart-FormData"
     }).then( res => {
       console.log("RECEIVED IMAGE URL", res.config.url)
-      setImageUrl(BASE_URL + "/backend/api/user-image/3")
+      // setImageUrl(BASE_URL + "/backend/api/user-image/" + user.userID)
     }).catch( err => {
       console.log(err)
     })
@@ -169,7 +193,7 @@ const ProfileScreen = (props) => {
           //   ? <img src={deafaultPic} alt="profile picture"/>
           //   : <img src={} alt="profile picture"/>
         }
-        <img className="profile-Image-Bruh" src={BASE_URL + "/backend/api/user-image/3"} alt="profile picture"/>
+        <img className="profile-Image-Bruh" src={BASE_URL + "/backend/api/user-image/" + user.userID} alt="profile"/>
 
         <Card className="profile-card">
           <Card.Body>
@@ -192,7 +216,7 @@ const ProfileScreen = (props) => {
       result = (
         <Fade in={editMode}>
         <div className="personal-info-edit">
-          <img src={deafaultPic} alt="profile picture"/>
+          <img src={BASE_URL + "/backend/api/user-image/" + user.userID} alt="profile"/>
           <Form style={{padding:"2%"}}>
             <Form.File 
               id="custom-file"

@@ -9,11 +9,11 @@ const PostingsScreen = (props) => {
   const BASE_URL = "http://localhost:8080"
   const [jobs, setJobs] = useState([]); 
   const [loading, setLoading] = useState(true)
-  let data = {
-    "filter": "",
-    "subFilter": "",
-    "searchTerm": ""
-  }
+  // let data = {
+  //   "filter": "",
+  //   "subFilter": "",
+  //   "searchTerm": ""
+  // }
   let query = useSelector( state => state.search.query)
   useEffect( () => {
     console.log("SENDING REQUEST TO BACKEND")

@@ -10,14 +10,14 @@ export const userSlice = createSlice({
         email: "theonlytugla@gmail.com",
         degree: "Bachelors of Science",
         password: "omega secret password",
-        about: "PRetty boi living in west coast lol",
-        skills: "Runs fast, PLays dota whatrever does something everyday.",
+        about: "Im a computer student. I like playing basketball and soccer. My favorite artists are Weeknd, Post Malone & Joji.",
+        skills: "C++, GoLang, JavaScript, React",
         graduateDate: new Date(),
         userType: "student",
         school: "San Francisco State University",
         major: "Computer Science",
         imageURL: "SOME URL HERE",
-        userID: "1"
+        userID: "2"
     }
   },
   reducers: {
@@ -29,14 +29,14 @@ export const userSlice = createSlice({
         email: "theonlytugla@gmail.com",
         degree: "Bachelors of Science",
         password: "omega secret password",
-        about: "PRetty boi living in west coast lol",
-        skills: "Runs fast, PLays dota whatrever does something everyday.",
+        about: "Im a computer student. I like playing basketball and soccer. My favorite artists are Weeknd, Post Malone & Joji.",
+        skills: "C++, GoLang, JavaScript, React",
         graduateDate: new Date(),
         userType: "student",
         school: "San Francisco State University",
         major: "Computer Science",
         imageURL: "SOME URL HERE",
-        userID: "1"
+        userID: "2"
       }
       state.loggedIn = true
     },
