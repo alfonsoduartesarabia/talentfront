@@ -41,7 +41,7 @@ function App() {
         <PostingsScreen />
       </Route>
       <Route path="/" exact>
-        <HomeScreen />
+        <ProfileScreen />
       </Route>
     </Router>
     </div>

@@ -3,6 +3,7 @@ import Navbar from '../../components/navbar'
 import axios from 'axios'
 import "./postings.scss"
 import { Spinner } from 'react-bootstrap';
+import { useSelector } from 'react-redux'
 
 const PostingsScreen = (props) => {
   const BASE_URL = "http://localhost:8080"
@@ -13,16 +14,21 @@ const PostingsScreen = (props) => {
     "subFilter": "",
     "searchTerm": ""
   }
-
+  let query = useSelector( state => state.search.query)
   useEffect( () => {
-    console.log("MAKING API CALL with this DATA", data)
-    axios.post(BASE_URL + '/backend/api/search', data)
+    console.log("SENDING REQUEST TO BACKEND")
+    console.log(query)
+    axios.post(BASE_URL + '/backend/api/search', query)
       .then(res => {
         setJobs(res.data.entries)
         console.log(res.data)
         setLoading(false)
-      })  
-  }, [])
+      })
+      .catch (err => {
+        console.log(err)
+        setLoading(false)
+      })
+  }, [query])
 
   let renderedPostings = jobs.map( (job, index) => {
     return (

@@ -146,11 +146,11 @@ const ProfileScreen = (props) => {
     formData.append("image", file)
     formData.append("userId", "USER EZRA")
     console.log(file)
-    axios.post(BASE_URL + "/backend/api/user-image/upload/2", formData, {
+    axios.post(BASE_URL + "/backend/api/user-image/upload/3", formData, {
       "Content-Type": "Multipart-FormData"
     }).then( res => {
       console.log("RECEIVED IMAGE URL", res.config.url)
-      setImageUrl(BASE_URL + "/backend/api/user-image/2")
+      setImageUrl(BASE_URL + "/backend/api/user-image/3")
     }).catch( err => {
       console.log(err)
     })
@@ -169,7 +169,7 @@ const ProfileScreen = (props) => {
           //   ? <img src={deafaultPic} alt="profile picture"/>
           //   : <img src={} alt="profile picture"/>
         }
-        <img className="profile-Image-Bruh" src={BASE_URL + "/backend/api/user-image/2"} alt="profile picture"/>
+        <img className="profile-Image-Bruh" src={BASE_URL + "/backend/api/user-image/3"} alt="profile picture"/>
 
         <Card className="profile-card">
           <Card.Body>

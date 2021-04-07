@@ -1,16 +1,26 @@
-// import react from 'react'
+import { useState } from 'react'
 import './navbar.sass'
 import { BsSearch } from 'react-icons/bs';
+import { useHistory } from "react-router-dom";
 import {
   Link
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-
+import { updateQuery } from '../features/search'
 
 const Navbar = (props) => {
-
+  const dispatch = useDispatch()
+  let history = useHistory();
+  const [searchTerm, setSearchTerm] = useState("");
   const handleClick = (event) => {
     event.preventDefault()
+    let query = {
+      "filter": "",
+      "subFilter": "",
+      "searchTerm": searchTerm
+    }
+    dispatch(updateQuery(query))
+    history.push("/postings")
   }
 
   const loggedIn = useSelector( state => state.user.loggedIn)
@@ -26,7 +36,7 @@ const Navbar = (props) => {
       <div className="search-bar-wrapper">
         <form action="">
           <div className="search-bar">
-            <input type="text" />
+            <input onChange={ event=> setSearchTerm(event.target.value) } type="text" />
             <div className="search-bar-btn"> <BsSearch /> </div>  
           </div>
           <button onClick={handleClick} className="navbar-btn">Search</button>
