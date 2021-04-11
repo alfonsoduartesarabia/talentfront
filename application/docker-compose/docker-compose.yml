@@ -76,19 +76,19 @@ services:
         condition: service_healthy
 
   # backend springboot service
-  freya:
-    image: pachecosf/freya:latest
-    container_name: freya
-    restart: always
-    ports:
-      - 8080:8080
-    environment:
-      - DB_LOCATION=mysql-db
-    depends_on: 
-      mysql-db:
-        condition: service_healthy
-    networks:
-      - app-network
+  # freya:
+  #   image: pachecosf/freya:latest
+  #   container_name: freya
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     - DB_LOCATION=mysql-db
+  #   depends_on: 
+  #     mysql-db:
+  #       condition: service_healthy
+  #   networks:
+  #     - app-network
 
   # my-app
   my-app:
