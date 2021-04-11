@@ -29,8 +29,7 @@ class UserDao(
             .where(USER.EMAIL.eq(email))
             .orderBy(USER.USER_ID.asc())
             .limit(1)
-            .fetchOne()
-            .into(USER) ?: return null
-        return record.toUser()
+            .fetchOne() ?: return null
+        return record.into(USER).toUser()
     }
 }
