@@ -10,15 +10,14 @@ import com.talentfront.freya.login.models.RegisterRequest
 import com.talentfront.freya.login.models.RegisterRequest.Companion.toUser
 import com.talentfront.freya.login.models.RegisterResponse
 import com.talentfront.freya.models.User
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.security.MessageDigest
-import java.util.*
-import org.springframework.http.ResponseCookie
+import java.util.UUID
 
 @RestController
 class LoginController(
@@ -42,11 +41,8 @@ class LoginController(
         }
         val user = registerRequest.toUser() ?: return ResponseEntity("UserType failure, UserType must match one of: talent, professor, recruiter, company", HttpStatus.BAD_REQUEST)
         val savedUser = userDao.saveUser(user)
-        val headers = HttpHeaders()
-        headers.set(HttpHeaders.SET_COOKIE, getUserSessionCookie(savedUser).toString())
         return ResponseEntity.ok()
-            .headers(headers)
-            .body(RegisterResponse(userId = savedUser.id!!))
+            .body(RegisterResponse(userId = savedUser.id!!, sessionCookie = getUserSessionCookie(savedUser).toString()))
     }
 
     @PostMapping(value = [LOGIN])
@@ -59,11 +55,8 @@ class LoginController(
         }
         val user = userDao.findByEmail(loginRequest.email.toLowerCase()) ?: return ResponseEntity("No matching info", HttpStatus.BAD_REQUEST)
         return if (verifyPassword(loginRequest.password, user)) {
-            val headers = HttpHeaders()
-            headers.set(HttpHeaders.SET_COOKIE, getUserSessionCookie(user).toString())
             return ResponseEntity.ok()
-                .headers(headers)
-                .body(LoginResponse(user.id!!))
+                .body(LoginResponse(user.id!!, getUserSessionCookie(user).toString()))
         } else {
             ResponseEntity("No matching info", HttpStatus.BAD_REQUEST)
         }
@@ -80,10 +73,9 @@ class LoginController(
         val verification = UUID.randomUUID().toString()
         userSessionDao.saveSession(user, verification)
 
-        val value = "${user.id}_${verification}"
+        val value = "${user.id}_$verification"
 
         return ResponseCookie.from("talentfront-session", value)
-            .httpOnly(true)
             .secure(true)
             .path("/")
             .maxAge(7 * 24 * 60 * 60)
