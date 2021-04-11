@@ -21,13 +21,13 @@ class UserSessionDao(
     }
 
     fun getIsVerified(userId: Int, verification2: String): Boolean {
-        val record = dslContext.select()
+        dslContext.select()
             .from(USER_SESSION)
             .where(USER_SESSION.USER_ID.eq(userId))
             .and(USER_SESSION.VERIFICATION.eq(verification2))
             .limit(1)
             .fetchOne()
             .into(USER_SESSION) ?: return false
-        return true;
+        return true
     }
 }
