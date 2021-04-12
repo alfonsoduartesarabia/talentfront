@@ -127,7 +127,7 @@ const Registration = () => {
                     <input type="text" placeholder="Enter last name" name="last-name" id="last-name" onChange={event => setLastName(event.target.value)}></input>
 
                     <label for="password"><b>Password</b></label>
-                    <input type="text" placeholder="Create password, max length 20" name="password" id="password" onChange={event => setPassword(event.target.value)}></input>
+                    <input type="password" placeholder="Create password, max length 20" name="password" id="password" onChange={event => setPassword(event.target.value)}></input>
 
                     <label for="user-type"><b>Indicate Type of User</b></label>
                     <select name="user-type" id="user-type" onChange={handleChange}>

@@ -7,5 +7,6 @@ class Routes {
         const val GET_USER_IMAGE = "api/user-image"
         const val REGISTER = "api/register"
         const val LOGIN = "api/login"
+        const val USER = "api/user"
     }
 }
