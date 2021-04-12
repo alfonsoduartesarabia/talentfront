@@ -1,5 +1,5 @@
 -- -----------------------------------------------------
--- Table `user_image`
+-- Table `user_skill`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user_skill` (
                                        `user_skill_id` INT NOT NULL AUTO_INCREMENT,

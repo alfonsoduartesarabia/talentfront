@@ -30,4 +30,15 @@ class UserEducationDao(
     private fun makeDomainUserEducation(userEducationRecord: UserEducationRecord, userRecord: UserRecord): UserEducation {
         return userEducationRecord.toUserEducation(userRecord.toUser())
     }
+
+    fun getUserEducationsByUserId(userId: Int): List<UserEducationRecord> {
+        return dslContext.select()
+            .from(USER_EDUCATION)
+            .where(USER_EDUCATION.USER_ID.eq(userId))
+            .orderBy(USER_EDUCATION.USER_EDUCATION_ID.desc())
+            .fetchArray()
+            .map {
+                it.into(USER_EDUCATION)
+            }
+    }
 }

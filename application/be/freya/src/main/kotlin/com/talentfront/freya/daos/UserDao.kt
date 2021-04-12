@@ -32,4 +32,14 @@ class UserDao(
             .fetchOne() ?: return null
         return record.into(USER).toUser()
     }
+
+    fun findById(id: Int): User? {
+        val record = dslContext.select()
+            .from(USER)
+            .where(USER.USER_ID.eq(id))
+            .orderBy(USER.USER_ID.asc())
+            .limit(1)
+            .fetchOne() ?: return null
+        return record.into(USER).toUser()
+    }
 }
