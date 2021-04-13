@@ -10,5 +10,6 @@ class Routes {
         const val USER = "api/user"
         const val USER_SKILL = "api/user/skill"
         const val USER_EDUCATION = "/api/user/education"
+        const val USER_EXPERIENCE = "/api/user/experience"
     }
 }
