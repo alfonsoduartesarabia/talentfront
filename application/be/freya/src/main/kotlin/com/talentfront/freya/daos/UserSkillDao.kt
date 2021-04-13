@@ -19,4 +19,20 @@ class UserSkillDao(
                 it.into(USER_SKILL)
             }
     }
+
+    fun saveSkill(p_userId: Int, p_skill: String): Int {
+        val record = dslContext.newRecord(USER_SKILL).apply {
+            userId = p_userId
+            skill = p_skill
+        }
+        record.store()
+        return record.userSkillId
+    }
+
+    fun removeSkill(p_userId: Int, p_skill: String) {
+        dslContext.deleteFrom(USER_SKILL)
+            .where(USER_SKILL.USER_ID.eq(p_userId))
+            .and(USER_SKILL.SKILL.like(p_skill))
+            .execute()
+    }
 }

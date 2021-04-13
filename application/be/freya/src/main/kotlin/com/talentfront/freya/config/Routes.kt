@@ -8,5 +8,7 @@ class Routes {
         const val REGISTER = "api/register"
         const val LOGIN = "api/login"
         const val USER = "api/user"
+        const val USER_SKILL = "api/user/skill"
+        const val USER_EDUCATION = "/api/user/education"
     }
 }
