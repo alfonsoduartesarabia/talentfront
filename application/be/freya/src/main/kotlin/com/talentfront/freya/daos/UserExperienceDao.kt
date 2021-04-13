@@ -4,6 +4,8 @@ import com.talentfront.jooq.tables.UserExperience.USER_EXPERIENCE
 import com.talentfront.jooq.tables.records.UserExperienceRecord
 import org.jooq.DSLContext
 import org.springframework.stereotype.Component
+import java.time.LocalDate
+import java.time.LocalDate.now
 
 @Component
 class UserExperienceDao(
@@ -19,5 +21,18 @@ class UserExperienceDao(
             .map {
                 it.into(USER_EXPERIENCE)
             }
+    }
+
+    fun saveUserEducationRecord(p_userId: Int, p_title: String?, p_company: String?, p_description: String?, start: LocalDate?, end: LocalDate?): Int {
+        val record = dslContext.newRecord(USER_EXPERIENCE).apply {
+            jobTitle = p_title
+            company = p_company
+            description = p_description ?: ""
+            dateStart = start ?: now()
+            dateEnd = end
+            userId = p_userId
+        }
+        record.store()
+        return record.userExeperinceId
     }
 }

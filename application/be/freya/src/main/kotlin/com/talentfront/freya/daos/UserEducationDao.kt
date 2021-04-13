@@ -41,4 +41,16 @@ class UserEducationDao(
                 it.into(USER_EDUCATION)
             }
     }
+
+    fun saveUserEducationRecord(p_userId: Int, p_degreeType: String, p_school: String, p_major: String?, p_state: String): Int {
+        val record = dslContext.newRecord(USER_EDUCATION).apply {
+            school = p_school
+            degreeType = p_degreeType
+            major = p_major
+            state = p_state
+            userId = p_userId
+        }
+        record.store()
+        return record.userEducationId
+    }
 }

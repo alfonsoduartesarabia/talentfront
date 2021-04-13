@@ -18,4 +18,13 @@ class UserCompanyDao(
             .fetchOne() ?: return null
         return record.into(USER_COMPANY)
     }
+
+    fun saveUserCompany(p_userId: Int, p_company: String): Int {
+        val record = dslContext.newRecord(USER_COMPANY).apply {
+            companyName = p_company
+            userId = p_userId
+        }
+        record.store()
+        return record.userCompanyId
+    }
 }
