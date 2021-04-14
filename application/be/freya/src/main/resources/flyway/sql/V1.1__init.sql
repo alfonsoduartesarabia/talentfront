@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `user_education` (
     `user_education_id` INT NOT NULL AUTO_INCREMENT,
     `school` TEXT(256) NOT NULL,
     `degree_type` TEXT(256) NOT NULL,
+    `major` TEXT(256) NULL,
     `state` TEXT(256) NOT NULL,
     `user_id` INT NOT NULL,
     PRIMARY KEY (`user_education_id`),
@@ -154,8 +155,9 @@ CREATE INDEX `user_id_fk` ON `posting` (`user_id` ASC);
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user_experience` (
   `user_exeperince_id` INT NOT NULL AUTO_INCREMENT,
-  `job_title` VARCHAR(45) NULL,
-  `experience` VARCHAR(45) NULL,
+  `job_title` VARCHAR(256) NULL,
+  `company` VARCHAR(256) NULL,
+  `description` TEXT NOT NULL,
   `date_start` DATE NULL,
   `date_end` DATE NULL,
   `user_id` INT NOT NULL,

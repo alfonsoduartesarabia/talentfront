@@ -30,4 +30,27 @@ class UserEducationDao(
     private fun makeDomainUserEducation(userEducationRecord: UserEducationRecord, userRecord: UserRecord): UserEducation {
         return userEducationRecord.toUserEducation(userRecord.toUser())
     }
+
+    fun getUserEducationsByUserId(userId: Int): List<UserEducationRecord> {
+        return dslContext.select()
+            .from(USER_EDUCATION)
+            .where(USER_EDUCATION.USER_ID.eq(userId))
+            .orderBy(USER_EDUCATION.USER_EDUCATION_ID.desc())
+            .fetchArray()
+            .map {
+                it.into(USER_EDUCATION)
+            }
+    }
+
+    fun saveUserEducationRecord(p_userId: Int, p_degreeType: String, p_school: String, p_major: String?, p_state: String): Int {
+        val record = dslContext.newRecord(USER_EDUCATION).apply {
+            school = p_school
+            degreeType = p_degreeType
+            major = p_major
+            state = p_state
+            userId = p_userId
+        }
+        record.store()
+        return record.userEducationId
+    }
 }

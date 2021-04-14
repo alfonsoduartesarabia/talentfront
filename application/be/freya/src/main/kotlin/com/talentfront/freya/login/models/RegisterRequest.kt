@@ -41,9 +41,13 @@ data class RegisterRequest(
                 saltPasswordHash = hashedPassword,
                 salt = salt,
                 userTypeId = userTypeId,
-                firstName = this.firstName,
-                lastName = this.lastName ?: ""
+                firstName = this.firstName.toProperCase(),
+                lastName = this.lastName?.toProperCase() ?: ""
             )
         }
+    }
+    private fun String.toProperCase(): String {
+        if (this.isBlank()) return this
+        return this.toLowerCase().replaceRange(0, 1, "${this[0].toUpperCase()}")
     }
 }
