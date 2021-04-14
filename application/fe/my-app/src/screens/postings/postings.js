@@ -1,81 +1,156 @@
-import { useState, useEffect} from 'react'
-import Navbar from '../../components/navbar'
-import axios from 'axios'
-import "./postings.scss"
-import { Spinner } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from "react";
+import Navbar from "../../components/navbar";
+import { Spinner } from "react-bootstrap";
+import { useSelector } from "react-redux";
+// import { postSearch } from "../../utility/request";
+import { Dropdown } from "react-bootstrap";
+import Moment from "react-moment";
+import "./postings.scss";
+import postingDummyData from "./postingDummyData";
 
 const PostingsScreen = (props) => {
-  const BASE_URL = window.origin
-  const [jobs, setJobs] = useState([]); 
-  const [loading, setLoading] = useState(true)
-  // let data = {
-  //   "filter": "",
-  //   "subFilter": "",
-  //   "searchTerm": ""
-  // }
-  let query = useSelector( state => state.search.query)
-  useEffect( () => {
-    console.log("SENDING REQUEST TO BACKEND")
-    console.log(query)
-    axios.post(BASE_URL + '/backend/api/search', query)
-      .then(res => {
-        setJobs(res.data.entries)
-        console.log(res.data)
-        setLoading(false)
-      })
-      .catch (err => {
-        console.log(err)
-        setLoading(false)
-      })
-  }, [query])
+  const [jobs, setJobs] = useState([]);
+  const [salaryFilter, setSalaryFilter] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  let renderedPostings = jobs.map( (job, index) => {
+  let query = useSelector((state) => state.search.query);
+  useEffect(() => {
+    console.log("SENDING REQUEST TO BACKEND");
+    console.log(query);
+    setJobs(postingDummyData);
+    setLoading(false);
+    // searchPostings()
+    //   .then(res => {
+    //     setJobs(res.data.entries)
+    //     console.log(res.data)
+    //     setLoading(false)
+    //   })
+    //   .catch (err => {
+    //     console.log(err)
+    //     setLoading(false)
+    //   })
+  }, [query]);
+
+  let renderedPostings = jobs.map((job, index) => {
     return (
       <div className="job-post" key={index}>
         <div className="job-post-left">
           <div className="job-post-header">
             <div className="job-title">
-              <h3>{job.title}</h3>  
-              <span>Company Name</span>
+              <h3>{job.title}</h3>
+              <span>{job.companyName}</span>
             </div>
-            Salary Est. 50k - 70k
+            Salary Est. {job.salaryEstimate}
           </div>
-          <p> { job.description } </p>  
+          <p> {job.description} </p>
         </div>
         <div className="job-post-right">
           <h3> Requirements</h3>
           <ul>
-            <li> JavaScript </li>
-            <li> Java </li>
-            <li> C++ </li>
-            <li> GoLang </li>
+            {job.requirements.map((requirement, index) => {
+              return <li key={index}>{requirement}</li>;
+            })}
           </ul>
+
           <div className="footer">
-            <div> Posted Date: August 20, 2021 </div>
-            <button className="apply-btn"> APPLY NOW </button>  
-            
+            <div>
+              {" "}
+              Posted Date: <Moment format="MM/DD/YYYY">
+                {job.postedDate}
+              </Moment>{" "}
+            </div>
+            <button className="apply-btn"> APPLY NOW </button>
           </div>
         </div>
       </div>
-    )
-  })
+    );
+  });
 
-  if (loading){
-    return(
+  if (loading) {
+    return (
       <div className="spin-wrapper">
-        <Spinner animation="border" variant="primary" />  
+        <Spinner animation="border" variant="primary" />
       </div>
-    )
+    );
   }
   return (
     <div>
       <Navbar />
-      <div className="job-posts-container">
-        {renderedPostings}
-      </div>
-    </div>
-  )
-}
+      <div className="postings-filter">
+        FILTER BY:
+        <div className="filter-sub">
+          SALARY
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              {salaryFilter === "" ? "Range" : salaryFilter}
+            </Dropdown.Toggle>
 
-export default PostingsScreen
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("")}>
+                Clear Filter
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("100k-150k")}>
+                100k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("120k-150k")}>
+                120k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("200k+")}>
+                200k+
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="filter-sub">
+          SORT BY DATE
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              {salaryFilter === "" ? "Range" : salaryFilter}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("")}>
+                Clear Filter
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("100k-150k")}>
+                100k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("120k-150k")}>
+                120k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("200k+")}>
+                200k+
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="filter-sub">
+          EXPERIENCE REQUIREMENT
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              {salaryFilter === "" ? "Range" : salaryFilter}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("")}>
+                Clear Filter
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("100k-150k")}>
+                100k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("120k-150k")}>
+                120k - 150k
+              </Dropdown.Item>
+              <Dropdown.Item onClick={(event) => setSalaryFilter("200k+")}>
+                200k+
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+      <div className="job-posts-container">{renderedPostings}</div>
+    </div>
+  );
+};
+
+export default PostingsScreen;
