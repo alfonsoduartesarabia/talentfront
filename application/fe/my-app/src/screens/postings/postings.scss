@@ -1,6 +1,8 @@
+@import '../../variables.sass';
+
 .job-posts-container {
   display: flex;
-  margin: 0 10vw;
+  margin: 20px 10vw;
   flex-wrap: wrap;
   justify-content: space-between;
   background: #395c6b;
@@ -63,34 +65,57 @@
     padding: 0 20px;
     justify-content: space-between;
     .apply-btn{
-      
-      // width: 150px;
-      // height: 45px;
-      // display: flex;
-      // align-items: center;
-      // justify-content: center;
-      // background-color: #bcd3f2;
-      // font-size: 20px;
-      // border: none;
-      // border-radius: 10px;
-      // font-weight: 400;
-      // cursor: pointer;
-      
+      width: 150px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #bcd3f2;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 400;
+      cursor: pointer;
       align-self: flex-end;
     }
   }
 }
 
-.btn {
-  width: 150px;
-  height: 45px;
+.postings-filter {
+  background-color: $deep_blue;
   display: flex;
+  margin: 20px 10vw;
+  padding: 25px 75px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  background-color: #bcd3f2;
-  font-size: 20px;
-  border: none;
-  border-radius: 10px;
-  font-weight: 400;
-  cursor: pointer;
+  * {
+    padding: 0 10px;
+  }
+  .filter-sub {
+    display: flex;
+    align-items: center;
+    .dropdown {
+      button {
+        background-color: white;
+        color: black;
+      }
+    }
+  }
 }
+
+// .btn {
+//   width: 150px;
+//   height: 45px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: #bcd3f2;
+//   font-size: 20px;
+//   border: none;
+//   border-radius: 10px;
+//   font-weight: 400;
+//   cursor: pointer;
+// }
