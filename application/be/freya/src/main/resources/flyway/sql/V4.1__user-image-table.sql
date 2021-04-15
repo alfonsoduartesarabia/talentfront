@@ -15,3 +15,5 @@ CREATE TABLE IF NOT EXISTS `user_image` (
                                                ON DELETE NO ACTION
                                                ON UPDATE NO ACTION)
     ENGINE = InnoDB;
+
+CREATE INDEX `user_image_user_id_fk` ON `user_image` (`user_id` ASC);

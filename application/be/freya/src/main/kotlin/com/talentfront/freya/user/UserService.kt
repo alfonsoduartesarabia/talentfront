@@ -5,6 +5,7 @@ import com.talentfront.freya.daos.UserDao
 import com.talentfront.freya.daos.UserEducationDao
 import com.talentfront.freya.daos.UserExperienceDao
 import com.talentfront.freya.daos.UserSkillDao
+import com.talentfront.freya.daos.UserTypeDao
 import com.talentfront.freya.user.models.EducationResponse
 import com.talentfront.freya.user.models.Experience
 import com.talentfront.freya.user.models.UserProfileResponse
@@ -19,7 +20,8 @@ class UserService(
     private val userCompanyDao: UserCompanyDao,
     private val userEducationDao: UserEducationDao,
     private val userSkillDao: UserSkillDao,
-    private val userExperienceDao: UserExperienceDao
+    private val userExperienceDao: UserExperienceDao,
+    private val userTypeDao: UserTypeDao
 ) {
     fun getUserInfo(userId: Int): UserProfileResponse? {
         val user = userDao.findById(userId) ?: return null
@@ -36,6 +38,7 @@ class UserService(
         return UserProfileResponse(
             firstName = user.firstName,
             lastName = user.lastName,
+            userType = userTypeDao.getUserTypeByd(user.userTypeId),
             companyName = userCompanyDao.findLatestByUserId(userId)?.companyName ?: "",
             degree = if (educations.isNotEmpty()) educations[0].degreeType else "",
             skills = skills,
@@ -70,5 +73,4 @@ class UserService(
         val startMonth = date?.month?.name?.toLowerCase()
         return startMonth?.replaceRange(0, 1, "${startMonth[0].toUpperCase()}") ?: ""
     }
-    // hmm
 }
