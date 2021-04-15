@@ -1,9 +1,7 @@
 package com.talentfront.freya.daos
 
 import com.talentfront.freya.models.Posting
-import com.talentfront.freya.models.User.Companion.toUser
 import com.talentfront.jooq.tables.Posting.POSTING
-import com.talentfront.jooq.tables.User
 import com.talentfront.jooq.tables.records.PostingRecord
 import org.jooq.DSLContext
 import org.springframework.stereotype.Component

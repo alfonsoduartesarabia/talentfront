@@ -21,7 +21,7 @@ class PostingRequest(
             return Posting(
                 id = null,
                 description = this.description,
-                employerName =  this.companyName,
+                employerName = this.companyName,
                 salaryRangeTop = this.salaryTop?.toInt(),
                 salaryRangeBottom = this.salaryBottom?.toInt(),
                 createdDt = LocalDateTime.now(),

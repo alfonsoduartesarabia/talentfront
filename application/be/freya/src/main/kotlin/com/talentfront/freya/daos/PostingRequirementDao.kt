@@ -1,8 +1,6 @@
 package com.talentfront.freya.daos
 
-import com.talentfront.freya.models.Posting
 import com.talentfront.jooq.tables.PostingRequirement.POSTING_REQUIREMENT
-import com.talentfront.jooq.tables.records.PostingRecord
 import com.talentfront.jooq.tables.records.PostingRequirementRecord
 import org.jooq.DSLContext
 import org.springframework.stereotype.Component
