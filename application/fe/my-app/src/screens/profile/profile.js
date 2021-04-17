@@ -13,7 +13,8 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const ProfileScreen = (props) => {
-  const BASE_URL = "http://localhost";
+  // const BASE_URL = "http://localhost";
+  const BASE_URL = "http://localhost:8080";
   let id = useParams().id;
   const [user, setUser] = useState({});
   const [editMode, setEditMode] = useState(false);

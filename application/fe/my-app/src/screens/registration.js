@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import axios from 'axios'
+import axios from 'axios'
 import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
@@ -119,6 +119,7 @@ const gradFields = () => (
 );
 
 const Registration = () => {
+  // const axios = require("axios");
   const [userType, setUserType] = useState("");
   let additionalFields = "";
   if (userType === "student") additionalFields = studentFields();
@@ -131,7 +132,6 @@ const Registration = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const history = useHistory();
-  const axios = require("axios");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -148,6 +148,40 @@ const Registration = () => {
       history.push("/profile");
     });
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   const data = JSON.stringify({
+  //       "email": email,
+  //       "password": password,
+  //       "userType": userType,
+  //       "firstName": firstName,
+  //       "lastName": lastName
+  //   });
+    
+  //   // const baseUrl = window.origin;
+  //   // const baseUrl = 'http://localhost';
+  //   const baseUrl = 'http://localhost:8080';
+
+  //   const config = {
+  //       method: 'post',
+  //       // withCredentials: true,
+  //       url: baseUrl + '/backend/api/register',
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       },
+  //       data: data
+  //   };
+  //   axios(config)
+  //   .then( res => {
+  //       document.cookie = res.data.sessionCookie
+  //       history.push("/profile")
+  //   })
+  //   .catch( err => {
+  //       console.log(err)
+  //   });
+  // }
+
   return (
     <div>
       <Navbar />
@@ -162,11 +196,12 @@ const Registration = () => {
             <b>Email</b>
           </label>
           <input
-            type="text"
+            type="email"
             placeholder="Enter email"
             name="email"
             id="email"
             onChange={(event) => setEmail(event.target.value)}
+            required
           ></input>
 
           <label htmlFor="first-name">
@@ -178,6 +213,7 @@ const Registration = () => {
             name="first-name"
             id="first-name"
             onChange={(event) => setFirstName(event.target.value)}
+            required
           ></input>
 
           <label htmlFor="last-name">
@@ -189,6 +225,7 @@ const Registration = () => {
             name="last-name"
             id="last-name"
             onChange={(event) => setLastName(event.target.value)}
+            required
           ></input>
 
           <label htmlFor="password">
@@ -200,6 +237,7 @@ const Registration = () => {
             name="password"
             id="password"
             onChange={(event) => setPassword(event.target.value)}
+            required
           ></input>
 
           <label htmlFor="user-type">
@@ -210,13 +248,20 @@ const Registration = () => {
             name="user-type"
             id="user-type"
             onChange={(event) => setUserType(event.target.value)}
+            required
           >
             <option value="" disabled>
               Select your option
             </option>
-            <option value="talent">Talent</option>
-            <option value="recruiter">Employer</option>
-            <option value="professor">Teacher</option>
+            <option value="talent">Talent</option> 
+            <option value="recruiter">Recruiter</option>
+            <option value="professor">Professor</option>
+
+            {/* <option value="student">Student</option>
+            <option value="recent-grad">Graduate</option>
+            <option value="teacher">Teacher</option>
+            <option value="recruiter">Recruiter</option> */}
+        
           </select>
           {additionalFields}
 
