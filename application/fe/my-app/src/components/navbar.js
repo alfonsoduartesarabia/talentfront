@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateQuery } from "../utility/slices/search";
+import { logout } from "../utility/slices/user";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -21,14 +22,18 @@ const Navbar = (props) => {
     history.push("/postings");
   };
 
+  // const handleLogOutClick = (event) =>{
+  //   // event.preventDefault();
+  //     dispatch(logout());
+  // }
+
   const loggedIn = useSelector((state) => state.user.loggedIn);
+  // console.log("loggedIn: " + loggedIn);
   let loginButton = (
     <Link to="/logout">
-      <button className="navbar-btn">Logout</button>
+      <button className="navbar-btn" >Logout</button>
     </Link>
   );
-  let username = useSelector((state) => state.user.name);
-  let userID = useSelector((state) => state.user.id);
   if (!loggedIn) {
     loginButton = (
       <Link to="/login">
@@ -36,6 +41,9 @@ const Navbar = (props) => {
       </Link>
     );
   }
+
+  let username = useSelector((state) => state.user.name);
+  let userID = useSelector((state) => state.user.id);
 
   return (
     <div className="navbar-search">

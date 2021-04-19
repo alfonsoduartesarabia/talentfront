@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
+import Home from './screens/home';
+import SearchBar from './components/searchbar'
 import { CookiesProvider } from "react-cookie";
 import {
   BrowserRouter as Router,
@@ -46,7 +48,9 @@ function App() {
             <PostingsScreen />
           </Route>
           <Route path="/" exact>
-            <ProfileScreen />
+            {/* <ProfileScreen /> */}
+            {/* < Home /> */}
+            < SearchBar />
           </Route>
         </Router>
       </div>
