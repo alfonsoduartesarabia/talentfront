@@ -131,3 +131,16 @@ export const getProfile = (id) => {
 // SALARY RANGE : top & bottom
 // TITLE
 // LOCATION
+
+export const postNewJob = (job) => {
+  return instance
+    .post("backend/api/user/experience", job)
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return "err";
+    });
+};

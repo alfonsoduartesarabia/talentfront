@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { Form, Row, Col, Card, Fade, Modal } from "react-bootstrap";
 import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
-import { getProfile, getMyProfile } from "../../utility/request";
+import { getProfile, getMyProfile, postNewJob } from "../../utility/request";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Cookies from "universal-cookie";
@@ -16,12 +16,34 @@ const BASE_URL = "http://localhost";
 
 const AddNewExperience = (props) => {
   const { show, handleClose } = props;
-  const [companyName, setCompanyName] = useState("");
+  const [company, setCompany] = useState("");
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [isStillWorking, setIsStillWorking] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = () => {
+    setLoading(true);
+    let newJob = {
+      title,
+      company,
+      startDate,
+      endDate,
+      description,
+    };
+    console.log(newJob);
+    postNewJob(newJob)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        handleClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Modal
@@ -48,7 +70,7 @@ const AddNewExperience = (props) => {
             <Form.Group as={Col}>
               <Form.Label>Company Name</Form.Label>
               <Form.Control
-                onChange={(event) => setCompanyName(event.target.value)}
+                onChange={(event) => setCompany(event.target.value)}
                 placeholder="Enter company name"
               />
             </Form.Group>
@@ -101,10 +123,11 @@ const AddNewExperience = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        {loading ? <Spinner animation="border" variant="primary" /> : null}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleClose}>
+        <Button variant="primary" onClick={handleSave}>
           Save Changes
         </Button>
       </Modal.Footer>
@@ -177,7 +200,7 @@ const ProfileScreen = (props) => {
             <Card.Body>
               <Card.Title>{user.firstName + " " + user.lastName}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                {user.companyName}
+                {user.company}
               </Card.Subtitle>
               <Card.Title>{user.degree}</Card.Title>
               <Card className="skills-card">
@@ -291,7 +314,7 @@ const ProfileScreen = (props) => {
               </div>
             </Card.Header>
             <Card.Body>
-              {/*<Card.Text>{experience.description}</Card.Text>*/}
+              <Card.Text>{experience.description}</Card.Text>
             </Card.Body>
           </Card>
         );
