@@ -3,8 +3,12 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+// const BASE_URL =
+//   process.env.REACT_APP_ENV === "PROD" ? window.origin : "http://localhost";
+
+// @Alfonso works for me when yarn and docker are running
 const BASE_URL =
-  process.env.REACT_APP_ENV === "PROD" ? window.origin : "http://localhost";
+  "http://localhost:8080";
 
 const instance = axios.create({
   // withCredentials: true,
@@ -40,7 +44,28 @@ export function postSearch(data) {
   // .catch(err => { console.log(err) })
 }
 
-export const postLogin = () => {};
+export const postLogin = async (data) => 
+{
+  const config = {
+    // withCredentials: true,
+    method: "post",
+    url: BASE_URL + "/backend/api/login",
+    headers: {
+      "Content-Type": "application/json",
+      // "Access-Control-Allow-Origin": "*"
+    },
+    data: data,
+  };
+
+  try {
+    const res = await axios(config);
+    cookies.set(res.data.sessionCookie);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+
+};
 
 export const postRegister = (data) => {
   const config = {
@@ -63,11 +88,12 @@ export const postRegister = (data) => {
 };
 
 export const getMyProfile = () => {
-  console.log("session cookie:", cookies.get("talentfront-session"));
-  console.log("GET backend/api/user");
+  console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
   return instance
     .get("backend/api/user")
     .then((res) => {
+      console.log("RESPONSE FROM", BASE_URL + "/backend/api/user");
+      console.log(res);
       return res;
     })
     .catch((err) => {
