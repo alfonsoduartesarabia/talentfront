@@ -88,11 +88,12 @@ export const postRegister = (data) => {
 };
 
 export const getMyProfile = () => {
-  console.log("session cookie:", cookies.get("talentfront-session"));
-  console.log("GET backend/api/user");
+  console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
   return instance
     .get("backend/api/user")
     .then((res) => {
+      console.log("RESPONSE FROM", BASE_URL + "/backend/api/user");
+      console.log(res);
       return res;
     })
     .catch((err) => {
