@@ -15,8 +15,15 @@ const cookies = new Cookies();
 const BASE_URL = "http://localhost";
 
 const AddNewExperience = (props) => {
-  const [startDate, setStartDate] = useState(new Date());
   const { show, handleClose } = props;
+
+  const [companyName, setCompanyName] = useState("");
+  const [title, setTitle] = useState("");
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [description, setDescription] = useState("");
+  const [isStillWorking, setIsStillWorking] = useState(false);
+
   return (
     <Modal
       backdrop="static"
@@ -34,11 +41,17 @@ const AddNewExperience = (props) => {
           <Form.Row>
             <Form.Group as={Col}>
               <Form.Label>Job title</Form.Label>
-              <Form.Control placeholder="Enter job title" />
+              <Form.Control
+                onChange={(event) => setTitle(event.target.value)}
+                placeholder="Enter job title"
+              />
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>Company Name</Form.Label>
-              <Form.Control placeholder="Enter company name" />
+              <Form.Control
+                onChange={(event) => setCompanyName(event.target.value)}
+                placeholder="Enter company name"
+              />
             </Form.Group>
           </Form.Row>
           <Form.Row>
@@ -46,8 +59,9 @@ const AddNewExperience = (props) => {
               <Form.Label>Started Date</Form.Label>
               <Form.Control
                 type="month"
-                name="dob"
-                placeholder="Date of Birth"
+                name="started date"
+                placeholder="Start Date"
+                onChange={(event) => setStartDate(event.target.value)}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -61,19 +75,29 @@ const AddNewExperience = (props) => {
                     type="checkbox"
                     id="default-checkbox"
                     label="Current"
+                    onChange={(event) => {
+                      console.log(event);
+                      setIsStillWorking(!isStillWorking);
+                    }}
                   />
                 </Col>
               </Row>
               <Form.Control
                 type="month"
-                name="dob"
-                placeholder="Date of Birth"
+                name="ended date"
+                placeholder="End Date"
+                disabled={isStillWorking}
+                onChange={(event) => setEndDate(event.target.value)}
               />
             </Form.Group>
           </Form.Row>
           <Form.Group>
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" rows={4} />
+            <Form.Control
+              onChange={(event) => setDescription(event.target.value)}
+              as="textarea"
+              rows={4}
+            />
           </Form.Group>
         </Form>
       </Modal.Body>
