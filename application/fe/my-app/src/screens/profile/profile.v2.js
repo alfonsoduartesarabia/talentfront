@@ -16,7 +16,6 @@ const BASE_URL = "http://localhost";
 
 const AddNewExperience = (props) => {
   const { show, handleClose } = props;
-
   const [companyName, setCompanyName] = useState("");
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState();
