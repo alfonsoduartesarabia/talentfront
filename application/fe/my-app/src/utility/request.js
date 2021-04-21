@@ -7,8 +7,7 @@ const cookies = new Cookies();
 //   process.env.REACT_APP_ENV === "PROD" ? window.origin : "http://localhost";
 
 // @Alfonso works for me when yarn and docker are running
-const BASE_URL =
-  "http://localhost:8080";
+const BASE_URL = "http://localhost:8080";
 
 const instance = axios.create({
   // withCredentials: true,
@@ -44,8 +43,7 @@ export function postSearch(data) {
   // .catch(err => { console.log(err) })
 }
 
-export const postLogin = async (data) => 
-{
+export const postLogin = async (data) => {
   const config = {
     // withCredentials: true,
     method: "post",
@@ -64,7 +62,6 @@ export const postLogin = async (data) =>
   } catch (err) {
     console.log(err);
   }
-
 };
 
 export const postRegister = (data) => {
@@ -88,12 +85,11 @@ export const postRegister = (data) => {
 };
 
 export const getMyProfile = () => {
-  console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
+  console.log("session cookie:", cookies.get("talentfront-session"));
+  console.log("GET backend/api/user");
   return instance
     .get("backend/api/user")
     .then((res) => {
-      console.log("RESPONSE FROM", BASE_URL + "/backend/api/user");
-      console.log(res);
       return res;
     })
     .catch((err) => {

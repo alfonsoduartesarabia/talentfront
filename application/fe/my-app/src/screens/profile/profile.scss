@@ -18,26 +18,25 @@ test {
 
 .profile-Image-Bruh {
   border-radius: 50%;
-  width: 325px;
-  height: 325px;
+  width: 100%;
   padding: 2%;
 }
 
 .generic-button {
   box-sizing: border-box;
   width: 100%;
-  
-  display:inline-block;
+
+  display: inline-block;
   transition: all 0.2s;
 }
 
 .personal-info-edit {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
 .card-head {
-  background:#D4CB92;
+  background: #d4cb92;
 }
 
 .card-text {
@@ -47,7 +46,7 @@ test {
 .article {
   flex-shrink: 1;
   margin: 2%;
-  background:#ECE1C5;
+  background: #ece1c5;
   box-shadow: 1px 2px 5px;
 }
 
@@ -58,13 +57,13 @@ test {
   height: 100vh; // vw for width :)
 }
 
-section {
+.profile-screen-contanier {
   display: flex;
-  margin-left:8%;
-  margin-right:8%;
+  margin-left: 8%;
+  margin-right: 8%;
   margin-top: 1%;
   padding: 1%;
-  background:#395C6B;
+  background: #395c6b;
   border-radius: 1vh;
   border-width: thick;
   flex-wrap: nowrap;
@@ -80,12 +79,11 @@ section {
 }
 
 .account-head {
-  background-color: #80A4ED;
-
+  background-color: #80a4ed;
 }
 
 .account-edit {
-  background-color: #BCD3F2;
+  background-color: #bcd3f2;
   padding: 2%;
   border-radius: 1vh;
   flex-grow: 1;
@@ -101,7 +99,7 @@ section {
 }
 
 .edit-menu {
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 
@@ -123,38 +121,35 @@ section {
   cursor: pointer;
   /* width: 100%; */
   opacity: 0.9;
-
-
 }
 
 .profile-card {
-  background-color: #BCD3F2;
+  background-color: #bcd3f2;
 }
 
 .skills-card {
-  padding:"20%";
+  padding: "20%";
   background-color: #ffffff;
 }
 
 .description-box-container {
-  padding:2%;
+  padding: 2%;
   flex-shrink: 1;
   width: 100%;
 }
 
 .description-box {
   width: 100%;
-  height: 100%; 
+  height: 100%;
   resize: none;
 }
-
 
 content {
   width: 75%;
 }
 
 .article-head {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   padding-left: 2%;
 }
@@ -165,24 +160,23 @@ content {
 
 .personal-info-bit {
   font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-margin: 2%;
-text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  margin: 2%;
+  text-align: center;
 }
 
 .article-content {
-background: #cccccc;
-border-radius: 14px;
-box-shadow: 3px 3px 6px;
-padding: 2%;
+  background: #cccccc;
+  border-radius: 14px;
+  box-shadow: 3px 3px 6px;
+  padding: 2%;
 
+  /* User_Info -> description */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
 
-/* User_Info -> description */
-font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-
-color: #000000;
-width: 100%;
+  color: #000000;
+  width: 100%;
 }
