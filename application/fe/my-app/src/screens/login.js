@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../utility/slices/user";
 import { postLogin } from "../utility/request";
 //import axios from 'axios'
+// import { logout } from "../utility/slices/user";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -17,11 +18,11 @@ const Login = (props) => {
   let handleSubmit = (event) => {
     event.preventDefault();
     // console.log("HELLO?");
-    console.log(login);
-   dispatch(login({
-     email: email,
-     password: password,
-   }));
+  //   console.log(login);
+  //  dispatch(login({
+  //    email: email,
+  //    password: password,
+  //  }));
 
   const data = JSON.stringify({
     "email": email,
@@ -29,8 +30,20 @@ const Login = (props) => {
     });
 
     postLogin(data).then((res) =>{
-      console.log(res)
-      history.push("/profile");
+      console.log(res);
+      // history.push("/profile");
+      if(res === undefined){
+        console.log("Error when logging in.");
+        //dispatch(logout());
+      }
+      else{
+        console.log(login);
+        dispatch(login({
+          email: email,
+          password: password,
+        }));
+        history.push("/profile");
+      }
     });
   };
 
@@ -59,7 +72,7 @@ const Login = (props) => {
             Login
           </button>
           <p>
-            Dont' have an account? <Link to="/register">Sign up</Link>
+            Don't have an account? <Link to="/register">Sign up</Link>
           </p>
         </form>
       </div>

@@ -1,11 +1,17 @@
 // import { useState } from "react";
 import "./searchbar.sass";
+import "./searchbar.css";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
+// import { Menu, Transition} from "@headlessui/react";
+// import { ChevronDownIcon } from "@heroicons/react/solid";
+// import { Fragment, useEffect, useRef, useState } from "react";
+// import Footer from '../components/footer';
 
 const SearchBar = (props) => {
 
     return (
+        <div id="nav">
         <div className="navbar-search">
 
           <div className="search-bar-wrapper">
@@ -30,7 +36,7 @@ const SearchBar = (props) => {
                 </label>
                     <select
                     defaultValue=""
-                    name="search-"
+                    name="search"
                     id="user-type">
                         <option value="">
                             Filter
@@ -41,10 +47,10 @@ const SearchBar = (props) => {
                         <option value="organization">Organization</option>
                     </select>
 
-                </div>   
+                    
+            </div> 
             </form>
           </div>
-
             <div className="navbar-right">
             <Link to="/profile">
             <button className="navbar-btn">Profile</button>
@@ -54,11 +60,13 @@ const SearchBar = (props) => {
             <button className="navbar-btn">Login</button>
             </Link>
             </div>
-          
           </div>
 
+          {/* <Footer/> */}
+          </div>
       );
-
+      
+      
 }
 
 export default SearchBar;

@@ -10,6 +10,13 @@ const cookies = new Cookies();
 const BASE_URL =
   "http://localhost:8080";
 
+const source = axios.CancelToken.source(); // cancel a request using a cancel token
+// {cancelToken: source.token}
+/**
+ * https://github.com/axios/axios#cancellation
+ * https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm
+ */
+
 const instance = axios.create({
   // withCredentials: true,
   baseURL: BASE_URL,
@@ -29,9 +36,9 @@ const instance = axios.create({
 //   });
 // };
 
-const cookieAsQueryParam = () => {
-  return "?cookie=" + document.cooki;
-};
+// const cookieAsQueryParam = () => {
+//   return "?cookie=" + document.cooki;
+// };
 
 export function postSearch(data) {
   return instance.post("search", data);
@@ -99,6 +106,7 @@ export const getMyProfile = () => {
     .catch((err) => {
       console.log("Get profile request failed: /backend/api/user");
       console.log(err);
+      source.cancel();
       return "err";
     });
 };
@@ -115,6 +123,7 @@ export const getProfile = (id) => {
     .catch((err) => {
       console.log("Get profile request failed: /backend/api/user/" + id);
       console.log(err);
+      source.cancel();
       return "err";
     });
 };

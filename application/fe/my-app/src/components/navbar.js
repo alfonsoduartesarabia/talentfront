@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateQuery } from "../utility/slices/search";
 import { logout } from "../utility/slices/user";
+import {selectUser} from "../utility/slices/user"
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
+  
   const handleClick = (event) => {
     event.preventDefault();
     let query = {
@@ -22,25 +24,55 @@ const Navbar = (props) => {
     history.push("/postings");
   };
 
-  // const handleLogOutClick = (event) =>{
-  //   // event.preventDefault();
-  //     dispatch(logout());
-  // }
-
   const loggedIn = useSelector((state) => state.user.loggedIn);
   // console.log("loggedIn: " + loggedIn);
-  let loginButton = (
-    <Link to="/logout">
-      <button className="navbar-btn" >Logout</button>
-    </Link>
-  );
-  if (!loggedIn) {
-    loginButton = (
-      <Link to="/login">
-        <button className="navbar-btn">Login</button>
-      </Link>
-    );
+
+  const user = useSelector(selectUser);
+  // console.log(user);
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    dispatch(logout());
   }
+
+  // @TODO FIX THESE - LOGOUT button not redirecting but it is loggin out user 
+  let loginButton = (
+    <div>
+      { 
+      user ? <Link to="/login"><button className="navbar-btn" onClick={(e) => handleLogout(e)}>Logout</button></Link> 
+      : <Link to="/login"><button className="navbar-btn">Login</button></Link> 
+      }
+    </div>
+  );
+
+  // let loginButton = (
+  //   <Link to="/logout">
+  //     <button className="navbar-btn" >Logout</button>
+  //   </Link>
+  // );
+  // if (!loggedIn) {
+  //   loginButton = (
+  //     <Link to="/login">
+  //       <button className="navbar-btn">Login</button>
+  //     </Link>
+  //   );
+  // }
+
+  // let loginButton = null
+  // if (!loggedIn) {
+  //   loginButton = (
+  //     <Link to="/login">
+  //       <button className="navbar-btn">Login</button>
+  //     </Link>
+  //   );
+  // }
+  // else if(loggedIn){
+  //   loginButton = (
+  //     <Link to="/">
+  //       <button className="navbar-btn" >Logout</button>
+  //     </Link>
+  //   );
+  // }
 
   let username = useSelector((state) => state.user.name);
   let userID = useSelector((state) => state.user.id);

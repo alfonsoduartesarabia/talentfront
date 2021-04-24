@@ -24,20 +24,37 @@ const ProfileScreen = (props) => {
   };
   if (id === undefined) id = "";
   useEffect(() => {
+    //const abortConst = new AbortController();
     console.log("id=", id);
     if (id === "") {
       getMyProfile().then((res) => {
         console.log("getProfile RESPONSE", res);
         if (res !== "err") setLoading(false);
-        setUser(res.data);
+        if(res === "err"){
+          console.log("Fetch aborted! Fixed the error: Can't perform a React state update on an unmounted component.");
+        }
+        else{
+          setUser(res.data);
+        }
       });
     } else {
       getProfile(id).then((res) => {
         console.log("getProfile RESPONSE", res);
         if (res !== "err") setLoading(false);
-        setUser(res.data);
+        if(res === "err"){
+          console.log("Fetch aborted! Fixed the error: Can't perform a React state update on an unmounted component.");
+        }
+        else{
+          setUser(res.data);
+        }
       });
     }
+
+    // Added because of useEffect() warning 
+    return function cleanup() {
+      console.log("cleanup");
+      //abortConst.abort(); 
+  }
   }, []);
 
   let articlesResult = "";
