@@ -4,15 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
-import Home from './screens/home';
-import SearchBar from './components/searchbar'
+import SearchBar from "./components/searchbar";
 import { CookiesProvider } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  Route,
-  // Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProfileScreen from "./screens/profile/profile.js";
 
 function App() {
@@ -24,17 +18,7 @@ function App() {
             <Registration />
           </Route>
           <Route path="/login">
-            {
-              /* Conditionally render here
-            or have a main login screen and render coditionally
-            maybe dropdown would do the work.
-            @Alfonso
-           */
-              <Login />
-            }
-            {/* <LoginEmployer />
-        <LoginProfessor />
-        <LoginTalent /> */}
+            <Login />
           </Route>
 
           <Route path="/profile" exact>
@@ -50,7 +34,7 @@ function App() {
           <Route path="/" exact>
             {/* <ProfileScreen /> */}
             {/* < Home /> */}
-            < SearchBar />
+            <SearchBar />
           </Route>
         </Router>
       </div>
