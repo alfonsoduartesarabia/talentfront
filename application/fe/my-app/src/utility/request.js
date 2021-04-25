@@ -28,6 +28,7 @@ const instance = axios.create({
 //   });
 // };
 
+export { instance, BASE_URL };
 const cookieAsQueryParam = () => {
   return "?cookie=" + document.cooki;
 };
@@ -133,14 +134,8 @@ export const getProfile = (id) => {
 // LOCATION
 
 export const postNewJob = (job) => {
-  return instance
-    .post("backend/api/user/experience", job)
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return "err";
-    });
+  return instance.post("backend/api/user/experience", job).then((res) => {
+    console.log(res);
+    return res;
+  });
 };

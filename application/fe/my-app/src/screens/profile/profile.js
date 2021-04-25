@@ -7,14 +7,15 @@ import { Form, Row, Col, Card, Fade } from "react-bootstrap";
 import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
 import { getProfile, getMyProfile } from "../../utility/request";
-
+import { useDispatch } from "react-redux";
+import { getUser } from "../../utility/slices/user";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
 const ProfileScreen = (props) => {
-  // const BASE_URL = "http://localhost";
   const BASE_URL = "http://localhost:8080";
+  const dispatch = useDispatch();
   let id = useParams().id;
   const [user, setUser] = useState({});
   const [editMode, setEditMode] = useState(false);
@@ -23,22 +24,28 @@ const ProfileScreen = (props) => {
     setEditMode(!editMode);
   };
   if (id === undefined) id = "";
+
   useEffect(() => {
-    console.log("id=", id);
-    if (id === "") {
-      getMyProfile().then((res) => {
-        console.log("getProfile RESPONSE", res);
-        if (res !== "err") setLoading(false);
-        setUser(res.data);
-      });
-    } else {
-      getProfile(id).then((res) => {
-        console.log("getProfile RESPONSE", res);
-        if (res !== "err") setLoading(false);
-        setUser(res.data);
-      });
-    }
-  }, []);
+    console.log("ID=", id);
+    console.log(dispatch(getUser()));
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   console.log("id=", id);
+  //   if (id === "") {
+  //     getMyProfile().then((res) => {
+  //       console.log("getProfile RESPONSE", res);
+  //       if (res !== "err") setLoading(false);
+  //       setUser(res.data);
+  //     });
+  //   } else {
+  //     getProfile(id).then((res) => {
+  //       console.log("getProfile RESPONSE", res);
+  //       if (res !== "err") setLoading(false);
+  //       setUser(res.data);
+  //     });
+  //   }
+  // }, []);
 
   let articlesResult = "";
   if (user?.experiences)

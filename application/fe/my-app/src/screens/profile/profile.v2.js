@@ -3,13 +3,24 @@ import "./profile.scss";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { Form, Row, Col, Card, Fade, Modal } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  Card,
+  Fade,
+  Modal,
+  ListGroup,
+  FormControl,
+} from "react-bootstrap";
 import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
 import { getProfile, getMyProfile, postNewJob } from "../../utility/request";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { Switch } from "@headlessui/react";
 import Cookies from "universal-cookie";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../utility/slices/user";
 
 const cookies = new Cookies();
 const BASE_URL = "http://localhost";
@@ -102,6 +113,22 @@ const AddNewExperience = (props) => {
                     }}
                   />
                 </Col>
+                {/*<Col>
+                  <Switch
+                    checked={isStillWorking}
+                    onChange={setIsStillWorking}
+                    className={`${
+                      isStillWorking ? "bg-blue-600" : "bg-gray-200"
+                    } relative inline-flex items-center h-6 rounded-full w-11`}
+                  >
+                    <span className="sr-only">Enable notifications</span>
+                    <span
+                      className={`${
+                        isStillWorking ? "translate-x-6" : "translate-x-1"
+                      } inline-block w-4 h-4 transform bg-white rounded-full`}
+                    />
+                  </Switch>
+                </Col>*/}
               </Row>
               <Form.Control
                 type="month"
@@ -135,16 +162,103 @@ const AddNewExperience = (props) => {
   );
 };
 
+const LeftSection = (props) => {
+  const { user, imageLink, addSkill } = props;
+  const [newSkill, setNewSkill] = useState("");
+  const [skills, setSkills] = useState([]);
+  const { isEditing, setIsEditing } = useState(false);
+  useEffect(() => {
+    if (user.skills !== undefined) setSkills(user.skills);
+  }, []);
+  const handleNewSkill = () => {
+    // Hacky Solution later move all user stuff to REDUX
+    addSkill(newSkill);
+    setSkills((skills) => [...skills, newSkill]);
+    setNewSkill("");
+  };
+  const handleRemoveSkill = (index) => {
+    setSkills((skills) => skills.filter((skill, idx) => index !== idx));
+  };
+  return (
+    <div className="personals">
+      <Card className="profile-details">
+        <img className="profile-image" src={imageLink} alt="profile" />
+        <div className="profile-name">
+          {user.firstName + " " + user.lastName}
+        </div>
+        <div className="text-muted">{user.degree ? user.degree : "Degree"}</div>
+        <div className="text-muted">{user.school ? user.school : "School"}</div>
+        <div className="text-muted">
+          {user.company ? user.company : "Company"}
+        </div>
+      </Card>
+      <Card>
+        <Card.Header>Skills</Card.Header>
+        <ListGroup variant="flush">
+          <ListGroup.Item className="individual-skill">
+            Java <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
+          </ListGroup.Item>
+          <ListGroup.Item className="individual-skill">
+            JavaScript
+            <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
+          </ListGroup.Item>
+          <ListGroup.Item className="individual-skill">
+            Googling
+            <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
+          </ListGroup.Item>
+          {skills?.map((skill, index) => {
+            return (
+              <ListGroup.Item className="individual-skill" key={index}>
+                {skill}
+                <RiDeleteBin5Fill
+                  onClick={() => handleRemoveSkill(index)}
+                  style={{ color: "#dc3545" }}
+                />
+              </ListGroup.Item>
+            );
+          })}
+          <ListGroup.Item className="add-skill">
+            <FormControl
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              onChange={(event) => setNewSkill(event.target.value)}
+              value={newSkill}
+            />
+            <Button variant="outline-primary" onClick={handleNewSkill}>
+              Add Skill
+            </Button>
+          </ListGroup.Item>
+        </ListGroup>
+      </Card>
+    </div>
+  );
+};
+
 const ProfileScreen = (props) => {
   let id = useParams().id;
   if (id === undefined) id = "";
+  const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
 
+  const user = useSelector((state) => state.user);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    console.log("ID=", id);
+    if (id === "") {
+      dispatch(getUser());
+    } else {
+      dispatch(getProfile(id));
+    }
+  }, [dispatch]);
+
+  const addSkill = (skill) => {
+    user.skills.push(skill);
+  };
 
   let imageLink =
     `${BASE_URL}/backend/api/user-image/${id}` +
@@ -155,21 +269,21 @@ const ProfileScreen = (props) => {
       "/backend/api/user-image/" +
       `?cookie=${cookies.get("talentfront-session")}`;
 
-  useEffect(() => {
-    if (id === "") {
-      getMyProfile().then((res) => {
-        console.log("getProfile RESPONSE", res);
-        if (res !== "err") setLoading(false);
-        setUser(res.data);
-      });
-    } else {
-      getProfile(id).then((res) => {
-        console.log("getProfile RESPONSE", res);
-        if (res !== "err") setLoading(false);
-        setUser(res.data);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (id === "") {
+  //     getMyProfile().then((res) => {
+  //       console.log("getProfile RESPONSE", res);
+  //       if (res !== "err") setLoading(false);
+  //       setUser(res.data);
+  //     });
+  //   } else {
+  //     getProfile(id).then((res) => {
+  //       console.log("getProfile RESPONSE", res);
+  //       if (res !== "err") setLoading(false);
+  //       setUser(res.data);
+  //     });
+  //   }
+  // }, []);
 
   const handleSubmit = (file) => {
     const BASE_URL = window.origin;
@@ -195,14 +309,18 @@ const ProfileScreen = (props) => {
     if (!editMode) {
       result = (
         <div>
-          <img className="profile-Image-Bruh" src={imageLink} alt="profile" />
+          <Card className="profile-details">
+            <img className="profile-image" src={imageLink} alt="profile" />
+            <div className="profile-name">
+              {user.firstName + " " + user.lastName}
+            </div>
+            <div>{user.degree ? user.degree : "Degree"}</div>
+            <div>{user.school ? user.school : "School"}</div>
+            <div>{user.company ? user.company : "Company"}</div>
+          </Card>
+
           <Card className="profile-card">
             <Card.Body>
-              <Card.Title>{user.firstName + " " + user.lastName}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                {user.company}
-              </Card.Subtitle>
-              <Card.Title>{user.degree}</Card.Title>
               <Card className="skills-card">
                 <Card.Title style={{ padding: "2%" }}>Skills:</Card.Title>
                 <div style={{ padding: "2%" }}>
@@ -438,9 +556,7 @@ const ProfileScreen = (props) => {
       <AddNewExperience show={show} handleClose={handleClose} />
       <Navbar />
       <div className="profile-screen-contanier">
-        <div className="personals">
-          <PersonalInfo />
-        </div>
+        <LeftSection user={user} imageLink={imageLink} addSkill={addSkill} />
         <RenderArticles />
       </div>
     </div>

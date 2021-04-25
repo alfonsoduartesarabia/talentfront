@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./registration.css";
 import Navbar from "../components/navbar";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../utility/slices/user";
+import { setUser } from "../utility/slices/user";
 import { postLogin } from "../utility/request";
-import axios from 'axios'
+import axios from "axios";
 
 const Login = (props) => {
-  //const dispatch = useDispatch();
-  
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const history = useHistory();
@@ -18,19 +18,19 @@ const Login = (props) => {
     event.preventDefault();
     // console.log("HELLO?");
     // console.log(login);
-   // dispatch(login());
+    // dispatch(login());
 
-  const data = JSON.stringify({
-    "email": email,
-    "password": password,
+    const data = JSON.stringify({
+      email: email,
+      password: password,
     });
 
-    postLogin(data).then((res) =>{
-      console.log(res)
+    postLogin(data).then((res) => {
+      console.log(res);
       history.push("/profile");
     });
   };
-
+  dispatch(setUser({ userName: "Tulga" }));
   // const handleSubmit = (event) => {
   //   event.preventDefault()
   //   const data = JSON.stringify({

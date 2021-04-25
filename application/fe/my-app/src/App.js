@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.sass";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "tailwindcss/tailwind.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import ProfileScreen from "./screens/profile/profile.js";
+// import ProfileScreen from "./screens/profile/profile.js";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
 
 function App() {
