@@ -1,0 +1,102 @@
+/** {box-sizing: border-box}*/
+
+.registration-container{
+    /* padding: 16px; */
+    /* padding-left: 80px;
+    padding-right: 80px; */
+    /* background-color: #ebebeb;  */
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px/17px; 
+    box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+    margin: 7px auto;
+    width: 555px; 
+    padding: 20px 0;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+.login-employer-container{
+    border-radius: 10px/17px; 
+    box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+    margin: 120px auto;
+    padding-top: 20px;
+    width: 500px; 
+    height: 250px; 
+}
+.login-professor-container, .login-talent-container{
+    border-radius: 10px/17px; 
+    box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+    margin: 50px auto;
+    padding-top: 20px;
+    width: 500px; 
+    height: 550px; 
+}
+.login-main{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-radius: 10px/17px; 
+    box-shadow: 1px 2px 3px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+    margin: 130px auto;
+    padding-top: 20px;
+    width: 500px; 
+    /* height: 170px;  */
+}
+input[type=text], input[type=password], input[type=email],select {
+    width: 100%;
+    padding: 13px;
+    margin: 5px 0 11px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    font-size: medium;
+  }
+  .register-button{
+    background-color: #304eaf;
+    color: white;
+    padding: 13px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    opacity: 0.9;
+    position: relative;
+    top: 0px;
+    /* float: right; */
+  }
+  .enter-button {
+    background-color: #304eaf;
+    color: white;
+    padding: 13px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    opacity: 0.9;
+    position: relative;
+    top: 0px;
+    float: right;
+  }
+  .back-button{
+    background-color: #304eaf;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 13px 20px;
+    opacity: 0.9;
+    position: relative;
+    top: 0px;
+  }
+  form{
+    margin: 0 30px;
+  }
+  h1, .info-paragraph{
+      text-align: center;
+  }
