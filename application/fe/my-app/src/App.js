@@ -1,17 +1,14 @@
 import React from "react";
 import "./App.sass";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "tailwindcss/tailwind.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
 import { CookiesProvider } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  Route,
-  // Link
-} from "react-router-dom";
-import ProfileScreen from "./screens/profile/profile.js";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+// import ProfileScreen from "./screens/profile/profile.js";
+import ProfileScreenV2 from "./screens/profile/profile.v2.js";
 
 function App() {
   return (
@@ -36,17 +33,17 @@ function App() {
           </Route>
 
           <Route path="/profile" exact>
-            <ProfileScreen />
+            <ProfileScreenV2 />
           </Route>
 
           <Route path="/profile/:id">
-            <ProfileScreen />
+            <ProfileScreenV2 />
           </Route>
           <Route path="/postings">
             <PostingsScreen />
           </Route>
           <Route path="/" exact>
-            <ProfileScreen />
+            <ProfileScreenV2 />
           </Route>
         </Router>
       </div>
