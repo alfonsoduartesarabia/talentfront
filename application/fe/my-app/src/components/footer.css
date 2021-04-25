@@ -1,0 +1,28 @@
+.footer-component{
+    /* position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; */
+   
+    background: #80A4ED;
+    color: black    ;
+    height: 50px;
+    position: relative;
+}
+.footer-component, .footer-content{
+    border: 1px solid red;
+    height: 50px;
+}
+.footer, .footer-bottom{
+    position: relative;
+    text-align: center;
+    background: #BCD3F2;
+    height: 30px;
+    bottom: 0px;
+    left: 0px;
+    padding-top: 20px;
+    width: 100%;
+}
+/* body{
+    height: 100%;
+} */

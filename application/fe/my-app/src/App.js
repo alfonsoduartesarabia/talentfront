@@ -5,10 +5,15 @@ import "tailwindcss/tailwind.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
+import SearchBar from "./components/searchbar";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+<<<<<<< HEAD
 // import ProfileScreen from "./screens/profile/profile.js";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
+=======
+import ProfileScreen from "./screens/profile/profile.js";
+>>>>>>> alfonso-branch
 
 function App() {
   return (
@@ -19,17 +24,7 @@ function App() {
             <Registration />
           </Route>
           <Route path="/login">
-            {
-              /* Conditionally render here
-            or have a main login screen and render coditionally
-            maybe dropdown would do the work.
-            @Alfonso
-           */
-              <Login />
-            }
-            {/* <LoginEmployer />
-        <LoginProfessor />
-        <LoginTalent /> */}
+            <Login />
           </Route>
 
           <Route path="/profile" exact>
@@ -44,6 +39,7 @@ function App() {
           </Route>
           <Route path="/" exact>
             <ProfileScreenV2 />
+            <SearchBar />
           </Route>
         </Router>
       </div>

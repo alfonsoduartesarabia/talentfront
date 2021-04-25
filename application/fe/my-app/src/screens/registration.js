@@ -3,6 +3,8 @@ import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
 import Navbar from "../components/navbar";
+// import Footer from '../components/footer';
+// import axios from 'axios'
 
 const employerFields = () => (
   <div>
@@ -120,11 +122,47 @@ const gradFields = () => (
 const Registration = () => {
   // const axios = require("axios");
   const [userType, setUserType] = useState("");
+  const [talentType, setTalentType] = useState("");
   let additionalFields = "";
-  if (userType === "student") additionalFields = studentFields();
-  if (userType === "recent-grad") additionalFields = gradFields();
-  if (userType === "employer") additionalFields = employerFields();
-  if (userType === "teacher") additionalFields = teacherFields();
+
+  const getTalentType = () => {
+    if (talentType === "student") {
+      return studentFields();
+    } else if (talentType === "recent-grad") {
+      return gradFields();
+    }
+  };
+
+  const talentField = () => (
+    <div>
+      <label htmlFor="talent-type">
+        <b>Indicate Type of Talent</b>
+      </label>
+      <select
+        defaultValue=""
+        name="talent-type"
+        id="talent-type"
+        //onChange={(event) => setUserType(event.target.value)}
+        required
+        onChange={(e) => setTalentType(e.target.value)}
+      >
+        <option value="" disabled>
+          Select type of talent
+        </option>
+        <option value="recent-grad" id="recent-grad" name="recent-grad">
+          Graduate
+        </option>
+        <option value="student" id="student" name="student">
+          Student
+        </option>
+      </select>
+      <div>{getTalentType()}</div>
+    </div>
+  );
+
+  if (userType === "talent") additionalFields = talentField();
+  if (userType === "recruiter") additionalFields = employerFields();
+  if (userType === "professor") additionalFields = teacherFields();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -144,7 +182,11 @@ const Registration = () => {
 
     postRegister(data).then((res) => {
       console.log(res);
-      history.push("/profile");
+      if (res === undefined) {
+        console.log("Error when registering.");
+      } else {
+        history.push("/profile");
+      }
     });
   };
 
@@ -271,8 +313,42 @@ const Registration = () => {
           </p>
         </form>
       </div>
+      {/* <Footer/> */}
     </div>
   );
 };
 
 export default Registration;
+
+// const handleSubmit = (event) => {
+//   event.preventDefault()
+//   const data = JSON.stringify({
+//       "email": email,
+//       "password": password,
+//       "userType": userType,
+//       "firstName": firstName,
+//       "lastName": lastName
+//   });
+
+//   // const baseUrl = window.origin;
+//   // const baseUrl = 'http://localhost';
+//   const baseUrl = 'http://localhost:8080';
+
+//   const config = {
+//       method: 'post',
+//       // withCredentials: true,
+//       url: baseUrl + '/backend/api/register',
+//       headers: {
+//           'Content-Type': 'application/json'
+//       },
+//       data: data
+//   };
+//   axios(config)
+//   .then( res => {
+//       document.cookie = res.data.sessionCookie
+//       history.push("/profile")
+//   })
+//   .catch( err => {
+//       console.log(err)
+//   });
+// }

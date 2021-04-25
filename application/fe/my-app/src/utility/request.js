@@ -9,6 +9,13 @@ const cookies = new Cookies();
 // @Alfonso works for me when yarn and docker are running
 const BASE_URL = "http://localhost:8080";
 
+const source = axios.CancelToken.source(); // cancel a request using a cancel token
+// {cancelToken: source.token}
+/**
+ * https://github.com/axios/axios#cancellation
+ * https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm
+ */
+
 const instance = axios.create({
   // withCredentials: true,
   baseURL: BASE_URL,
@@ -96,6 +103,7 @@ export const getMyProfile = () => {
     .catch((err) => {
       console.log("Get profile request failed: /backend/api/user");
       console.log(err);
+      source.cancel();
       return "err";
     });
 };
@@ -112,6 +120,7 @@ export const getProfile = (id) => {
     .catch((err) => {
       console.log("Get profile request failed: /backend/api/user/" + id);
       console.log(err);
+      source.cancel();
       return "err";
     });
 };
