@@ -8,12 +8,8 @@ import PostingsScreen from "./screens/postings/postings";
 import SearchBar from "./components/searchbar";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-<<<<<<< HEAD
-// import ProfileScreen from "./screens/profile/profile.js";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
-=======
 import ProfileScreen from "./screens/profile/profile.js";
->>>>>>> alfonso-branch
 
 function App() {
   return (
