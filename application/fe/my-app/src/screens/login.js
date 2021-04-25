@@ -5,7 +5,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../utility/slices/user";
 import { postLogin } from "../utility/request";
-import axios from "axios";
 
 const Login = (props) => {
   const dispatch = useDispatch();

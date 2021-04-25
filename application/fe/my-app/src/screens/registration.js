@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from 'axios'
 import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
@@ -158,7 +157,7 @@ const Registration = () => {
   //       "firstName": firstName,
   //       "lastName": lastName
   //   });
-    
+
   //   // const baseUrl = window.origin;
   //   // const baseUrl = 'http://localhost';
   //   const baseUrl = 'http://localhost:8080';
@@ -253,7 +252,7 @@ const Registration = () => {
             <option value="" disabled>
               Select your option
             </option>
-            <option value="talent">Talent</option> 
+            <option value="talent">Talent</option>
             <option value="recruiter">Recruiter</option>
             <option value="professor">Professor</option>
 
@@ -261,7 +260,6 @@ const Registration = () => {
             <option value="recent-grad">Graduate</option>
             <option value="teacher">Teacher</option>
             <option value="recruiter">Recruiter</option> */}
-        
           </select>
           {additionalFields}
 

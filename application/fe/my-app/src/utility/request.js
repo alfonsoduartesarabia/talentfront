@@ -29,9 +29,9 @@ const instance = axios.create({
 // };
 
 export { instance, BASE_URL };
-const cookieAsQueryParam = () => {
-  return "?cookie=" + document.cooki;
-};
+// const cookieAsQueryParam = () => {
+//   return "?cookie=" + document.cooki;
+// };
 
 export function postSearch(data) {
   return instance.post("search", data);

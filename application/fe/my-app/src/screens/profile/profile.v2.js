@@ -15,8 +15,7 @@ import {
 } from "react-bootstrap";
 import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
-import { getProfile, getMyProfile, postNewJob } from "../../utility/request";
-import { Switch } from "@headlessui/react";
+import { getProfile, postNewJob } from "../../utility/request";
 import Cookies from "universal-cookie";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -169,7 +168,7 @@ const LeftSection = (props) => {
   const { isEditing, setIsEditing } = useState(false);
   useEffect(() => {
     if (user.skills !== undefined) setSkills(user.skills);
-  }, []);
+  }, [user.skills]);
   const handleNewSkill = () => {
     // Hacky Solution later move all user stuff to REDUX
     addSkill(newSkill);
@@ -254,7 +253,7 @@ const ProfileScreen = (props) => {
     } else {
       dispatch(getProfile(id));
     }
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const addSkill = (skill) => {
     user.skills.push(skill);
