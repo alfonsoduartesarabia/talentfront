@@ -10,6 +10,7 @@ import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
 import ProfileScreen from "./screens/profile/profile.js";
+import EntriesScreen from "./screens/entries/entries";
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/postings">
             <PostingsScreen />
+          </Route>
+          <Route path="/entries">
+            <EntriesScreen />
           </Route>
           <Route path="/" exact>
             <ProfileScreenV2 />

@@ -3,8 +3,6 @@ import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
 import Navbar from "../components/navbar";
-// import Footer from '../components/footer';
-// import axios from 'axios'
 
 const employerFields = () => (
   <div>
@@ -16,7 +14,7 @@ const employerFields = () => (
       placeholder="Enter your company name"
       name="company-name"
       id="company-name"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Location</b>
@@ -26,7 +24,7 @@ const employerFields = () => (
       placeholder="Enter your location"
       name="location"
       id="location"
-    ></input>
+    />
   </div>
 );
 const teacherFields = () => (
@@ -39,17 +37,12 @@ const teacherFields = () => (
       placeholder="Enter your school"
       name="school-name"
       id="school-name"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Field</b>
     </label>
-    <input
-      type="text"
-      placeholder="Enter your major"
-      name="major"
-      id="major"
-    ></input>
+    <input type="text" placeholder="Enter your major" name="major" id="major" />
   </div>
 );
 const studentFields = () => (
@@ -62,7 +55,7 @@ const studentFields = () => (
       placeholder="Enter your school"
       name="school-name"
       id="school-name"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Degree</b>
@@ -72,17 +65,12 @@ const studentFields = () => (
       placeholder="Enter your degree"
       name="degree"
       id="degree"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Major</b>
     </label>
-    <input
-      type="text"
-      placeholder="Enter your field"
-      name="field"
-      id="field"
-    ></input>
+    <input type="text" placeholder="Enter your field" name="field" id="field" />
   </div>
 );
 const gradFields = () => (
@@ -95,7 +83,7 @@ const gradFields = () => (
       placeholder="Enter your highest earned degree"
       name="degree"
       id="degree"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Employer</b>
@@ -105,7 +93,7 @@ const gradFields = () => (
       placeholder="Enter your employer"
       name="employer"
       id="employer"
-    ></input>
+    />
 
     <label htmlFor="first-name">
       <b>Title</b>
@@ -115,7 +103,7 @@ const gradFields = () => (
       placeholder="Enter your title"
       name="job-title"
       id="job-title"
-    ></input>
+    />
   </div>
 );
 
@@ -160,9 +148,15 @@ const Registration = () => {
     </div>
   );
 
-  if (userType === "talent") additionalFields = talentField();
-  if (userType === "recruiter") additionalFields = employerFields();
-  if (userType === "professor") additionalFields = teacherFields();
+  if (userType === "talent") {
+    additionalFields = talentField();
+  }
+  if (userType === "recruiter") {
+    additionalFields = employerFields();
+  }
+  if (userType === "professor") {
+    additionalFields = teacherFields();
+  }
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -243,7 +237,7 @@ const Registration = () => {
             id="email"
             onChange={(event) => setEmail(event.target.value)}
             required
-          ></input>
+          />
 
           <label htmlFor="first-name">
             <b>First Name</b>
@@ -255,7 +249,7 @@ const Registration = () => {
             id="first-name"
             onChange={(event) => setFirstName(event.target.value)}
             required
-          ></input>
+          />
 
           <label htmlFor="last-name">
             <b>Last Name</b>
@@ -267,7 +261,7 @@ const Registration = () => {
             id="last-name"
             onChange={(event) => setLastName(event.target.value)}
             required
-          ></input>
+          />
 
           <label htmlFor="password">
             <b>Password</b>
@@ -279,7 +273,7 @@ const Registration = () => {
             id="password"
             onChange={(event) => setPassword(event.target.value)}
             required
-          ></input>
+          />
 
           <label htmlFor="user-type">
             <b>Indicate Type of User</b>

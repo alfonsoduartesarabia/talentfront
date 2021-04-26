@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../../components/navbar";
 import { Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
-// import { postSearch } from "../../utility/request";
+import { postSearch } from "../../utility/request";
 import { Dropdown } from "react-bootstrap";
 import Moment from "react-moment";
 import "./postings.scss";
@@ -13,22 +13,22 @@ const PostingsScreen = (props) => {
   const [salaryFilter, setSalaryFilter] = useState("");
   const [loading, setLoading] = useState(true);
 
-  let query = useSelector((state) => state.search.query);
+  let query = useSelector((state) => state.search);
   useEffect(() => {
     console.log("SENDING REQUEST TO BACKEND");
-    console.log(query);
-    setJobs(postingDummyData);
+    console.log(JSON.stringify(query));
+    // setJobs(postingDummyData);
     setLoading(false);
-    // searchPostings()
-    //   .then(res => {
-    //     setJobs(res.data.entries)
-    //     console.log(res.data)
-    //     setLoading(false)
-    //   })
-    //   .catch (err => {
-    //     console.log(err)
-    //     setLoading(false)
-    //   })
+    postSearch(query?.search)
+      .then(res => {
+        setJobs(res.data.entries)
+        console.log(`This is the response for ${JSON.stringify(res.data)}`)
+        setLoading(false)
+      })
+      .catch (err => {
+        console.log(err)
+        setLoading(false)
+      })
   }, [query]);
 
   let renderedPostings = jobs.map((job, index) => {
@@ -45,12 +45,12 @@ const PostingsScreen = (props) => {
           <p> {job.description} </p>
         </div>
         <div className="job-post-right">
-          <h3> Requirements</h3>
-          <ul>
-            {job.requirements.map((requirement, index) => {
-              return <li key={index}>{requirement}</li>;
-            })}
-          </ul>
+          {/*<h3> Requirements</h3>*/}
+          {/*<ul>*/}
+          {/*  {job.requirements.map((requirement, index) => {*/}
+          {/*    return <li key={index}>{requirement}</li>;*/}
+          {/*  })}*/}
+          {/*</ul>*/}
 
           <div className="footer">
             <div>

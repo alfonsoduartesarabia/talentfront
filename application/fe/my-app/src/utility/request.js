@@ -41,14 +41,12 @@ export { instance, BASE_URL };
 // };
 
 export function postSearch(data) {
-  return instance.post("search", data);
-  // return axios.request({
-  //   method: "post",
-  //   url: BASE_URL + "/backend/api/search",
-  //   data
-  // })
-  // .then(res => { console.log(res) })
-  // .catch(err => { console.log(err) })
+  return instance.post("/backend/api/search", data)
+  .then((res) => {
+    console.log(res);
+    return res;
+  })
+  .catch(err => { console.log(err) })
 }
 
 export const postLogin = async (data) => {

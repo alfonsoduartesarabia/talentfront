@@ -6,22 +6,24 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateQuery } from "../utility/slices/search";
 import { logout } from "../utility/slices/user";
-import {selectUser} from "../utility/slices/user"
+import { selectUser } from "../utility/slices/user";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
-  
-  const handleClick = (event) => {
+
+  const handleSearch = (event) => {
     event.preventDefault();
-    let query = {
+    const query = {
       filter: "",
       subFilter: "",
       searchTerm: searchTerm,
     };
+    console.log(query)
+    console.log("calling dispatch")
     dispatch(updateQuery(query));
-    history.push("/postings");
+    history.push("/entries");
   };
 
   const loggedIn = useSelector((state) => state.user.loggedIn);
@@ -33,15 +35,22 @@ const Navbar = (props) => {
   const handleLogout = (event) => {
     event.preventDefault();
     dispatch(logout());
-  }
+  };
 
-  // @TODO FIX THESE - LOGOUT button not redirecting but it is loggin out user 
+  // @TODO FIX THESE - LOGOUT button not redirecting but it is loggin out user
   let loginButton = (
     <div>
-      { 
-      user ? <Link to="/login"><button className="navbar-btn" onClick={(e) => handleLogout(e)}>Logout</button></Link> 
-      : <Link to="/login"><button className="navbar-btn">Login</button></Link> 
-      }
+      {user ? (
+        <Link to="/login">
+          <button className="navbar-btn" onClick={(e) => handleLogout(e)}>
+            Logout
+          </button>
+        </Link>
+      ) : (
+        <Link to="/login">
+          <button className="navbar-btn">Login</button>
+        </Link>
+      )}
     </div>
   );
 
@@ -91,7 +100,7 @@ const Navbar = (props) => {
               <BsSearch />{" "}
             </div>
           </div>
-          <button onClick={handleClick} className="navbar-btn">
+          <button onClick={handleSearch} className="navbar-btn">
             Search
           </button>
         </form>
