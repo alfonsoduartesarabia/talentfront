@@ -42,4 +42,31 @@ class UserDao(
             .fetchOne() ?: return null
         return record.into(USER).toUser()
     }
+
+    fun searchUsers(search: String): List<User> {
+        val terms = search.split("\\s".toRegex())
+        val list = mutableListOf<User>()
+        terms.forEach { term ->
+            dslContext.select()
+                .from(USER)
+                .where(USER.FIRST_NAME.like("%$term%"))
+                .or(USER.LAST_NAME.like("%$term%"))
+                .orderBy(USER.USER_ID.asc())
+                .fetchArray()
+                .map {
+                    list.add(it.into(USER).toUser())
+                }
+        }
+        return list
+    }
+
+    fun getAllUsers(): List<User> {
+        return dslContext.select()
+            .from(USER)
+            .orderBy(USER.USER_ID.asc())
+            .fetchArray()
+            .map {
+                it.into(USER).toUser()
+            }
+    }
 }

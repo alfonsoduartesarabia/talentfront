@@ -11,12 +11,10 @@ class PostingDao(
     private val dslContext: DSLContext
 ) {
 
-    fun getPostings(seek: Int, limit: Int): List<Posting> {
+    fun getPostings(): List<Posting> {
         return dslContext.select()
             .from(POSTING)
             .orderBy(POSTING.POSTING_ID.asc())
-            .seek(seek)
-            .limit(limit)
             .fetchArray()
             .map {
                 val record = it as PostingRecord
@@ -24,9 +22,9 @@ class PostingDao(
             }
     }
 
-    fun searchPostings(searchTerm: String, seek: Int, limit: Int): List<Posting> {
+    fun searchPostings(searchTerm: String): List<Posting> {
         val terms = searchTerm.split("\\s".toRegex())
-        val map = mutableMapOf<Int, Posting>()
+        val list = mutableListOf<Posting>()
         terms.forEach { term ->
             dslContext.select()
                 .from(POSTING)
@@ -34,15 +32,10 @@ class PostingDao(
                 .fetchArray()
                 .forEach {
                     val record = it as PostingRecord
-                    map.putIfAbsent(record.postingId, record.toPosting())
+                    list.add(record.toPosting())
                 }
         }
-        val list = map.values.toList()
-        return if (list.size < seek) {
-            emptyList()
-        } else {
-            list.subList(seek, minOf(seek + limit, list.size))
-        }
+        return list
     }
 
     fun PostingRecord.toPosting(): Posting {
