@@ -14,14 +14,14 @@ data class UserEducation(
 
     fun toEntry(): Entry {
         val fullName = "${user?.firstName} ${user?.lastName}"
-        return Entry(type = EntryType.USER.name, title = fullName, description = this.generateDescription(), link = "/posting/${this.id}")
+        return Entry(type = EntryType.USER.name, title = fullName, description = this.generateDescription(), link = "/profile/${user?.id}")
     }
 
     private fun generateDescription(): String {
         return when (this.state) {
-            State.PLANNED -> "Is planning to pursue an ${this.degreeType?.description} from ${this.school}"
-            State.IN_PROGRESS -> "Is pursuing an ${this.degreeType?.description} from ${this.school}"
-            State.COMPLETED -> "Has completed an ${this.degreeType?.description} from ${this.school}"
+            State.PLANNED -> "Is planning to pursue an ${this.degreeType?.description ?: "degree"} from ${this.school ?: "San Francisco State University"}"
+            State.IN_PROGRESS -> "Is pursuing an ${this.degreeType?.description ?: "degree"} from ${this.school ?: "San Francisco State University"}"
+            State.COMPLETED -> "Has completed an ${this.degreeType?.description ?: "degree"} from ${this.school ?: "San Francisco State University"}"
             else -> "Error"
         }
     }
