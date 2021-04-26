@@ -46,7 +46,7 @@ class UserImageController(
         return ResponseEntity.ok("looks good boss made img with id: $id")
     }
 
-    @GetMapping(value = ["$GET_USER_IMAGE/{userId}"])
+    @GetMapping(value = ["$GET_USER_IMAGE/{userId}", GET_USER_IMAGE])
     fun getUserImage(
         @PathVariable(required = false, value = "userId") pathUserId: Int?,
         @CookieValue(value = SessionService.SESSION_COOKIE_NAME) cookieValue: String?,
