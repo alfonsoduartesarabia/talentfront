@@ -1,4 +1,4 @@
-@import '../../variables.sass';
+@import "../../variables.sass";
 
 .job-posts-container {
   display: flex;
@@ -23,7 +23,7 @@
 
 .job-post-left {
   width: 50%;
-  .job-post-header{
+  .job-post-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,11 +37,11 @@
         padding-left: 10px;
       }
     }
-  } 
+  }
   p {
     display: -webkit-box;
     -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;  
+    -webkit-box-orient: vertical;
     overflow: hidden;
     white-space: pre-wrap;
     margin: 20px;
@@ -64,7 +64,7 @@
     align-items: flex-end;
     padding: 0 20px;
     justify-content: space-between;
-    .apply-btn{
+    .apply-btn {
       width: 150px;
       height: 45px;
       display: flex;

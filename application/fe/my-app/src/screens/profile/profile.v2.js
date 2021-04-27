@@ -15,44 +15,39 @@ import {
 } from "react-bootstrap";
 import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
-import { getProfile, postNewJob } from "../../utility/request";
+import { getProfile, postJobUser } from "../../utility/request";
 import Cookies from "universal-cookie";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { BsFilePlus } from "react-icons/bs";
+import { BiPencil } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../utility/slices/user";
+import { getUser, addJob, updateEducation } from "../../utility/slices/user";
 
 const cookies = new Cookies();
 const BASE_URL = "http://localhost";
 
 const AddNewExperience = (props) => {
+  const dispatch = useDispatch();
   const { show, handleClose } = props;
   const [company, setCompany] = useState("");
   const [title, setTitle] = useState("");
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState(null);
+  const [dateStart, setStartDate] = useState();
+  const [dateEnd, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [isStillWorking, setIsStillWorking] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSave = () => {
     setLoading(true);
-    let newJob = {
+    let job = {
       title,
       company,
-      startDate,
-      endDate,
+      dateStart,
+      dateEnd,
       description,
     };
-    console.log(newJob);
-    postNewJob(newJob)
-      .then((res) => {
-        console.log(res);
-        setLoading(false);
-        handleClose();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(addJob(job));
   };
 
   return (
@@ -107,7 +102,6 @@ const AddNewExperience = (props) => {
                     id="default-checkbox"
                     label="Current"
                     onChange={(event) => {
-                      console.log(event);
                       setIsStillWorking(!isStillWorking);
                     }}
                   />
@@ -162,15 +156,24 @@ const AddNewExperience = (props) => {
 };
 
 const LeftSection = (props) => {
-  const { user, imageLink, addSkill } = props;
+  const dispatch = useDispatch();
+  let user = useSelector((state) => state.user);
+  const { imageLink, addSkill } = props;
   const [newSkill, setNewSkill] = useState("");
-  const [skills, setSkills] = useState([]);
-  const { isEditing, setIsEditing } = useState(false);
+  const [skills, setSkills] = useState(user.skills);
+  const [isEditing, setIsEditing] = useState(false);
+  const [school, setSchool] = useState("");
+  const [degree, setDegree] = useState("");
+  const [major, setMajor] = useState("");
+
   useEffect(() => {
-    if (user.skills !== undefined) setSkills(user.skills);
-  }, [user.skills]);
+    if (user.educations && user.educations.length) {
+      setSchool(user.educations[0].school);
+      setDegree(user.educations[0].degree);
+      setMajor(user.educations[0].major);
+    }
+  }, [user]);
   const handleNewSkill = () => {
-    // Hacky Solution later move all user stuff to REDUX
     addSkill(newSkill);
     setSkills((skills) => [...skills, newSkill]);
     setNewSkill("");
@@ -178,17 +181,76 @@ const LeftSection = (props) => {
   const handleRemoveSkill = (index) => {
     setSkills((skills) => skills.filter((skill, idx) => index !== idx));
   };
+  const toggleEdit = () => {
+    if (isEditing) {
+      dispatch(updateEducation({ school, degree, major }));
+    }
+    setIsEditing(!isEditing);
+  };
+
   return (
     <div className="personals">
       <Card className="profile-details">
+        <div className="edit-profile">
+          {isEditing ? (
+            <FaCheck onClick={toggleEdit} />
+          ) : (
+            <BiPencil onClick={toggleEdit} />
+          )}
+        </div>
         <img className="profile-image" src={imageLink} alt="profile" />
         <div className="profile-name">
           {user.firstName + " " + user.lastName}
         </div>
-        <div className="text-muted">{user.degree ? user.degree : "Degree"}</div>
-        <div className="text-muted">{user.school ? user.school : "School"}</div>
-        <div className="text-muted">
-          {user.company ? user.company : "Company"}
+        <div className="education">
+          {isEditing ? (
+            <Form>
+              <Form.Group>
+                <FormControl
+                  as="select"
+                  onChange={(event) => setDegree(event.target.value)}
+                  value={degree}
+                >
+                  <option label="Associate in Arts">AA</option>
+                  <option label="Bachelor of Arts">BA</option>
+                  <option label="Bachelor of Science">BS</option>
+                  <option label="Masters">MA</option>
+                  <option label="Master of Business Administration">MBA</option>
+                  <option label="Doctorate">D</option>
+                </FormControl>
+              </Form.Group>
+              <Form.Group>
+                <FormControl
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="School"
+                  onChange={(event) => setSchool(event.target.value)}
+                  value={school}
+                />
+              </Form.Group>
+              <Form.Group>
+                <FormControl
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Major"
+                  onChange={(event) => setMajor(event.target.value)}
+                  value={major}
+                />
+              </Form.Group>
+            </Form>
+          ) : (
+            <>
+              <div className="text-muted">
+                {degree !== "" ? degree : "Degree - Not Available"}
+              </div>
+              <div className="text-muted">
+                {school ? school : "School - Not Available"}
+              </div>
+              <div className="text-muted">
+                {major ? major : "Major - Not Available"}
+              </div>
+            </>
+          )}
         </div>
       </Card>
       <Card>
@@ -233,6 +295,43 @@ const LeftSection = (props) => {
   );
 };
 
+const RightSection = (props) => {
+  const { handleShow } = props;
+  let experiences = useSelector((state) => state.user.experiences);
+  if (experiences === undefined) experiences = [];
+  const RenderedExperiences = experiences.map((experience, index) => {
+    return (
+      <Card key={index} className="article">
+        <Card.Header className="card-head">
+          <div className="article-head">
+            <h2 className="article-title">{experience.title}</h2>
+            {experience.endDt === "null" ? (
+              <h2 className="article-date">
+                {experience.startDt + " to present"}
+              </h2>
+            ) : (
+              <h2 className="article-date">
+                {experience.startDt + " - " + experience.endDt}
+              </h2>
+            )}
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <Card.Text>{experience.description}</Card.Text>
+        </Card.Body>
+      </Card>
+    );
+  });
+  return (
+    <div className="right-section">
+      {RenderedExperiences.length ? RenderedExperiences : null}
+      <div className="add-experience" onClick={handleShow}>
+        <div>Add Experience</div> <BsFilePlus />
+      </div>
+    </div>
+  );
+};
+
 const ProfileScreen = (props) => {
   let id = useParams().id;
   if (id === undefined) id = "";
@@ -240,14 +339,11 @@ const ProfileScreen = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
-
   const user = useSelector((state) => state.user);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    console.log("ID=", id);
     if (id === "") {
       dispatch(getUser());
     } else {
@@ -556,7 +652,7 @@ const ProfileScreen = (props) => {
       <Navbar />
       <div className="profile-screen-contanier">
         <LeftSection user={user} imageLink={imageLink} addSkill={addSkill} />
-        <RenderArticles />
+        <RightSection handleShow={handleShow} />
       </div>
     </div>
   );

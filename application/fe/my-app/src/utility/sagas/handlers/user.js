@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { getUser } from "../requests/user";
+import { getUser, postJobUser, postEducationUser } from "../requests/user";
 import { setUser } from "../../slices/user";
 
 export function* handleGetUser(action) {
@@ -7,6 +7,25 @@ export function* handleGetUser(action) {
     const response = yield call(getUser);
     const { data } = response;
     yield put(setUser(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* handleAddJob(action) {
+  try {
+    const response = yield call(postJobUser, action);
+    const { data } = response;
+    console.log(response);
+    // yield put(setUser(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* handleUpdateDegree(action) {
+  try {
+    const response = yield call(postEducationUser, action);
   } catch (err) {
     console.log(err);
   }

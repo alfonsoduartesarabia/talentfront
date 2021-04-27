@@ -9,7 +9,6 @@ import SearchBar from "./components/searchbar";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
-import ProfileScreen from "./screens/profile/profile.js";
 
 function App() {
   return (
@@ -35,7 +34,7 @@ function App() {
           </Route>
           <Route path="/" exact>
             <ProfileScreenV2 />
-            <SearchBar />
+            {/*<SearchBar />*/}
           </Route>
         </Router>
       </div>

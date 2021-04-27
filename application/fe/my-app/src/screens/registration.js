@@ -3,6 +3,8 @@ import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
 import Navbar from "../components/navbar";
+import { useDispatch } from "react-redux";
+import { getUser } from "../utility/slices/user.js";
 // import Footer from '../components/footer';
 // import axios from 'axios'
 
@@ -120,10 +122,10 @@ const gradFields = () => (
 );
 
 const Registration = () => {
-  // const axios = require("axios");
   const [userType, setUserType] = useState("");
   const [talentType, setTalentType] = useState("");
   let additionalFields = "";
+  const dispatch = useDispatch();
 
   const getTalentType = () => {
     if (talentType === "student") {
@@ -185,6 +187,7 @@ const Registration = () => {
       if (res === undefined) {
         console.log("Error when registering.");
       } else {
+        dispatch(getUser());
         history.push("/profile");
       }
     });

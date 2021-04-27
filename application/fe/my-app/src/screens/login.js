@@ -3,10 +3,8 @@ import "./registration.css";
 import Navbar from "../components/navbar";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../utility/slices/user";
+import { setUser, getUser } from "../utility/slices/user";
 import { postLogin } from "../utility/request";
-//import axios from 'axios'
-// import { logout } from "../utility/slices/user";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -17,7 +15,6 @@ const Login = (props) => {
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    // console.log("HELLO?");
     const data = JSON.stringify({
       email: email,
       password: password,
@@ -25,18 +22,9 @@ const Login = (props) => {
 
     postLogin(data).then((res) => {
       console.log(res);
-      // history.push("/profile");
       if (res === undefined) {
         console.log("Error when logging in.");
-        //dispatch(logout());
       } else {
-        console.log(login);
-        dispatch(
-          login({
-            email: email,
-            password: password,
-          })
-        );
         history.push("/profile");
       }
     });

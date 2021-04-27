@@ -16,32 +16,22 @@ const source = axios.CancelToken.source(); // cancel a request using a cancel to
  * https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm
  */
 
-const instance = axios.create({
-  // withCredentials: true,
-  baseURL: BASE_URL,
-  params: {
-    cookie: cookies.get("talentfront-session"),
-  },
-});
+const createRequest = () =>
+  axios.create({
+    // withCredentials: true,
+    baseURL: BASE_URL,
+    params: {
+      cookie: cookies.get("talentfront-session"),
+    },
+  });
 
-// const instance= () => {
-//   const [sessionCookie, setSessionCookie] = useCookies(["name"]);
-//   return axios.create({
-//     withCredentials: true,
-//     baseURL: BASE_URL,
-//     params: {
-//       cookie: sessionCookie,
-//     },
-//   });
-// };
-
-export { instance, BASE_URL };
+export { createRequest, BASE_URL };
 // const cookieAsQueryParam = () => {
 //   return "?cookie=" + document.cooki;
 // };
 
 export function postSearch(data) {
-  return instance.post("search", data);
+  return createRequest().post("search", data);
   // return axios.request({
   //   method: "post",
   //   url: BASE_URL + "/backend/api/search",
@@ -95,7 +85,7 @@ export const postRegister = (data) => {
 export const getMyProfile = () => {
   console.log("session cookie:", cookies.get("talentfront-session"));
   console.log("GET backend/api/user");
-  return instance
+  return createRequest()
     .get("backend/api/user")
     .then((res) => {
       return res;
@@ -110,7 +100,7 @@ export const getMyProfile = () => {
 
 export const getProfile = (id) => {
   console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
-  return instance
+  return createRequest()
     .get("backend/api/user/" + id)
     .then((res) => {
       console.log("RESPONSE FROM", BASE_URL + "/backend/api/user/" + id);
@@ -125,26 +115,11 @@ export const getProfile = (id) => {
     });
 };
 
-// export const updateProfile = () => {
-//   return instance
-// @TODO update Profile Individually
-// for ENDPOINTS OPEN THE DOC FROM GOOGLE
-// IMAGE
-// SKILLS /backend/api/user/
-// EXPERIENCE <- COMPANY NAME
-// EDUCATION
-// WEEK #1
-// }
-
-// JOB DESCRIPTION
-// EXPRIENCE REQUIREMENT
-// SALARY RANGE : top & bottom
-// TITLE
-// LOCATION
-
-export const postNewJob = (job) => {
-  return instance.post("backend/api/user/experience", job).then((res) => {
-    console.log(res);
-    return res;
-  });
+export const postAddJob = (job) => {
+  return createRequest()
+    .post("backend/api/user/experience", job)
+    .then((res) => {
+      console.log(res);
+      return res;
+    });
 };
