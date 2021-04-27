@@ -48,6 +48,7 @@ const AddNewExperience = (props) => {
       description,
     };
     dispatch(addJob(job));
+    dispatch(getUser());
   };
 
   return (
@@ -87,7 +88,7 @@ const AddNewExperience = (props) => {
                 type="month"
                 name="started date"
                 placeholder="Start Date"
-                onChange={(event) => setStartDate(event.target.value)}
+                onChange={(event) => setStartDate(event.target.value + "-01")}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -106,29 +107,13 @@ const AddNewExperience = (props) => {
                     }}
                   />
                 </Col>
-                {/*<Col>
-                  <Switch
-                    checked={isStillWorking}
-                    onChange={setIsStillWorking}
-                    className={`${
-                      isStillWorking ? "bg-blue-600" : "bg-gray-200"
-                    } relative inline-flex items-center h-6 rounded-full w-11`}
-                  >
-                    <span className="sr-only">Enable notifications</span>
-                    <span
-                      className={`${
-                        isStillWorking ? "translate-x-6" : "translate-x-1"
-                      } inline-block w-4 h-4 transform bg-white rounded-full`}
-                    />
-                  </Switch>
-                </Col>*/}
               </Row>
               <Form.Control
                 type="month"
                 name="ended date"
                 placeholder="End Date"
                 disabled={isStillWorking}
-                onChange={(event) => setEndDate(event.target.value)}
+                onChange={(event) => setEndDate(event.target.value + "-01")}
               />
             </Form.Group>
           </Form.Row>

@@ -65,7 +65,7 @@
   }
   .edit-profile {
     align-self: flex-end;
-    position: fixed;
+    position: absolute;
     cursor: pointer;
   }
   .education {
@@ -103,6 +103,7 @@
   flex-shrink: 1;
   background: #ece1c5;
   box-shadow: 1px 2px 5px;
+  margin-bottom: 10px;
 }
 
 .spin-wrapper {
