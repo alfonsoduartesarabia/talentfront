@@ -1,9 +1,10 @@
 package com.talentfront.freya.search
 
-import com.talentfront.freya.config.Routes.Companion.SEARCH_PATH
 import com.talentfront.freya.daos.PostingDao
 import com.talentfront.freya.daos.UserDao
 import com.talentfront.freya.daos.UserEducationDao
+import com.talentfront.freya.daos.UserExperienceDao
+import com.talentfront.freya.daos.UserSkillDao
 import com.talentfront.freya.search.models.Entry
 import com.talentfront.freya.search.models.Filter
 import com.talentfront.freya.search.models.SearchRequest
@@ -13,28 +14,28 @@ import org.springframework.stereotype.Component
 @Component
 class SearchService(
     private val userDao: UserDao,
+    private val userSkillDao: UserSkillDao,
+    private val userExperienceDao: UserExperienceDao,
     private val postingDao: PostingDao,
     private val userEducationDao: UserEducationDao
 ) {
-    val pageSize = 20
 
-    fun makeSearch(searchRequest: SearchRequest, pageParam: Int?): SearchResult {
-        val page = pageParam ?: 1
-        val seek = (page - 1) * pageSize
+    fun makeSearch(searchRequest: SearchRequest): SearchResult {
         val filter = determineFilter(searchRequest.filter)
         val entries = mutableListOf<Entry>()
         when (filter) {
-            Filter.JOB_POSTING -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
-            Filter.TALENT -> entries.searchTalent(searchRequest.searchTerm, seek, pageSize)
-            Filter.PROFESSOR -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
-            Filter.ORGANIZATION -> entries.searchPostings(searchRequest.searchTerm, seek, pageSize)
-            else -> entries.searchAll(searchRequest.searchTerm, seek, pageSize)
+            Filter.JOB_POSTING -> entries.searchPostings(searchRequest.searchTerm)
+            Filter.TALENT -> entries.searchTalent(searchRequest.searchTerm)
+            Filter.PROFESSOR -> entries.searchPostings(searchRequest.searchTerm)
+            Filter.ORGANIZATION -> entries.searchPostings(searchRequest.searchTerm)
+            else -> entries.searchAll(searchRequest.searchTerm)
         }
-        return SearchResult(entries = entries, request = searchRequest, nextPage = "/$SEARCH_PATH?page=${page + 1}")
+        return SearchResult(entries = entries, request = searchRequest)
     }
-    fun MutableList<Entry>.searchAll(searchTerm: String?, seek: Int, limit: Int) {
-        this.searchPostings(searchTerm, seek, pageSize)
-        this.searchTalent(searchTerm, seek, pageSize)
+
+    fun MutableList<Entry>.searchAll(searchTerm: String?) {
+        this.searchPostings(searchTerm)
+        this.searchTalent(searchTerm)
     }
 
     fun determineFilter(filter: String?): Filter? {
@@ -47,23 +48,58 @@ class SearchService(
         }
     }
 
-    fun MutableList<Entry>.searchPostings(searchTerm: String?, seek: Int, limit: Int) {
+    fun MutableList<Entry>.searchPostings(searchTerm: String?) {
         if (searchTerm?.isNotBlank() == true) {
-            postingDao.searchPostings(searchTerm, seek, limit)
+            postingDao.searchPostings(searchTerm)
                 .forEach {
                     this.add(it.toEntry())
                 }
         } else {
-            postingDao.getPostings(seek, limit).forEach {
+            postingDao.getPostings().forEach {
                 this.add(it.toEntry())
             }
         }
     }
 
-    fun MutableList<Entry>.searchTalent(searchTerm: String?, seek: Int, limit: Int) {
-        userEducationDao.getUserEducations(seek, limit)
-            .forEach {
-                this.add(it.toEntry())
-            }
+    fun MutableList<Entry>.searchTalent(searchTerm: String?) {
+        val userList = mutableSetOf<Int>()
+        if (searchTerm?.isNotBlank() == true) {
+            userExperienceDao.searchUserExperience(searchTerm)
+                .forEach {
+                    if (!userList.contains(it.user?.id)) {
+                        this.add(it.toEntry())
+                        userList.add(it.user!!.id!!)
+                    }
+                }
+            userSkillDao.searchUserSkills(searchTerm)
+                .forEach {
+                    if (!userList.contains(it.user?.id)) {
+                        this.add(it.toEntry())
+                        userList.add(it.user!!.id!!)
+                    }
+                }
+            userEducationDao.getUserEducations(searchTerm)
+                .forEach {
+                    if (!userList.contains(it.user?.id)) {
+                        this.add(it.toEntry())
+                        userList.add(it.user!!.id!!)
+                    }
+                }
+            userDao.searchUsers(searchTerm)
+                .forEach {
+                    if (!userList.contains(it.id)) {
+                        this.add(it.toEntry())
+                        userList.add(it.id!!)
+                    }
+                }
+        } else {
+            userDao.getAllUsers()
+                .forEach {
+                    if (!userList.contains(it.id)) {
+                        this.add(it.toEntry())
+                        userList.add(it.id!!)
+                    }
+                }
+        }
     }
 }

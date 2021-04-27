@@ -68,5 +68,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
 ### Docker
+
 1. docker build -t pachecosf/my-app .
 2. docker push pachecosf/my-app

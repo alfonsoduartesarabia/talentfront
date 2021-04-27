@@ -13,7 +13,7 @@ const Login = (props) => {
   const [password, setPassword] = useState();
   const history = useHistory();
 
-  let handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = JSON.stringify({
       email: email,
@@ -21,7 +21,6 @@ const Login = (props) => {
     });
 
     postLogin(data).then((res) => {
-      console.log(res);
       if (res === undefined) {
         console.log("Error when logging in.");
       } else {
@@ -29,7 +28,6 @@ const Login = (props) => {
       }
     });
   };
-
   return (
     <div>
       <Navbar />
@@ -42,7 +40,7 @@ const Login = (props) => {
             id="email"
             onChange={(event) => setEmail(event.target.value)}
             required
-          ></input>
+          />
           <input
             type="password"
             placeholder="Password"
@@ -50,7 +48,7 @@ const Login = (props) => {
             id="password"
             onChange={(event) => setPassword(event.target.value)}
             required
-          ></input>
+          />
           <button type="submit" className="enter-button">
             Login
           </button>
@@ -64,29 +62,3 @@ const Login = (props) => {
 };
 
 export default Login;
-
-// const handleSubmit = (event) => {
-//   event.preventDefault()
-//   const data = JSON.stringify({
-//       "email": email,
-//       "password": password
-//   });
-//   const baseUrl = 'http://localhost:8080';
-
-//   const config = {
-//       method: 'post',
-//       url: baseUrl + '/backend/api/login',
-//       headers: {
-//           'Content-Type': 'application/json'
-//       },
-//       data: data
-//   };
-//   axios(config)
-//   .then( res => {
-//       document.cookie = res.data.sessionCookie
-//       history.push("/profile")
-//   })
-//   .catch( err => {
-//       console.log(err)
-//   });
-// }

@@ -12,20 +12,24 @@ const Navbar = (props) => {
   let history = useHistory();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  const handleClick = (event) => {
+
+  const handleSearch = (event) => {
     event.preventDefault();
-    let query = {
+    const query = {
       filter: "",
       subFilter: "",
       searchTerm: searchTerm,
     };
+    console.log(query);
+    console.log("calling dispatch");
     dispatch(updateQuery(query));
-    history.push("/postings");
+    history.push("/entries");
   };
 
   const handleLogout = (event) => {
@@ -33,6 +37,55 @@ const Navbar = (props) => {
     dispatch(logout());
     history.push("/login");
   };
+
+  // @TODO FIX THESE - LOGOUT button not redirecting but it is loggin out user
+  let loginButton = (
+    <div>
+      {user ? (
+        <Link to="/login">
+          <button className="navbar-btn" onClick={(e) => handleLogout(e)}>
+            Logout
+          </button>
+        </Link>
+      ) : (
+        <Link to="/login">
+          <button className="navbar-btn">Login</button>
+        </Link>
+      )}
+    </div>
+  );
+
+  // let loginButton = (
+  //   <Link to="/logout">
+  //     <button className="navbar-btn" >Logout</button>
+  //   </Link>
+  // );
+  // if (!loggedIn) {
+  //   loginButton = (
+  //     <Link to="/login">
+  //       <button className="navbar-btn">Login</button>
+  //     </Link>
+  //   );
+  // }
+
+  // let loginButton = null
+  // if (!loggedIn) {
+  //   loginButton = (
+  //     <Link to="/login">
+  //       <button className="navbar-btn">Login</button>
+  //     </Link>
+  //   );
+  // }
+  // else if(loggedIn){
+  //   loginButton = (
+  //     <Link to="/">
+  //       <button className="navbar-btn" >Logout</button>
+  //     </Link>
+  //   );
+  // }
+
+  let username = useSelector((state) => state.user.name);
+  let userID = useSelector((state) => state.user.id);
 
   return (
     <div className="navbar-search">
@@ -47,7 +100,7 @@ const Navbar = (props) => {
               <BsSearch />
             </div>
           </div>
-          <button onClick={handleClick} className="navbar-btn">
+          <button onClick={handleSearch} className="navbar-btn">
             Search
           </button>
         </form>
