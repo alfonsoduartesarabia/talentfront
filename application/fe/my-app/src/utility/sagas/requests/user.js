@@ -8,7 +8,11 @@ export const getUser = () => {
     params: {
       cookie: cookies.get("talentfront-session"),
     },
-  }).get("backend/api/user");
+  })
+    .get("backend/api/user")
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const postJobUser = (action) => {
@@ -24,4 +28,11 @@ export const postEducationUser = (action) => {
     ...education,
     isFinished: false,
   });
+};
+
+export const postSkill = (action) => {
+  const skill = action.payload;
+  console.log("POST SKILL HANDLER FIRED");
+  console.log("skill in the request", skill);
+  return createRequest().post("backend/api/user/skill", skill);
 };

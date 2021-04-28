@@ -22,7 +22,12 @@ import { BsFilePlus } from "react-icons/bs";
 import { BiPencil } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, addJob, updateEducation } from "../../utility/slices/user";
+import {
+  getUser,
+  addJob,
+  updateEducation,
+  updateSkill,
+} from "../../utility/slices/user";
 
 const cookies = new Cookies();
 const BASE_URL = "http://localhost";
@@ -143,13 +148,14 @@ const AddNewExperience = (props) => {
 const LeftSection = (props) => {
   const dispatch = useDispatch();
   let user = useSelector((state) => state.user);
-  const { imageLink, addSkill } = props;
+  const { imageLink, setSkill } = props;
   const [newSkill, setNewSkill] = useState("");
-  const [skills, setSkills] = useState(user.skills);
   const [isEditing, setIsEditing] = useState(false);
   const [school, setSchool] = useState("");
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
+
+  const skills = useSelector((state) => state.user.skills);
 
   useEffect(() => {
     if (user.educations && user.educations.length) {
@@ -158,19 +164,29 @@ const LeftSection = (props) => {
       setMajor(user.educations[0].major);
     }
   }, [user]);
-  const handleNewSkill = () => {
-    addSkill(newSkill);
-    setSkills((skills) => [...skills, newSkill]);
-    setNewSkill("");
-  };
-  const handleRemoveSkill = (index) => {
-    setSkills((skills) => skills.filter((skill, idx) => index !== idx));
-  };
   const toggleEdit = () => {
     if (isEditing) {
       dispatch(updateEducation({ school, degree, major }));
     }
     setIsEditing(!isEditing);
+  };
+  const addSkill = (event) => {
+    console.log("ADD SKILL UI fired");
+    dispatch(
+      updateSkill({
+        add: [newSkill],
+      })
+    );
+    setNewSkill("");
+    dispatch(getUser());
+  };
+  const handleRemoveSkill = (skill) => {
+    dispatch(
+      updateSkill({
+        remove: [skill],
+      })
+    );
+    dispatch(getUser());
   };
 
   return (
@@ -241,39 +257,39 @@ const LeftSection = (props) => {
       <Card>
         <Card.Header>Skills</Card.Header>
         <ListGroup variant="flush">
-          <ListGroup.Item className="individual-skill">
-            Java <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
-          </ListGroup.Item>
-          <ListGroup.Item className="individual-skill">
-            JavaScript
-            <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
-          </ListGroup.Item>
-          <ListGroup.Item className="individual-skill">
-            Googling
-            <RiDeleteBin5Fill style={{ color: "#dc3545" }} />
-          </ListGroup.Item>
-          {skills?.map((skill, index) => {
-            return (
-              <ListGroup.Item className="individual-skill" key={index}>
-                {skill}
-                <RiDeleteBin5Fill
-                  onClick={() => handleRemoveSkill(index)}
-                  style={{ color: "#dc3545" }}
-                />
-              </ListGroup.Item>
-            );
-          })}
-          <ListGroup.Item className="add-skill">
-            <FormControl
-              aria-label="Small"
-              aria-describedby="inputGroup-sizing-sm"
-              onChange={(event) => setNewSkill(event.target.value)}
-              value={newSkill}
-            />
-            <Button variant="outline-primary" onClick={handleNewSkill}>
-              Add Skill
-            </Button>
-          </ListGroup.Item>
+          {skills
+            ? (skills.map((skill, index) => {
+                return (
+                  <ListGroup.Item className="individual-skill" key={index}>
+                    {skill}
+                    {isEditing ? (
+                      <RiDeleteBin5Fill
+                        onClick={() => handleRemoveSkill(skill)}
+                        style={{ color: "#dc3545" }}
+                      />
+                    ) : null}
+                  </ListGroup.Item>
+                );
+              }),
+              skills.length === 0 ? (
+                <ListGroup.Item className="individual-skill">
+                  Add your first skill
+                </ListGroup.Item>
+              ) : null)
+            : null}
+          {isEditing ? (
+            <ListGroup.Item className="add-skill">
+              <FormControl
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
+                onChange={(event) => setNewSkill(event.target.value)}
+                value={newSkill}
+              />
+              <Button variant="outline-primary" onClick={addSkill}>
+                Add Skill
+              </Button>
+            </ListGroup.Item>
+          ) : null}
         </ListGroup>
       </Card>
     </div>
@@ -335,10 +351,6 @@ const ProfileScreen = (props) => {
       dispatch(getProfile(id));
     }
   }, [dispatch, id]);
-
-  const addSkill = (skill) => {
-    user.skills.push(skill);
-  };
 
   let imageLink =
     `${BASE_URL}/backend/api/user-image/${id}` +
@@ -636,7 +648,7 @@ const ProfileScreen = (props) => {
       <AddNewExperience show={show} handleClose={handleClose} />
       <Navbar />
       <div className="profile-screen-contanier">
-        <LeftSection user={user} imageLink={imageLink} addSkill={addSkill} />
+        <LeftSection user={user} imageLink={imageLink} />
         <RightSection handleShow={handleShow} />
       </div>
     </div>

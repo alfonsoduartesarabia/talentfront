@@ -1,5 +1,10 @@
 import { call, put } from "redux-saga/effects";
-import { getUser, postJobUser, postEducationUser } from "../requests/user";
+import {
+  getUser,
+  postJobUser,
+  postEducationUser,
+  postSkill,
+} from "../requests/user";
 import { setUser } from "../../slices/user";
 
 export function* handleGetUser(action) {
@@ -26,6 +31,14 @@ export function* handleAddJob(action) {
 export function* handleUpdateDegree(action) {
   try {
     const response = yield call(postEducationUser, action);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* handleUpdateSkill(action) {
+  try {
+    const response = yield call(postSkill, action);
   } catch (err) {
     console.log(err);
   }
