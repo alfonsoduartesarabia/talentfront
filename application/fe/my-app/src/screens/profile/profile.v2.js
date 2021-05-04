@@ -147,15 +147,14 @@ const AddNewExperience = (props) => {
 
 const LeftSection = (props) => {
   const dispatch = useDispatch();
-  let user = useSelector((state) => state.user);
-  const { imageLink, setSkill } = props;
+  const { imageLink, setSkill, user } = props;
   const [newSkill, setNewSkill] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [school, setSchool] = useState("");
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
 
-  const skills = useSelector((state) => state.user.skills);
+  const skills = user.skills
 
   useEffect(() => {
     if (user.educations && user.educations.length) {
@@ -188,6 +187,20 @@ const LeftSection = (props) => {
     );
     dispatch(getUser());
   };
+
+  const RenderedSkills = user.skills?.map((skill, index) => {
+    return (
+        <ListGroup.Item className="individual-skill" key={index}>
+          {skill}
+          {isEditing ? (
+              <RiDeleteBin5Fill
+                  onClick={() => handleRemoveSkill(skill)}
+                  style={{ color: "#dc3545" }}
+              />
+          ) : null}
+        </ListGroup.Item>
+    );
+  });
 
   return (
     <div className="personals">
@@ -257,26 +270,11 @@ const LeftSection = (props) => {
       <Card>
         <Card.Header>Skills</Card.Header>
         <ListGroup variant="flush">
-          {skills
-            ? (skills.map((skill, index) => {
-                return (
-                  <ListGroup.Item className="individual-skill" key={index}>
-                    {skill}
-                    {isEditing ? (
-                      <RiDeleteBin5Fill
-                        onClick={() => handleRemoveSkill(skill)}
-                        style={{ color: "#dc3545" }}
-                      />
-                    ) : null}
-                  </ListGroup.Item>
-                );
-              }),
-              skills.length === 0 ? (
+          {(user.skills && user.skills.length !== 0)
+            ? (RenderedSkills) :
                 <ListGroup.Item className="individual-skill">
                   Add your first skill
-                </ListGroup.Item>
-              ) : null)
-            : null}
+                </ListGroup.Item>}
           {isEditing ? (
             <ListGroup.Item className="add-skill">
               <FormControl
@@ -297,8 +295,8 @@ const LeftSection = (props) => {
 };
 
 const RightSection = (props) => {
-  const { handleShow } = props;
-  let experiences = useSelector((state) => state.user.experiences);
+  const { handleShow, user } = props;
+  let experiences = user.experiences;
   if (experiences === undefined) experiences = [];
   const RenderedExperiences = experiences.map((experience, index) => {
     return (
@@ -340,17 +338,16 @@ const ProfileScreen = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
-  const user = useSelector((state) => state.user);
+  const currUser = useSelector((state) => state.user);
+  const [user, setUser] = useState(currUser);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    if (id === "") {
-      dispatch(getUser());
-    } else {
-      dispatch(getProfile(id));
-    }
-  }, [dispatch, id]);
+    getProfile(id).then(res => {
+      setUser(res.data);
+    })
+  }, [id, setUser]);
 
   let imageLink =
     `${BASE_URL}/backend/api/user-image/${id}` +
@@ -360,22 +357,6 @@ const ProfileScreen = (props) => {
       BASE_URL +
       "/backend/api/user-image/" +
       `?cookie=${cookies.get("talentfront-session")}`;
-
-  // useEffect(() => {
-  //   if (id === "") {
-  //     getMyProfile().then((res) => {
-  //       console.log("getProfile RESPONSE", res);
-  //       if (res !== "err") setLoading(false);
-  //       setUser(res.data);
-  //     });
-  //   } else {
-  //     getProfile(id).then((res) => {
-  //       console.log("getProfile RESPONSE", res);
-  //       if (res !== "err") setLoading(false);
-  //       setUser(res.data);
-  //     });
-  //   }
-  // }, []);
 
   const handleSubmit = (file) => {
     const BASE_URL = window.origin;
@@ -649,7 +630,7 @@ const ProfileScreen = (props) => {
       <Navbar />
       <div className="profile-screen-contanier">
         <LeftSection user={user} imageLink={imageLink} />
-        <RightSection handleShow={handleShow} />
+        <RightSection user={user} handleShow={handleShow} />
       </div>
     </div>
   );
