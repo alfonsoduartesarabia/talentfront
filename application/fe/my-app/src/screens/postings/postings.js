@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/navbar";
 import { Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { postSearch } from "../../utility/request";
@@ -75,7 +74,6 @@ const PostingsScreen = (props) => {
   }
   return (
     <div>
-      <Navbar />
       <div className="postings-filter">
         FILTER BY:
         <div className="filter-sub">

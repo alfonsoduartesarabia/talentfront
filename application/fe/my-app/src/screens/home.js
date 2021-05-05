@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./home.css";
 import axios from "axios";
 
-import Navbar from "../components/navbar";
-
 const HomeScreen = (props) => {
   const [searchString, setSearchString] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -61,7 +59,6 @@ const HomeScreen = (props) => {
 
   return (
     <div className="home-container">
-      <Navbar />
       <div className="searchbar-container">
         <form onSubmit={handleSubmit}>
           <div className="searchbar-options-container">

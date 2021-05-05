@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./registration.css";
-import Navbar from "../components/navbar";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser, getUser } from "../utility/slices/user";
@@ -30,7 +29,6 @@ const Login = (props) => {
   };
   return (
     <div>
-      <Navbar />
       <div className="login-main">
         <form className="login-form" onSubmit={handleSubmit}>
           <input

@@ -1,31 +1,53 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/navbar";
 import { Spinner } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { postSearch } from "../../utility/request";
 import "./entries.scss";
 import {useHistory} from "react-router-dom";
+import {updateQuery} from "../../utility/slices/search";
 
 const EntriesScreen = (props) => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
-
   let query = useSelector((state) => state.search);
+  if (props.emptySearch) {
+    let newQuery = {
+      filter: "",
+      subFilter: "",
+      searchTerm: "",
+    };
+  }
   useEffect(() => {
     console.log("SENDING REQUEST TO BACKEND");
     console.log(JSON.stringify(query));
     setLoading(false);
-    postSearch(query?.search)
+    if (props.emptySearch) {
+      postSearch({
+        filter: "",
+        subFilter: "",
+        searchTerm: "",
+      })
       .then(res => {
         setEntries(res.data.entries)
         setLoading(false)
       })
-      .catch (err => {
+      .catch(err => {
         console.log(err)
         setLoading(false)
       })
-  }, [query]);
+    } else {
+      postSearch(query?.search)
+      .then(res => {
+        setEntries(res.data.entries)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.log(err)
+        setLoading(false)
+      })
+    }
+  }, [query, props.emptySearch]);
 
   let renderedPostings = entries.map((entry, index) => {
     return (
@@ -58,7 +80,6 @@ const EntriesScreen = (props) => {
   }
   return (
     <div>
-      <Navbar />
       <div className="job-posts-container">{renderedPostings}</div>
     </div>
   );

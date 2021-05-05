@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useReducer} from "react";
 import "./profile.scss";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
@@ -13,7 +13,6 @@ import {
   ListGroup,
   FormControl,
 } from "react-bootstrap";
-import Navbar from "../../components/navbar";
 import { useParams } from "react-router-dom";
 import { getProfile, postJobUser } from "../../utility/request";
 import Cookies from "universal-cookie";
@@ -147,15 +146,13 @@ const AddNewExperience = (props) => {
 
 const LeftSection = (props) => {
   const dispatch = useDispatch();
-  let user = useSelector((state) => state.user);
+  const { user } = props;
   const { imageLink, setSkill } = props;
   const [newSkill, setNewSkill] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [school, setSchool] = useState("");
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
-
-  const skills = user.skills;
 
   useEffect(() => {
     if (user.educations && user.educations.length) {
@@ -170,6 +167,7 @@ const LeftSection = (props) => {
     }
     setIsEditing(!isEditing);
   };
+
   const addSkill = (event) => {
     console.log("ADD SKILL UI fired");
     dispatch(
@@ -179,7 +177,9 @@ const LeftSection = (props) => {
     );
     setNewSkill("");
     dispatch(getUser());
+    window.location.reload(false);
   };
+
   const handleRemoveSkill = (skill) => {
     dispatch(
       updateSkill({
@@ -187,6 +187,7 @@ const LeftSection = (props) => {
       })
     );
     dispatch(getUser());
+    window.location.reload(false);
   };
 
   const RenderedSkills = user.skills?.map((skill, index) => {
@@ -207,11 +208,7 @@ const LeftSection = (props) => {
     <div className="personals">
       <Card className="profile-details">
         <div className="edit-profile">
-          {isEditing ? (
-            <FaCheck onClick={toggleEdit} />
-          ) : (
-            <BiPencil onClick={toggleEdit} />
-          )}
+          {props.isUsersPage ? (isEditing ? (<FaCheck onClick={toggleEdit}/>) : (<BiPencil onClick={toggleEdit}/>)) : <div />}
         </div>
         <img className="profile-image" src={imageLink} alt="profile" />
         <div className="profile-name">
@@ -256,13 +253,13 @@ const LeftSection = (props) => {
           ) : (
             <>
               <div className="text-muted">
-                {degree !== "" ? degree : "Degree - Not Available"}
+                {degree !== "" ? degree : (props.isUsersPage ? "Add a Degree" : "Degree - Not Available")}
               </div>
               <div className="text-muted">
-                {school ? school : "School - Not Available"}
+                {school ? school : (props.isUsersPage ? "Add a School" : "School - Not Available")}
               </div>
               <div className="text-muted">
-                {major ? major : "Major - Not Available"}
+                {major ? major : (props.isUsersPage ? "Add a Major" : "Major - Not Available")}
               </div>
             </>
           )}
@@ -275,7 +272,7 @@ const LeftSection = (props) => {
             RenderedSkills
           ) : (
             <ListGroup.Item className="individual-skill">
-              Add your first skill
+              {props.isUsersPage ? ("Add your first skill") : ""}
             </ListGroup.Item>
           )}
           {isEditing ? (
@@ -327,9 +324,10 @@ const RightSection = (props) => {
   return (
     <div className="right-section">
       {RenderedExperiences.length ? RenderedExperiences : null}
-      <div className="add-experience" onClick={handleShow}>
+      {props.isUsersPage ?
+          (<div className="add-experience" onClick={handleShow}>
         <div>Add Experience</div> <BsFilePlus />
-      </div>
+      </div>) : <div /> }
     </div>
   );
 };
@@ -337,7 +335,7 @@ const RightSection = (props) => {
 const ProfileScreen = (props) => {
   let id = useParams().id;
   if (id === undefined) id = "";
-  const dispatch = useDispatch();
+  const isUsersPage = id === "";
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
@@ -630,10 +628,9 @@ const ProfileScreen = (props) => {
   return (
     <div>
       <AddNewExperience show={show} handleClose={handleClose} />
-      <Navbar />
       <div className="profile-screen-contanier">
-        <LeftSection imageLink={imageLink} />
-        <RightSection user={user} handleShow={handleShow} />
+        <LeftSection user={user} imageLink={imageLink} isUsersPage={isUsersPage} />
+        <RightSection user={user} handleShow={handleShow} isUsersPage={isUsersPage} />
       </div>
     </div>
   );
