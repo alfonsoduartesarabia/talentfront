@@ -147,14 +147,15 @@ const AddNewExperience = (props) => {
 
 const LeftSection = (props) => {
   const dispatch = useDispatch();
-  const { imageLink, setSkill, user } = props;
+  let user = useSelector((state) => state.user);
+  const { imageLink, setSkill } = props;
   const [newSkill, setNewSkill] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [school, setSchool] = useState("");
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
 
-  const skills = user.skills
+  const skills = user.skills;
 
   useEffect(() => {
     if (user.educations && user.educations.length) {
@@ -190,15 +191,15 @@ const LeftSection = (props) => {
 
   const RenderedSkills = user.skills?.map((skill, index) => {
     return (
-        <ListGroup.Item className="individual-skill" key={index}>
-          {skill}
-          {isEditing ? (
-              <RiDeleteBin5Fill
-                  onClick={() => handleRemoveSkill(skill)}
-                  style={{ color: "#dc3545" }}
-              />
-          ) : null}
-        </ListGroup.Item>
+      <ListGroup.Item className="individual-skill" key={index}>
+        {skill}
+        {isEditing ? (
+          <RiDeleteBin5Fill
+            onClick={() => handleRemoveSkill(skill)}
+            style={{ color: "#dc3545" }}
+          />
+        ) : null}
+      </ListGroup.Item>
     );
   });
 
@@ -270,11 +271,13 @@ const LeftSection = (props) => {
       <Card>
         <Card.Header>Skills</Card.Header>
         <ListGroup variant="flush">
-          {(user.skills && user.skills.length !== 0)
-            ? (RenderedSkills) :
-                <ListGroup.Item className="individual-skill">
-                  Add your first skill
-                </ListGroup.Item>}
+          {user.skills && user.skills.length !== 0 ? (
+            RenderedSkills
+          ) : (
+            <ListGroup.Item className="individual-skill">
+              Add your first skill
+            </ListGroup.Item>
+          )}
           {isEditing ? (
             <ListGroup.Item className="add-skill">
               <FormControl
@@ -344,9 +347,9 @@ const ProfileScreen = (props) => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    getProfile(id).then(res => {
+    getProfile(id).then((res) => {
       setUser(res.data);
-    })
+    });
   }, [id, setUser]);
 
   let imageLink =
@@ -629,7 +632,7 @@ const ProfileScreen = (props) => {
       <AddNewExperience show={show} handleClose={handleClose} />
       <Navbar />
       <div className="profile-screen-contanier">
-        <LeftSection user={user} imageLink={imageLink} />
+        <LeftSection imageLink={imageLink} />
         <RightSection user={user} handleShow={handleShow} />
       </div>
     </div>
