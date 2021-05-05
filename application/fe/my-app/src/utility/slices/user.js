@@ -10,6 +10,7 @@ export const userSlice = createSlice({
     getUser() {},
     setUser: (state, action) => {
       const userData = action.payload;
+      console.log(action);
       if (typeof userData !== "object") return;
       return { ...state, ...userData };
     },
