@@ -7,7 +7,8 @@ const cookies = new Cookies();
 //   process.env.REACT_APP_ENV === "PROD" ? window.origin : "http://localhost";
 
 // @Alfonso works for me when yarn and docker are running
-const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
+const BASE_URL = window.origin;
 
 const source = axios.CancelToken.source(); // cancel a request using a cancel token
 // {cancelToken: source.token}
@@ -123,19 +124,28 @@ export const getProfile = (id) => {
 export const getPosting = (id) => {
   console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
   return createRequest()
-  .get("backend/api/user/" + id)
+  .get("backend/api/posting/" + id)
   .then((res) => {
     console.log("RESPONSE FROM", BASE_URL + "/backend/api/posting/" + id);
     console.log(res);
     return res;
   })
   .catch((err) => {
-    console.log("Get profile request failed: /backend/api/user/" + id);
+    console.log("Get posting request failed: /backend/api/posting/" + id);
     console.log(err);
     source.cancel();
     return "err";
   });
 };
+
+export const postPosting = (postingData) => {
+  return createRequest()
+  .post("/backend/api/posting", postingData)
+  .then((res) => {
+    console.log(res);
+    return res;
+  });
+}
 
 export const postAddJob = (job) => {
   return createRequest()
