@@ -1,14 +1,17 @@
 package com.talentfront.freya.search
 
+import com.talentfront.freya.daos.CompanyDao
 import com.talentfront.freya.daos.PostingDao
 import com.talentfront.freya.daos.UserDao
 import com.talentfront.freya.daos.UserEducationDao
 import com.talentfront.freya.daos.UserExperienceDao
 import com.talentfront.freya.daos.UserSkillDao
 import com.talentfront.freya.search.models.Entry
+import com.talentfront.freya.search.models.EntryType
 import com.talentfront.freya.search.models.Filter
 import com.talentfront.freya.search.models.SearchRequest
 import com.talentfront.freya.search.models.SearchResult
+import com.talentfront.jooq.tables.records.CompanyRecord
 import org.springframework.stereotype.Component
 
 @Component
@@ -17,7 +20,8 @@ class SearchService(
     private val userSkillDao: UserSkillDao,
     private val userExperienceDao: UserExperienceDao,
     private val postingDao: PostingDao,
-    private val userEducationDao: UserEducationDao
+    private val userEducationDao: UserEducationDao,
+    private val companyDao: CompanyDao
 ) {
 
     fun makeSearch(searchRequest: SearchRequest): SearchResult {
@@ -27,7 +31,7 @@ class SearchService(
             Filter.JOB_POSTING -> entries.searchPostings(searchRequest.searchTerm)
             Filter.TALENT -> entries.searchTalent(searchRequest.searchTerm)
             Filter.PROFESSOR -> entries.searchPostings(searchRequest.searchTerm)
-            Filter.ORGANIZATION -> entries.searchPostings(searchRequest.searchTerm)
+            Filter.ORGANIZATION -> entries.searchCompanies(searchRequest.searchTerm)
             else -> entries.searchAll(searchRequest.searchTerm)
         }
         return SearchResult(entries = entries, request = searchRequest)
@@ -36,6 +40,7 @@ class SearchService(
     fun MutableList<Entry>.searchAll(searchTerm: String?) {
         this.searchPostings(searchTerm)
         this.searchTalent(searchTerm)
+        this.searchCompanies(searchTerm)
     }
 
     fun determineFilter(filter: String?): Filter? {
@@ -56,6 +61,19 @@ class SearchService(
                 }
         } else {
             postingDao.getPostings().forEach {
+                this.add(it.toEntry())
+            }
+        }
+    }
+
+    fun MutableList<Entry>.searchCompanies(searchTerm: String?) {
+        if (searchTerm?.isNotBlank() == true) {
+            companyDao.searchCompanies(searchTerm)
+                .forEach {
+                    this.add(it.toEntry())
+                }
+        } else {
+            companyDao.getCompanies().forEach {
                 this.add(it.toEntry())
             }
         }
@@ -101,5 +119,14 @@ class SearchService(
                     }
                 }
         }
+    }
+
+    private fun CompanyRecord.toEntry(): Entry {
+        return Entry(
+            type = EntryType.COMPANY.name,
+            title = this.companyName,
+            description = this.product,
+            link = "/company/${this.companyId}"
+        )
     }
 }

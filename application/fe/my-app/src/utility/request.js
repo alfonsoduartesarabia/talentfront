@@ -138,6 +138,17 @@ export const getPosting = (id) => {
   });
 };
 
+export const getCompany = (id) => {
+  return createRequest()
+  .get("backend/api/company/" + id)
+  .then((res) => {
+    return res;
+  })
+  .catch((err) => {
+    return "err";
+  });
+}
+
 export const postPosting = (postingData) => {
   return createRequest()
   .post("/backend/api/posting", postingData)
@@ -150,6 +161,15 @@ export const postPosting = (postingData) => {
 export const postReview = (reviewData) => {
   return createRequest()
   .post("/backend/api/user/review", reviewData)
+  .then((res) => {
+    console.log(res);
+    return res;
+  });
+}
+
+export const postCompany = (companyData) => {
+  return createRequest()
+  .post("/backend/api/company", companyData)
   .then((res) => {
     console.log(res);
     return res;

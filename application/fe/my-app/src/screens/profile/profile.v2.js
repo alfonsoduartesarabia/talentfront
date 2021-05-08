@@ -15,7 +15,7 @@ import {
 import { useParams } from "react-router-dom";
 import {
   getImageLink,
-  getProfile, postReview,
+  getProfile, postCompany, postReview,
   postUserImage
 } from "../../utility/request";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -215,6 +215,97 @@ const AddNewReview = (props) => {
   );
 };
 
+const AddCompanyPage = (props) => {
+  const { show, handleClose, user } = props;
+  const [companyName, setCompanyName] = useState("");
+  const [mission, setMission] = useState("");
+  const [product, setProduct] = useState("");
+  const [numberEmployees, setNumberEmployees] = useState(0);
+  const [locations, setLocations] = useState([]);
+
+  const handleSave = () => {
+    let companyData = {
+      companyName,
+      mission,
+      product,
+      numberEmployees,
+      locations,
+    };
+    postCompany(companyData).then(res => window.location.assign(`/company/${res?.data?.companyId}`));
+  };
+
+  return (
+      <Modal
+          backdrop="static"
+          keyboard={false}
+          show={show}
+          onHide={handleClose}
+          size="lg"
+          centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Create a New Company Page</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label>Company Name</Form.Label>
+                <Form.Control
+                    onChange={(event) => setCompanyName(event.target.value)}
+                    placeholder="Enter Company Name"
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Number of Employees</Form.Label>
+                <Form.Control
+                    onChange={(event) => setNumberEmployees(parseInt(event.target.value))}
+                    placeholder="Enter Number of Employees"
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Group>
+              <Form.Label>Product</Form.Label>
+              <Form.Control
+                  onChange={(event) => setProduct(event.target.value)}
+                  as="textarea"
+                  rows={3}
+                  placeholder="Describe your Product"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Mission</Form.Label>
+              <Form.Control
+                  onChange={(event) => setMission(event.target.value)}
+                  as="textarea"
+                  rows={3}
+                  placeholder="Describe your company's mission"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Locations</Form.Label>
+              <Form.Control
+                  onChange={(event) => setLocations(event.target.value.split(','))}
+                  as="textarea"
+                  placeholder="Enter Your Company's Locations"
+                  rows={1}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  );
+};
+
+
 const LeftSection = (props) => {
   const dispatch = useDispatch();
   const { user } = props;
@@ -384,7 +475,7 @@ const LeftSection = (props) => {
 };
 
 const RightSection = (props) => {
-  const { handleShow, handlePosting, user, handleReview } = props;
+  const { handleShow, handlePosting, user, handleReview, handleCompany } = props;
   let experiences = user.experiences;
   if (experiences === undefined) experiences = [];
   const RenderedExperiences = experiences.map((experience, index) => {
@@ -447,6 +538,13 @@ const RightSection = (props) => {
           </div>
           : <div/>
       }
+      {props.isUsersPage && "company" === props.user?.userType ?
+          <div className="add-experience" onClick={handleCompany}>
+            <div>Create a Company Page</div>
+            <BsFilePlus/>
+          </div>
+          : <div/>
+      }
       {props.user?.isProfessor ?
           <div className="add-experience" onClick={handleReview}>
             <div>Add a review</div>
@@ -465,16 +563,19 @@ const ProfileScreen = (props) => {
   const [showAddExperience, setShowAddExperience] = useState(false);
   const [showAddPosting, setShowAddPosting] = useState(false);
   const [showReview, setShowReview] = useState(false);
+  const [showCompany, setShowCompany] = useState(false);
   const currUser = useSelector((state) => state.user);
   const [user, setUser] = useState(currUser);
   const handleClose = () => {
     setShowAddExperience(false);
     setShowAddPosting(false);
     setShowReview(false);
+    setShowCompany(false);
   }
   const handleShowExperience = () => setShowAddExperience(true);
   const handleShowPosting = () => setShowAddPosting(true);
   const handleReview = () => setShowReview(true);
+  const handleShowCompany = () => setShowCompany(true);
 
   useEffect(() => {
     getProfile(id).then((res) => {
@@ -489,9 +590,10 @@ const ProfileScreen = (props) => {
       <AddNewExperience show={showAddExperience} handleClose={handleClose} />
       <AddNewPosting show={showAddPosting} handleClose={handleClose} />
       <AddNewReview show={showReview} handleClose={handleClose} id={id} user={user}/>
+      <AddCompanyPage show={showCompany} handleClose={handleClose}/>
       <div className="profile-screen-container">
         <LeftSection user={user} imageLink={imageLink} isUsersPage={isUsersPage} />
-        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} handleReview = {handleReview} isUsersPage={isUsersPage} />
+        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} handleReview = {handleReview} handleCompany = {handleShowCompany} isUsersPage={isUsersPage} />
       </div>
     </div>
   );

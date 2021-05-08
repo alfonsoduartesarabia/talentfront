@@ -12,6 +12,7 @@ import EntriesScreen from "./screens/entries/entries";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import PostingScreen from "./screens/posting/posting";
+import CompanyScreen from "./screens/company/company";
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
 
           <Route path="/posting/:id">
             <PostingScreen />
+          </Route>
+
+          <Route path="/company/:id">
+            <CompanyScreen />
           </Route>
 
           {/*<Route path="/postings">*/}

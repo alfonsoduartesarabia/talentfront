@@ -295,6 +295,7 @@ const Registration = () => {
                         <option value="talent">Talent</option>
                         <option value="recruiter">Recruiter</option>
                         <option value="professor">Professor</option>
+                        <option value="company">Company</option>
 
                         {/* <option value="student">Student</option>
             <option value="recent-grad">Graduate</option>
