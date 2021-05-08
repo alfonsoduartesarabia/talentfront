@@ -5,17 +5,19 @@ import "tailwindcss/tailwind.css";
 import Registration from "./screens/registration";
 import Login from "./screens/login";
 import PostingsScreen from "./screens/postings/postings";
-import SearchBar from "./components/searchbar";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProfileScreenV2 from "./screens/profile/profile.v2.js";
 import EntriesScreen from "./screens/entries/entries";
+import Footer from "./components/footer";
+import Navbar from "./components/navbar";
 
 function App() {
   return (
     <CookiesProvider>
       <div className="App">
         <Router>
+          <Navbar />
           <Route path="/register">
             <Registration />
           </Route>
@@ -37,10 +39,10 @@ function App() {
             <EntriesScreen />
           </Route>
           <Route path="/" exact>
-            <ProfileScreenV2 />
-            {/*<SearchBar />*/}
+            <EntriesScreen emptySearch={true}/>
           </Route>
         </Router>
+        <Footer />
       </div>
     </CookiesProvider>
   );

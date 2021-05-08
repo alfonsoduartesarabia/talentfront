@@ -7,22 +7,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateQuery } from "../utility/slices/search";
 import { logout } from "../utility/slices/user";
 import { selectUser, getUser } from "../utility/slices/user";
+import {getProfile} from "../utility/request";
 
 const Navbar = (props) => {
   let history = useHistory();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
-
-  const user = useSelector((state) => state.user);
+  const [filter, setFilter] = useState("");
+  const currUser = useSelector((state) => state.user);
+  const [user, setUser] = useState(currUser);
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    getProfile("").then(res => {
+      setUser(res.data);
+    })
+  }, []);
 
   const handleSearch = (event) => {
     event.preventDefault();
     const query = {
-      filter: "",
+      filter: filter,
       subFilter: "",
       searchTerm: searchTerm,
     };
@@ -36,6 +40,7 @@ const Navbar = (props) => {
     console.log("logging out");
     dispatch(logout());
     history.push("/login");
+    window.location.reload(false);
   };
 
   // @TODO FIX THESE - LOGOUT button not redirecting but it is loggin out user
@@ -99,14 +104,20 @@ const Navbar = (props) => {
             <div className="search-bar-btn">
               <BsSearch />
             </div>
-          </div>
+            <select className="filter" onChange={(event) => setFilter(event.target.value)}>
+              <option value="">Any</option>
+              <option value="talent">Talent</option>
+              <option value="professor">Professor</option>
+              <option value="jobPosting">Jobs</option>
+            </select>
+            </div>
           <button onClick={handleSearch} className="navbar-btn">
             Search
           </button>
         </form>
       </div>
       <div className="navbar-right">
-        {Object.keys(user).length ? (
+        {Object.keys(user).length && user?.firstName ? (
           <>
             <Link to="/profile">
               <button className="navbar-btn">{user.firstName}</button>

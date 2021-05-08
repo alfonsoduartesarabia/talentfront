@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import "./registration.css";
 import { Link, useHistory } from "react-router-dom";
 import { postRegister } from "../utility/request";
-import Navbar from "../components/navbar";
 import { useDispatch } from "react-redux";
 import { getUser } from "../utility/slices/user.js";
-// import Footer from '../components/footer';
-// import axios from 'axios'
 
 const employerFields = () => (
   <div>
@@ -185,6 +182,7 @@ const Registration = () => {
       } else {
         dispatch(getUser());
         history.push("/profile");
+        window.location.reload(false);
       }
     });
   };
@@ -224,7 +222,6 @@ const Registration = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="registration-container">
         <h1>Registration</h1>
         <p className="info-paragraph">
@@ -302,7 +299,7 @@ const Registration = () => {
             <option value="teacher">Teacher</option>
             <option value="recruiter">Recruiter</option> */}
           </select>
-          {additionalFields}
+          {/*{additionalFields}*/}
 
           <button type="submit" className="register-button">
             Register

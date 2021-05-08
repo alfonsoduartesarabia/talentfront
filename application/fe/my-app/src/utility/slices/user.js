@@ -16,11 +16,11 @@ export const userSlice = createSlice({
     },
     logout: (state, action) => {
       cookies.remove("talentfront-session");
+      setUser({});
       return {};
     },
     addJob: (state, action) => {
       const { title, company, description } = action.payload;
-      console.log(action.payload);
     },
     updateEducation: (state, action) => {
       const { school, degree } = action.payload;
