@@ -109,6 +109,7 @@ const Navbar = (props) => {
               <option value="talent">Talent</option>
               <option value="professor">Professor</option>
               <option value="jobPosting">Jobs</option>
+              <option value="organization">Organizations</option>
             </select>
             </div>
           <button onClick={handleSearch} className="navbar-btn">
