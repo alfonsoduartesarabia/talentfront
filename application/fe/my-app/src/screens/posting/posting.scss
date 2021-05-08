@@ -113,7 +113,7 @@
   height: 100vh; // vw for width :)
 }
 
-.profile-screen-contanier {
+.profile-screen-container {
   display: flex;
   margin-left: 8%;
   margin-right: 8%;
@@ -207,6 +207,16 @@ content {
 }
 
 .article-head {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2%;
+}
+
+.article-sub-title {
+  text-align: left;
+}
+
+.article-sub-head {
   display: flex;
   justify-content: space-between;
   padding-left: 2%;

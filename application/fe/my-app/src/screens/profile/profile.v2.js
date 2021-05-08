@@ -29,6 +29,7 @@ import {
   updateEducation,
   updateSkill,
 } from "../../utility/slices/user";
+import {AddNewPosting} from "../posting/posting";
 
 const AddNewExperience = (props) => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const AddNewExperience = (props) => {
     };
     dispatch(addJob(job));
     dispatch(getUser());
-    window.location.reload(false);
+    setTimeout(function(){ window.location.reload(false); }, 1000);
   };
 
   return (
@@ -177,7 +178,7 @@ const LeftSection = (props) => {
     );
     setNewSkill("");
     dispatch(getUser());
-    window.location.reload(false);
+    setTimeout(function(){ window.location.reload(false); }, 1000);
   };
 
   const handleRemoveSkill = (skill) => {
@@ -195,7 +196,7 @@ const LeftSection = (props) => {
     const formData = new FormData(form);
     formData.append("image", file);
     postUserImage(formData);
-    window.location.reload(false);
+    setTimeout(function(){ window.location.reload(false); }, 1000);
   };
 
   const RenderedSkills = user.skills?.map((skill, index) => {
@@ -313,7 +314,7 @@ const LeftSection = (props) => {
 };
 
 const RightSection = (props) => {
-  const { handleShow, user } = props;
+  const { handleShow, handlePosting, user } = props;
   let experiences = user.experiences;
   if (experiences === undefined) experiences = [];
   const RenderedExperiences = experiences.map((experience, index) => {
@@ -346,6 +347,13 @@ const RightSection = (props) => {
           (<div className="add-experience" onClick={handleShow}>
         <div>Add Experience</div> <BsFilePlus />
       </div>) : <div /> }
+      {props.isUsersPage && "recruiter" === props.user?.userType ?
+          <div className="add-experience" onClick={handlePosting}>
+            <div>Create a Job Posting</div>
+            <BsFilePlus/>
+          </div>
+          : <div/>
+      }
     </div>
   );
 };
@@ -354,11 +362,13 @@ const ProfileScreen = (props) => {
   let id = useParams().id;
   if (id === undefined) id = "";
   const isUsersPage = id === "";
-  const [show, setShow] = useState(false);
+  const [showAddExperience, setShowAddExperience] = useState(false);
+  const [showAddPosting, setShowAddPosting] = useState(false);
   const currUser = useSelector((state) => state.user);
   const [user, setUser] = useState(currUser);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShowAddExperience(false);
+  const handleShowExperience = () => setShowAddExperience(true);
+  const handleShowPosting = () => setShowAddPosting(true);
 
   useEffect(() => {
     getProfile(id).then((res) => {
@@ -370,10 +380,11 @@ const ProfileScreen = (props) => {
 
   return (
     <div>
-      <AddNewExperience show={show} handleClose={handleClose} />
-      <div className="profile-screen-contanier">
+      <AddNewExperience show={showAddExperience} handleClose={handleClose} />
+      <AddNewPosting show={showAddPosting} handleClose={handleClose} />
+      <div className="profile-screen-container">
         <LeftSection user={user} imageLink={imageLink} isUsersPage={isUsersPage} />
-        <RightSection user={user} handleShow={handleShow} isUsersPage={isUsersPage} />
+        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} isUsersPage={isUsersPage} />
       </div>
     </div>
   );

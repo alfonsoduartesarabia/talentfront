@@ -33,9 +33,15 @@ function App() {
           <Route path="/profile/:id">
             <ProfileScreenV2 />
           </Route>
+
+          <Route path="/posting" exact>
+            <PostingScreen />
+          </Route>
+
           <Route path="/posting/:id">
             <PostingScreen />
           </Route>
+
           {/*<Route path="/postings">*/}
           {/*  <PostingsScreen />*/}
           {/*</Route>*/}

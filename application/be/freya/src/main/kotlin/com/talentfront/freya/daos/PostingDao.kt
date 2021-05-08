@@ -53,6 +53,8 @@ class PostingDao(
             dslContext.select()
                 .from(POSTING)
                 .where(POSTING.JOB_TITLE.like("%$term%"))
+                .or(POSTING.EMPLOYER_NAME.like("%$term%"))
+                .or(POSTING.CITY.like("%$term%"))
                 .fetchArray()
                 .forEach {
                     val record = it as PostingRecord
