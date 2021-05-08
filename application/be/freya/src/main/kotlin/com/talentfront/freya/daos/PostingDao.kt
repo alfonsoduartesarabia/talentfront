@@ -22,6 +22,30 @@ class PostingDao(
             }
     }
 
+    fun getPosting(id: Int): PostingRecord? {
+        val record = dslContext.select()
+            .from(POSTING)
+            .where(POSTING.POSTING_ID.eq(id))
+            .fetchOne() ?: null
+        return record?.into(POSTING)
+    }
+
+    fun savePosting(posting: Posting): PostingRecord? {
+        val record = dslContext.newRecord(POSTING).apply {
+            description = posting.description
+            employerName = posting.employerName
+            salaryRangeTop = posting.salaryRangeTop
+            salaryRangeBottom = posting.salaryRangeBottom
+            createdDt = posting.createdDt
+            userId = posting.userId
+            jobTitle = posting.jobTitle
+            state = posting.state
+            city = posting.city
+        }
+        record.store()
+        return record
+    }
+
     fun searchPostings(searchTerm: String): List<Posting> {
         val terms = searchTerm.split("\\s".toRegex())
         val list = mutableListOf<Posting>()
@@ -45,13 +69,11 @@ class PostingDao(
             employerName = this.employerName,
             salaryRangeTop = this.salaryRangeTop,
             salaryRangeBottom = this.salaryRangeBottom,
-            experienceRequired = this.experienceRequired,
             createdDt = this.createdDt,
             userId = this.userId,
             jobTitle = this.jobTitle,
             state = this.state,
             city = this.city,
-            zipCode = this.zipCode
         )
     }
 }

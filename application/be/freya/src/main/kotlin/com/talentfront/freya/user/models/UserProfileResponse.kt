@@ -3,12 +3,12 @@ package com.talentfront.freya.user.models
 data class UserProfileResponse(
     val firstName: String? = null,
     val lastName: String? = null,
+    val userType: String? = null,
     val companyName: String? = null,
     val degree: String? = null,
     val skills: Array<String>? = null,
     val experiences: Array<Experience>? = null,
     val educations: Array<EducationResponse>? = null
-
 )
 
 data class Experience(

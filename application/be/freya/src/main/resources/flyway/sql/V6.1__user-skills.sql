@@ -12,3 +12,5 @@ CREATE TABLE IF NOT EXISTS `user_skill` (
                                                ON DELETE NO ACTION
                                                ON UPDATE NO ACTION)
     ENGINE = InnoDB;
+
+CREATE INDEX `user_skill_user_id_fk` ON `user_skill` (`user_id` ASC);

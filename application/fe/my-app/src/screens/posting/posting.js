@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useReducer} from "react";
-import "./profile.scss";
+import "./posting.scss";
 import { Spinner } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import {

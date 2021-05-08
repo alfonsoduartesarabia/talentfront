@@ -321,7 +321,7 @@ const RightSection = (props) => {
       <Card key={index} className="article">
         <Card.Header className="card-head">
           <div className="article-head">
-            <h2 className="article-title">{experience.title}</h2>
+            <h2 className="article-title">{experience.company} - {experience.title}</h2>
             {experience.endDt === "null" ? (
               <h2 className="article-date">
                 {experience.startDt + " to present"}

@@ -13,3 +13,5 @@ CREATE TABLE IF NOT EXISTS `user_session` (
                                                ON DELETE NO ACTION
                                                ON UPDATE NO ACTION)
     ENGINE = InnoDB;
+
+CREATE INDEX `user_session_user_id_fk` ON `user_session` (`user_id` ASC);

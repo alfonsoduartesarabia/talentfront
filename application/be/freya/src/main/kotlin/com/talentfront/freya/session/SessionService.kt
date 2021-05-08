@@ -21,7 +21,8 @@ class SessionService(
         val value = "${user.id}_$verification"
 
         return ResponseCookie.from(SESSION_COOKIE_NAME, value)
-            .secure(true)
+            .secure(false)
+            .sameSite("none")
             .path("/")
             .maxAge(7 * 24 * 60 * 60)
             .build()

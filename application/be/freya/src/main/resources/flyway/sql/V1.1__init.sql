@@ -132,13 +132,11 @@ CREATE TABLE IF NOT EXISTS `posting` (
   `employer_name` VARCHAR(45) NOT NULL,
   `salary_range_top` INT NULL,
   `salary_range_bottom` INT NULL,
-  `experience_required` INT NOT NULL,
   `created_dt` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
   `job_title` VARCHAR(45) NOT NULL,
   `state` VARCHAR(2),
   `city` VARCHAR(256),
-  `zip_code` INT,
   PRIMARY KEY (`posting_id`),
   CONSTRAINT `posting_user_id_fk`
     FOREIGN KEY (`user_id`)
