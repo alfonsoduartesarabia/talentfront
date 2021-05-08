@@ -15,6 +15,7 @@ class UserReviewDao(
             reviewerId = p_reviewerId
             revieweeId = userReviewRequest.revieweeId
             reviewData = userReviewRequest.review
+            reviewStars = userReviewRequest.score
         }
         record.store()
         return record

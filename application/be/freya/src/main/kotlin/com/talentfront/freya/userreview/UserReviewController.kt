@@ -25,7 +25,7 @@ class UserReviewController(
     ): ResponseEntity<*> {
         val cookie = cookieQuery ?: cookieValue
         val userId = sessionService.getValidUserIdFromCookie(cookie) ?: return ResponseEntity.ok("expected cookie or path param")
-        if (userReviewRequest.revieweeId == null || userReviewRequest.review.isNullOrBlank()) {
+        if (userReviewRequest.revieweeId == null || userReviewRequest.review.isNullOrBlank() || userReviewRequest.score == null) {
             return ResponseEntity.ok("missing reviewee id or review data")
         }
         userReviewDao.savePosting(userId, userReviewRequest)

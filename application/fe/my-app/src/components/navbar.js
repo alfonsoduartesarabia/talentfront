@@ -19,7 +19,7 @@ const Navbar = (props) => {
 
   useEffect(() => {
     getProfile("").then(res => {
-      setUser(res.data);
+      setUser(res?.data);
     })
   }, []);
 
