@@ -83,6 +83,7 @@ class UserService(
         val reviewer = userDao.findById(this.reviewerId)!!
         return ReviewResponse(
             reviewerName = "${reviewer.firstName} ${reviewer.lastName}",
+            stars = "${this.reviewStars}/5",
             review = this.reviewData,
             link = "/profile/${reviewer.id}"
         )

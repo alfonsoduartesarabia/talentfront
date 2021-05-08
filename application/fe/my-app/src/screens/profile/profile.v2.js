@@ -149,6 +149,7 @@ const AddNewReview = (props) => {
   const { show, handleClose, user } = props;
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
+  const [score, setScore] = useState(5);
   const revieweeId = props.id
 
   const handleSave = () => {
@@ -156,6 +157,7 @@ const AddNewReview = (props) => {
     let reviewData = {
       revieweeId,
       review,
+      score,
     };
     postReview(reviewData).then(res => console.log(res.data));
     setTimeout(function(){ window.location.reload(false); }, 500);
@@ -174,6 +176,21 @@ const AddNewReview = (props) => {
           <Modal.Title>New Review for {user.firstName} {user.lastName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Rate them out of 5</Form.Label>
+              <Form.Control
+                  onChange={(event) => setScore(parseInt(event.target.value))}
+                  as="select"
+              >
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
           <Form>
             <Form.Group>
               <Form.Label>Review</Form.Label>
@@ -401,6 +418,9 @@ const RightSection = (props) => {
           <Card.Header className="card-head">
             <div className="article-head">
               <h5 className="article-title">Review from {review.reviewerName}</h5>
+              <h5 className="article-date">
+                {review.stars}
+              </h5>
               <button className="link-btn" onClick={() => {
                 window.location.assign(review.link)
               }}> Reviewer </button>
@@ -458,7 +478,7 @@ const ProfileScreen = (props) => {
 
   useEffect(() => {
     getProfile(id).then((res) => {
-      setUser(res.data);
+      setUser(res?.data);
     });
   }, [id, setUser]);
 

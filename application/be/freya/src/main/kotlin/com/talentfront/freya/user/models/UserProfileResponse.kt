@@ -30,5 +30,6 @@ data class EducationResponse(
 data class ReviewResponse(
     val reviewerName: String? = null,
     val review: String? = null,
-    val link: String? = null
+    val link: String? = null,
+    val stars: String? = null
 )

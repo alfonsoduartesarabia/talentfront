@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `user_review` (
   `review_data` TEXT NOT NULL,
   `reviewer_id` INT NOT NULL,
   `reviewee_id` INT NOT NULL,
+  `review_stars` INT NOT NULL,
   PRIMARY KEY (`user_review_id`),
   CONSTRAINT `user_review_reviewer_id_fk`
     FOREIGN KEY (`reviewer_id`)
