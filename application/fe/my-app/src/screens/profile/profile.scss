@@ -238,3 +238,18 @@ content {
   color: #000000;
   width: 100%;
 }
+
+.link-btn{
+  width: 150px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #bcd3f2;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 400;
+  cursor: pointer;
+  align-self: flex-end;
+}

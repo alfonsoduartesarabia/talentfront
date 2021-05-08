@@ -8,7 +8,9 @@ data class UserProfileResponse(
     val degree: String? = null,
     val skills: Array<String>? = null,
     val experiences: Array<Experience>? = null,
-    val educations: Array<EducationResponse>? = null
+    val educations: Array<EducationResponse>? = null,
+    val reviews: Array<ReviewResponse>? = null,
+    val isProfessor: Boolean = false
 )
 
 data class Experience(
@@ -23,4 +25,10 @@ data class EducationResponse(
     val school: String? = null,
     val degreeType: String? = null,
     val major: String? = null
+)
+
+data class ReviewResponse(
+    val reviewerName: String? = null,
+    val review: String? = null,
+    val link: String? = null
 )

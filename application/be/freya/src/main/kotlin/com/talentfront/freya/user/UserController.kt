@@ -38,8 +38,9 @@ class UserController(
         @PathVariable(required = false, value = "userId") pathUserId: Int?,
     ): ResponseEntity<*> {
         if (cookieValue == null && cookieQuery == null && pathUserId == null) return ResponseEntity.ok("expected cookie or path param")
-        val userId = userIdUtil.getUserId(pathUserId = pathUserId, cookieValue = cookieValue, cookieQuery = cookieQuery) ?: return ResponseEntity.ok("no user found")
-        val userProfileResponse: UserProfileResponse = userService.getUserInfo(userId) ?: return ResponseEntity.ok("no user found")
+        val mainUserId = userIdUtil.getUserId(pathUserId = pathUserId, cookieValue = cookieValue, cookieQuery = cookieQuery) ?: return ResponseEntity.ok("no user found")
+        val cookieUserId = sessionService.getValidUserIdFromCookie(cookieQuery ?: cookieValue)
+        val userProfileResponse: UserProfileResponse = userService.getUserInfo(mainUserId, cookieUserId) ?: return ResponseEntity.ok("no user found")
         return ResponseEntity.ok(userProfileResponse)
     }
 
