@@ -11,6 +11,7 @@ import ProfileScreenV2 from "./screens/profile/profile.v2.js";
 import EntriesScreen from "./screens/entries/entries";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
+import PostingScreen from "./screens/posting/posting";
 
 function App() {
   return (
@@ -32,9 +33,12 @@ function App() {
           <Route path="/profile/:id">
             <ProfileScreenV2 />
           </Route>
-          <Route path="/postings">
-            <PostingsScreen />
+          <Route path="/posting/:id">
+            <PostingScreen />
           </Route>
+          {/*<Route path="/postings">*/}
+          {/*  <PostingsScreen />*/}
+          {/*</Route>*/}
           <Route path="/entries">
             <EntriesScreen />
           </Route>

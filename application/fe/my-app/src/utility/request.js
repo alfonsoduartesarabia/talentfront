@@ -83,21 +83,25 @@ export const postRegister = (data) => {
     });
 };
 
-export const getMyProfile = () => {
-  console.log("session cookie:", cookies.get("talentfront-session"));
-  console.log("GET backend/api/user");
-  return createRequest()
-    .get("backend/api/user")
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.log("Get profile request failed: /backend/api/user");
-      console.log(err);
-      source.cancel();
-      return "err";
-    });
+export const getImageLink = (isUsersPage, id) => {
+  return isUsersPage
+      ? `${BASE_URL}/backend/api/user-image/?cookie=${cookies.get(
+          "talentfront-session")}`
+      : `${BASE_URL}/backend/api/user-image/${id}`;
 };
+
+export const postUserImage = (formData) => {
+  axios
+  .post(BASE_URL + `/backend/api/user-image/upload?cookie=${cookies.get("talentfront-session")}`, formData, {
+    "Content-Type": "Multipart-FormData",
+  })
+  .then((res) => {
+    console.log("RECEIVED IMAGE URL", res.config.url);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 export const getProfile = (id) => {
   console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
@@ -114,6 +118,23 @@ export const getProfile = (id) => {
       source.cancel();
       return "err";
     });
+};
+
+export const getPosting = (id) => {
+  console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
+  return createRequest()
+  .get("backend/api/user/" + id)
+  .then((res) => {
+    console.log("RESPONSE FROM", BASE_URL + "/backend/api/posting/" + id);
+    console.log(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log("Get profile request failed: /backend/api/user/" + id);
+    console.log(err);
+    source.cancel();
+    return "err";
+  });
 };
 
 export const postAddJob = (job) => {
