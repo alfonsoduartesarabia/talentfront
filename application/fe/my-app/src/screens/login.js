@@ -1,82 +1,62 @@
-import React from 'react'
-// import axios from 'axios'
-import "./registration.css"
-import Navbar from '../components/navbar'
-import {
-    // BrowserRouter as Router,
-    // Switch,
-    // Route,
-    Link
-  } from "react-router-dom";
-
-import { useDispatch } from 'react-redux'
-import { login } from "../features/user/slice"
+import React, { useState } from "react";
+import "./registration.css";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser, getUser } from "../utility/slices/user";
+import { postLogin } from "../utility/request";
 
 const Login = (props) => {
-    const dispatch = useDispatch()
-    //const [selectedUser, setSelectedUser] = useState()
-    // const handleSubmit = (event) => {
-    //     event.preventDefault()
-    //     var userType = document.getElementById("login-user-type").value
-    //     console.log(userType)
-    // }
+  const dispatch = useDispatch();
 
-    /**
-     * Austin's Code for login endpoint
-     */
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const history = useHistory();
 
-    let handleSubmit = (event) => {
-        event.preventDefault()
-        console.log("HELLO?")
-        console.log(login)
-        dispatch(login())
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+    });
 
-    // var data = JSON.stringify({
-    // "email": "test-email2@tester.mail",
-    // "password": "badfishsmell"
-    // });
+    postLogin(data).then((res) => {
+      if (res === undefined) {
+        console.log("Error when logging in.");
+      } else {
+        history.push("/profile");
+      }
+    });
+  };
+  return (
+    <div>
+      <div className="login-main">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            id="email"
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+          <button type="submit" className="enter-button">
+            Login
+          </button>
+          <p>
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-    // var config = {
-    //     method: 'post',
-    //     url: 'http://localhost:8080/backend/api/login',
-    //     headers: { 
-    //         'Content-Type': 'application/json'
-    //     },
-    //     data : data
-    // };
-
-    // axios(config)
-    //     .then(function (response) {
-    //         console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     });
-
-    return(
-        <div>
-            <Navbar />
-            <div className="login-main">
-                <form onSubmit={handleSubmit}>
-                    {/*<label for="login-user-type"><b>Indicate Type of User</b></label>
-                        <select name="login-user-type" id="login-user-type">
-                        <option value="talent">Talent</option>
-                        <option value="professor">Professor</option>
-                        <option value="employer">Employer</option>
-                    </select>*/}
-                    <input type="text" placeholder="Username" name="username" id="username" required></input>
-                    <input type="password" placeholder="Password" name="password" id="password" required></input>
-                    <button type="submit" class="enter-button">Login</button> 
-                    {/* <button onClick={handleSubmit} type="submit" class="enter-button">Login</button>  */}
-                    {/* <Link to="/register"><button type="submit" class="register-button">Signup</button> </Link> */}
-                    <p>Dont' have an account? <Link to="/register">Sign up</Link></p>
-                </form>
-            </div>    
-        </div>
-        
-    )
-
-}
-
-export default Login
+export default Login;

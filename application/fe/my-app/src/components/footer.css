@@ -1,0 +1,20 @@
+.footer-content, .footer-component, .footer-bottom {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.footer-component{
+    bottom: 0;
+    background: #80A4ED;
+    color: black    ;
+}
+.footer-component, .footer-content{
+    text-align: center;
+    height: 65px;
+}
+.footer-bottom{
+    background: #BCD3F2;
+    height: 45px;
+    bottom: 0;
+}

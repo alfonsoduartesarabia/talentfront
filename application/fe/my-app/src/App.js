@@ -1,49 +1,54 @@
-import React from 'react';
-import './App.sass';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Registration from './screens/registration'
-import Login from './screens/login'
-import PostingsScreen from './screens/postings/postings'
-import {
-  BrowserRouter as Router,
-  // Switch,
-  Route,
-  // Link
-} from "react-router-dom";
-import ProfileScreen from './screens/profile/profile.js'
+import React from "react";
+import "./App.sass";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "tailwindcss/tailwind.css";
+import Registration from "./screens/registration";
+import Login from "./screens/login";
+import PostingsScreen from "./screens/postings/postings";
+import { CookiesProvider } from "react-cookie";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ProfileScreenV2 from "./screens/profile/profile.v2.js";
+import EntriesScreen from "./screens/entries/entries";
+import Footer from "./components/footer";
+import Navbar from "./components/navbar";
+import PostingScreen from "./screens/posting/posting";
 
 function App() {
   return (
-    <div className="App">
-    <Router>
-      <Route path="/register">
-        <Registration/>  
-      </Route>
-      <Route path="/login">
-        {
-          /* Conditionally render here
-            or have a main login screen and render coditionally
-            maybe dropdown would do the work.
-            @Alfonso
-           */
-           <Login />
-         }
-        {/* <LoginEmployer />
-        <LoginProfessor />
-        <LoginTalent /> */}
-      </Route>
+    <CookiesProvider>
+      <div className="App">
+        <Router>
+          <Navbar />
+          <Route path="/register">
+            <Registration />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-      <Route path="/profile">
-        <ProfileScreen />
-      </Route>
-      <Route path="/postings">
-        <PostingsScreen />
-      </Route>
-      <Route path="/" exact>
-        <ProfileScreen />
-      </Route>
-    </Router>
-    </div>
+          <Route path="/profile" exact>
+            <ProfileScreenV2 />
+          </Route>
+
+          <Route path="/profile/:id">
+            <ProfileScreenV2 />
+          </Route>
+          <Route path="/posting/:id">
+            <PostingScreen />
+          </Route>
+          {/*<Route path="/postings">*/}
+          {/*  <PostingsScreen />*/}
+          {/*</Route>*/}
+          <Route path="/entries">
+            <EntriesScreen />
+          </Route>
+          <Route path="/" exact>
+            <EntriesScreen emptySearch={true}/>
+          </Route>
+        </Router>
+        <Footer />
+      </div>
+    </CookiesProvider>
   );
 }
 

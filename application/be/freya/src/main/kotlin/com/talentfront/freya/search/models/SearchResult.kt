@@ -2,7 +2,6 @@ package com.talentfront.freya.search.models
 
 data class SearchResult(
     val entries: List<Entry>,
-    val nextPage: String? = null,
     val request: SearchRequest
 )
 

@@ -1,7 +1,12 @@
 package com.talentfront.freya.daos
 
+import com.talentfront.freya.models.User.Companion.toUser
+import com.talentfront.freya.models.UserExperience
+import com.talentfront.freya.models.UserExperience.Companion.toUserExperience
+import com.talentfront.jooq.tables.User
 import com.talentfront.jooq.tables.UserExperience.USER_EXPERIENCE
 import com.talentfront.jooq.tables.records.UserExperienceRecord
+import com.talentfront.jooq.tables.records.UserRecord
 import org.jooq.DSLContext
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -11,6 +16,28 @@ import java.time.LocalDate.now
 class UserExperienceDao(
     private val dslContext: DSLContext
 ) {
+
+    fun searchUserExperience(search: String): List<UserExperience> {
+        val terms = search.split("\\s".toRegex())
+        val list = mutableListOf<UserExperience>()
+        terms.forEach { term ->
+            dslContext.select()
+                .from(USER_EXPERIENCE)
+                .join(User.USER).on(USER_EXPERIENCE.USER_ID.eq(User.USER.USER_ID))
+                .where(USER_EXPERIENCE.JOB_TITLE.like("%$term%"))
+                .or(USER_EXPERIENCE.COMPANY.like("%$term%"))
+                .orderBy(USER_EXPERIENCE.USER_ID.asc())
+                .fetchArray()
+                .map {
+                    list.add(makeDomainUserSkillRecord(it.into(USER_EXPERIENCE), it.into(User.USER)))
+                }
+        }
+        return list
+    }
+
+    private fun makeDomainUserSkillRecord(userExperienceRecord: UserExperienceRecord, userRecord: UserRecord): UserExperience {
+        return userExperienceRecord.toUserExperience(userRecord.toUser())
+    }
 
     fun getUserExperiencesByUserId(userId: Int): List<UserExperienceRecord> {
         return dslContext.select()

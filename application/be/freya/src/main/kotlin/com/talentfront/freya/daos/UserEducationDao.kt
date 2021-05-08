@@ -14,17 +14,33 @@ import org.springframework.stereotype.Component
 class UserEducationDao(
     private val dslContext: DSLContext
 ) {
-    fun getUserEducations(seek: Int, limit: Int): List<UserEducation> {
+
+    fun getUserEducations(): List<UserEducation> {
         return dslContext.select()
             .from(USER_EDUCATION)
             .join(USER).on(USER_EDUCATION.USER_ID.eq(USER.USER_ID))
             .orderBy(USER_EDUCATION.USER_EDUCATION_ID.asc())
-            .seek(seek)
-            .limit(limit)
             .fetchArray()
             .map {
                 makeDomainUserEducation(it.into(USER_EDUCATION), it.into(USER))
             }
+    }
+
+    fun getUserEducations(searchTerm: String): List<UserEducation> {
+        val terms = searchTerm.split("\\s".toRegex())
+        val list = mutableListOf<UserEducation>()
+        terms.forEach { term ->
+            dslContext.select()
+                .from(USER_EDUCATION)
+                .join(USER).on(USER_EDUCATION.USER_ID.eq(USER.USER_ID))
+                .where(USER_EDUCATION.SCHOOL.like("%$term%"))
+                .orderBy(USER_EDUCATION.USER_EDUCATION_ID.asc())
+                .fetchArray()
+                .map {
+                    list.add(makeDomainUserEducation(it.into(USER_EDUCATION), it.into(USER)))
+                }
+        }
+        return list
     }
 
     private fun makeDomainUserEducation(userEducationRecord: UserEducationRecord, userRecord: UserRecord): UserEducation {

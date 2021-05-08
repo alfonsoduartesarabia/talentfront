@@ -1,5 +1,7 @@
 package com.talentfront.freya.models
 
+import com.talentfront.freya.search.models.Entry
+import com.talentfront.freya.search.models.EntryType
 import com.talentfront.jooq.tables.records.UserRecord
 
 data class User(
@@ -11,6 +13,15 @@ data class User(
     val firstName: String? = null,
     val lastName: String? = null
 ) {
+    fun toEntry(): Entry {
+        val fullName = "${this.firstName} ${this.lastName}"
+        return Entry(type = EntryType.USER.name, title = fullName, description = this.generateDescription(), link = "/profile/${this.id}")
+    }
+
+    private fun generateDescription(): String {
+        return "Is currently open to suitable positions"
+    }
+
     companion object {
         fun UserRecord.toUser(): User {
             return User(
