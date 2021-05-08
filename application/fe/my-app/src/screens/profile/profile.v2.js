@@ -15,7 +15,7 @@ import {
 import { useParams } from "react-router-dom";
 import {
   getImageLink,
-  getProfile,
+  getProfile, postReview,
   postUserImage
 } from "../../utility/request";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -145,6 +145,59 @@ const AddNewExperience = (props) => {
   );
 };
 
+const AddNewReview = (props) => {
+  const { show, handleClose, user } = props;
+  const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
+  const revieweeId = props.id
+
+  const handleSave = () => {
+    setLoading(true);
+    let reviewData = {
+      revieweeId,
+      review,
+    };
+    postReview(reviewData).then(res => console.log(res.data));
+    setTimeout(function(){ window.location.reload(false); }, 500);
+  };
+
+  return (
+      <Modal
+          backdrop="static"
+          keyboard={false}
+          show={show}
+          onHide={handleClose}
+          size="lg"
+          centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>New Review for {user.firstName} {user.lastName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Review</Form.Label>
+              <Form.Control
+                  onChange={(event) => setReview(event.target.value)}
+                  as="textarea"
+                  rows={4}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {loading ? <Spinner animation="border" variant="primary" /> : null}
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  );
+};
+
 const LeftSection = (props) => {
   const dispatch = useDispatch();
   const { user } = props;
@@ -178,7 +231,7 @@ const LeftSection = (props) => {
     );
     setNewSkill("");
     dispatch(getUser());
-    setTimeout(function(){ window.location.reload(false); }, 1000);
+    setTimeout(function(){ window.location.reload(false); }, 500);
   };
 
   const handleRemoveSkill = (skill) => {
@@ -196,7 +249,7 @@ const LeftSection = (props) => {
     const formData = new FormData(form);
     formData.append("image", file);
     postUserImage(formData);
-    setTimeout(function(){ window.location.reload(false); }, 1000);
+    setTimeout(function(){ window.location.reload(false); }, 500);
   };
 
   const RenderedSkills = user.skills?.map((skill, index) => {
@@ -314,7 +367,7 @@ const LeftSection = (props) => {
 };
 
 const RightSection = (props) => {
-  const { handleShow, handlePosting, user } = props;
+  const { handleShow, handlePosting, user, handleReview } = props;
   let experiences = user.experiences;
   if (experiences === undefined) experiences = [];
   const RenderedExperiences = experiences.map((experience, index) => {
@@ -340,9 +393,29 @@ const RightSection = (props) => {
       </Card>
     );
   });
+  let reviews = user.reviews;
+  if (reviews === undefined) reviews = [];
+  const RenderedReviews = reviews.map((review, index) => {
+    return (
+        <Card key={index} className="article">
+          <Card.Header className="card-head">
+            <div className="article-head">
+              <h5 className="article-title">Review from {review.reviewerName}</h5>
+              <button className="link-btn" onClick={() => {
+                window.location.assign(review.link)
+              }}> Reviewer </button>
+            </div>
+          </Card.Header>
+          <Card.Body>
+            <Card.Text>{review.review}</Card.Text>
+          </Card.Body>
+        </Card>
+    );
+  });
   return (
     <div className="right-section">
       {RenderedExperiences.length ? RenderedExperiences : null}
+      {RenderedReviews.length ? RenderedReviews : null}
       {props.isUsersPage ?
           (<div className="add-experience" onClick={handleShow}>
         <div>Add Experience</div> <BsFilePlus />
@@ -350,6 +423,13 @@ const RightSection = (props) => {
       {props.isUsersPage && "recruiter" === props.user?.userType ?
           <div className="add-experience" onClick={handlePosting}>
             <div>Create a Job Posting</div>
+            <BsFilePlus/>
+          </div>
+          : <div/>
+      }
+      {props.user?.isProfessor ?
+          <div className="add-experience" onClick={handleReview}>
+            <div>Add a review</div>
             <BsFilePlus/>
           </div>
           : <div/>
@@ -364,11 +444,17 @@ const ProfileScreen = (props) => {
   const isUsersPage = id === "";
   const [showAddExperience, setShowAddExperience] = useState(false);
   const [showAddPosting, setShowAddPosting] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const currUser = useSelector((state) => state.user);
   const [user, setUser] = useState(currUser);
-  const handleClose = () => setShowAddExperience(false);
+  const handleClose = () => {
+    setShowAddExperience(false);
+    setShowAddPosting(false);
+    setShowReview(false);
+  }
   const handleShowExperience = () => setShowAddExperience(true);
   const handleShowPosting = () => setShowAddPosting(true);
+  const handleReview = () => setShowReview(true);
 
   useEffect(() => {
     getProfile(id).then((res) => {
@@ -382,9 +468,10 @@ const ProfileScreen = (props) => {
     <div>
       <AddNewExperience show={showAddExperience} handleClose={handleClose} />
       <AddNewPosting show={showAddPosting} handleClose={handleClose} />
+      <AddNewReview show={showReview} handleClose={handleClose} id={id} user={user}/>
       <div className="profile-screen-container">
         <LeftSection user={user} imageLink={imageLink} isUsersPage={isUsersPage} />
-        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} isUsersPage={isUsersPage} />
+        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} handleReview = {handleReview} isUsersPage={isUsersPage} />
       </div>
     </div>
   );

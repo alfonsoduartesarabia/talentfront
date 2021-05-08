@@ -7,8 +7,8 @@ const cookies = new Cookies();
 //   process.env.REACT_APP_ENV === "PROD" ? window.origin : "http://localhost";
 
 // @Alfonso works for me when yarn and docker are running
-// const BASE_URL = "http://localhost:8080";
-const BASE_URL = window.origin;
+const BASE_URL = "http://localhost:8080";
+// const BASE_URL = window.origin;
 
 const source = axios.CancelToken.source(); // cancel a request using a cancel token
 // {cancelToken: source.token}
@@ -146,6 +146,16 @@ export const postPosting = (postingData) => {
     return res;
   });
 }
+
+export const postReview = (reviewData) => {
+  return createRequest()
+  .post("/backend/api/user/review", reviewData)
+  .then((res) => {
+    console.log(res);
+    return res;
+  });
+}
+
 
 export const postAddJob = (job) => {
   return createRequest()

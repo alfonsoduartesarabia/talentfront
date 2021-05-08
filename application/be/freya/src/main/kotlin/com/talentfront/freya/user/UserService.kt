@@ -4,13 +4,16 @@ import com.talentfront.freya.daos.UserCompanyDao
 import com.talentfront.freya.daos.UserDao
 import com.talentfront.freya.daos.UserEducationDao
 import com.talentfront.freya.daos.UserExperienceDao
+import com.talentfront.freya.daos.UserReviewDao
 import com.talentfront.freya.daos.UserSkillDao
 import com.talentfront.freya.daos.UserTypeDao
 import com.talentfront.freya.user.models.EducationResponse
 import com.talentfront.freya.user.models.Experience
+import com.talentfront.freya.user.models.ReviewResponse
 import com.talentfront.freya.user.models.UserProfileResponse
 import com.talentfront.jooq.tables.records.UserEducationRecord
 import com.talentfront.jooq.tables.records.UserExperienceRecord
+import com.talentfront.jooq.tables.records.UserReviewRecord
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -21,9 +24,10 @@ class UserService(
     private val userEducationDao: UserEducationDao,
     private val userSkillDao: UserSkillDao,
     private val userExperienceDao: UserExperienceDao,
-    private val userTypeDao: UserTypeDao
+    private val userTypeDao: UserTypeDao,
+    private val userReviewDao: UserReviewDao
 ) {
-    fun getUserInfo(userId: Int): UserProfileResponse? {
+    fun getUserInfo(userId: Int, cookieUserId: Int?): UserProfileResponse? {
         val user = userDao.findById(userId) ?: return null
         val educations = userEducationDao.getUserEducationsByUserId(userId)
         val educationResponses = educations
@@ -35,6 +39,14 @@ class UserService(
         val experiences = userExperienceDao.getUserExperiencesByUserId(userId)
             .map { record -> record.toExperience() }
             .toTypedArray()
+        val cookieUser = if (cookieUserId != null) {
+            userDao.findById(cookieUserId)
+        } else {
+            null
+        }
+        val reviews = userReviewDao.getReviews(userId)
+            .map { record -> record.toReview() }
+            .toTypedArray()
         return UserProfileResponse(
             firstName = user.firstName,
             lastName = user.lastName,
@@ -43,7 +55,9 @@ class UserService(
             degree = if (educations.isNotEmpty()) educations[0].degreeType else "",
             skills = skills,
             experiences = experiences,
-            educations = educationResponses
+            educations = educationResponses,
+            isProfessor = cookieUserId != userId && 2 == cookieUser?.userTypeId,
+            reviews = reviews
         )
     }
 
@@ -62,6 +76,15 @@ class UserService(
             startDt = getFormattedDate(this.dateStart),
             endDt = getFormattedDate(this.dateEnd),
             description = this.description
+        )
+    }
+
+    private fun UserReviewRecord.toReview(): ReviewResponse {
+        val reviewer = userDao.findById(this.reviewerId)!!
+        return ReviewResponse(
+            reviewerName = "${reviewer.firstName} ${reviewer.lastName}",
+            review = this.reviewData,
+            link = "/profile/${reviewer.id}"
         )
     }
 
