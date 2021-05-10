@@ -41,16 +41,19 @@
 .landing-info-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 5vh 0;
   img {
     border-top-right-radius: 25%;
     border-top-left-radius: 25%;
+    height: 100%;
   }
   .jumbotron {
     background-color: white;
     img {
       border-radius: 50%;
     }
+    min-width: 50%;
     .media {
       display: flex;
       justify-content: center;
@@ -81,6 +84,34 @@
     }
     button:hover {
       color: black;
+    }
+  }
+}
+
+.job-search-home {
+  padding: 10vh 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  height: 80vh;
+  .media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 50px;
+  }
+  .media-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h4 {
+      font-weight: 300;
+      text-align: center;
+    }
+    img {
+      height: 300px;
     }
   }
 }
