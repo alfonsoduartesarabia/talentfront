@@ -110,7 +110,9 @@ const Navbar = (props) => {
                 user={user}
             />
             <div className="navbar-search">
-                <img src={LogoImage} />
+                <Link to="/">
+                    <img src={LogoImage} />{" "}
+                </Link>
                 <div className="search-bar-wrapper">
                     <form action="">
                         <div className="search-bar">
