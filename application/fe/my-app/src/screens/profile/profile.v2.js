@@ -531,7 +531,7 @@ const RightSection = (props) => {
           (<div className="add-experience" onClick={handleShow}>
         <div>Add Experience</div> <BsFilePlus />
       </div>) : <div /> }
-      {props.isUsersPage && "recruiter" === props.user?.userType ?
+      {props.isUsersPage && ("recruiter" === props.user?.userType || "company" === props.user?.userType) ?
           <div className="add-experience" onClick={handlePosting}>
             <div>Create a Job Posting</div>
             <BsFilePlus/>

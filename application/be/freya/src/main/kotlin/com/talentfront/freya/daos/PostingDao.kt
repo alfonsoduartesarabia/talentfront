@@ -22,6 +22,18 @@ class PostingDao(
             }
     }
 
+    fun getPostingByPoster(userId: Int): List<Posting> {
+        return dslContext.select()
+            .from(POSTING)
+            .where(POSTING.USER_ID.eq(userId))
+            .orderBy(POSTING.POSTING_ID.asc())
+            .fetchArray()
+            .map {
+                val record = it as PostingRecord
+                record.toPosting()
+            }
+    }
+
     fun getPosting(id: Int): PostingRecord? {
         val record = dslContext.select()
             .from(POSTING)

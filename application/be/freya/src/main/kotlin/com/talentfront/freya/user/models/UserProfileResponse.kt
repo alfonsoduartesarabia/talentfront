@@ -10,6 +10,7 @@ data class UserProfileResponse(
     val experiences: Array<Experience>? = null,
     val educations: Array<EducationResponse>? = null,
     val reviews: Array<ReviewResponse>? = null,
+    val notifications: Array<NotificationResponse>? = null,
     val isProfessor: Boolean = false
 )
 
@@ -32,4 +33,11 @@ data class ReviewResponse(
     val review: String? = null,
     val link: String? = null,
     val stars: String? = null
+)
+
+data class NotificationResponse(
+    val applyName: String? = null,
+    val email: String? = null,
+    val profileLink: String? = null,
+    val postingLink: String? = null
 )
