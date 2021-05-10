@@ -13,6 +13,7 @@ import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import PostingScreen from "./screens/posting/posting";
 import CompanyScreen from "./screens/company/company";
+import HomeScreen from "./screens/home";
 
 function App() {
   return (
@@ -54,7 +55,8 @@ function App() {
             <EntriesScreen />
           </Route>
           <Route path="/" exact>
-            <EntriesScreen emptySearch={true}/>
+            {/*<EntriesScreen emptySearch={true}/>*/}
+            <HomeScreen />
           </Route>
         </Router>
         <Footer />
