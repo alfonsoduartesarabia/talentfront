@@ -1,18 +1,22 @@
 package com.talentfront.freya.user
 
+import com.talentfront.freya.daos.PostingDao
 import com.talentfront.freya.daos.UserCompanyDao
 import com.talentfront.freya.daos.UserDao
 import com.talentfront.freya.daos.UserEducationDao
 import com.talentfront.freya.daos.UserExperienceDao
+import com.talentfront.freya.daos.UserPostingApplyDao
 import com.talentfront.freya.daos.UserReviewDao
 import com.talentfront.freya.daos.UserSkillDao
 import com.talentfront.freya.daos.UserTypeDao
 import com.talentfront.freya.user.models.EducationResponse
 import com.talentfront.freya.user.models.Experience
+import com.talentfront.freya.user.models.NotificationResponse
 import com.talentfront.freya.user.models.ReviewResponse
 import com.talentfront.freya.user.models.UserProfileResponse
 import com.talentfront.jooq.tables.records.UserEducationRecord
 import com.talentfront.jooq.tables.records.UserExperienceRecord
+import com.talentfront.jooq.tables.records.UserPostingApplyRecord
 import com.talentfront.jooq.tables.records.UserReviewRecord
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -25,7 +29,9 @@ class UserService(
     private val userSkillDao: UserSkillDao,
     private val userExperienceDao: UserExperienceDao,
     private val userTypeDao: UserTypeDao,
-    private val userReviewDao: UserReviewDao
+    private val userReviewDao: UserReviewDao,
+    private val userPostingApplyDao: UserPostingApplyDao,
+    private val postingDao: PostingDao
 ) {
     fun getUserInfo(userId: Int, cookieUserId: Int?): UserProfileResponse? {
         val user = userDao.findById(userId) ?: return null
@@ -47,6 +53,13 @@ class UserService(
         val reviews = userReviewDao.getReviews(userId)
             .map { record -> record.toReview() }
             .toTypedArray()
+        val postings = postingDao.getPostingByPoster(userId)
+            .mapNotNull { it.id }
+            .toTypedArray()
+        val postingApplies = mutableListOf<UserPostingApplyRecord>()
+        for (posting in postings) {
+            userPostingApplyDao.getAppliesForPosting(posting).forEach { postingApplies.add(it) }
+        }
         return UserProfileResponse(
             firstName = user.firstName,
             lastName = user.lastName,
@@ -57,7 +70,8 @@ class UserService(
             experiences = experiences,
             educations = educationResponses,
             isProfessor = cookieUserId != userId && 2 == cookieUser?.userTypeId,
-            reviews = reviews
+            reviews = reviews,
+            notifications = postingApplies.map { it.toNotification() }.toTypedArray()
         )
     }
 
@@ -96,5 +110,15 @@ class UserService(
     private fun getMonthFromDate(date: LocalDate?): String {
         val startMonth = date?.month?.name?.toLowerCase()
         return startMonth?.replaceRange(0, 1, "${startMonth[0].toUpperCase()}") ?: ""
+    }
+
+    private fun UserPostingApplyRecord.toNotification(): NotificationResponse {
+        val user = userDao.findById(this.applicantId)
+        return NotificationResponse(
+            applyName = "${user?.firstName} ${user?.lastName}",
+            email = user?.email,
+            profileLink = "/profile/${this.applicantId}",
+            postingLink = "/posting/${this.postingId}"
+        )
     }
 }

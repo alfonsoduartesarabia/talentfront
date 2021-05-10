@@ -9,9 +9,27 @@ import {
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import {
+  getApply,
   getPosting, postPosting,
 } from "../../utility/request";
 
+export const ShowNotification = (props) => {
+  const {showNotification, handleClose} = props;
+
+  return (
+      <Modal
+          backdrop="static"
+          keyboard={false}
+          show={showNotification}
+          onHide={handleClose}
+          size="lg"
+          centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>We've notified the Poster of Your Interest</Modal.Title>
+        </Modal.Header>
+      </Modal>);
+};
 export const AddNewPosting = (props) => {
   const { show, handleClose } = props;
   const [jobTitle, setJobTitle] = useState("");
@@ -132,7 +150,7 @@ export const AddNewPosting = (props) => {
 };
 
 const JobSection = (props) => {
-  const { handleShow, posting, isPostersPage } = props;
+  const { handleShow, posting, isPostersPage, id, handleShowNotification } = props;
 
   const RenderedReqs = posting?.requirements?.map((requirement, index) => {
     return (
@@ -141,6 +159,13 @@ const JobSection = (props) => {
         </li>
     );
   });
+
+  const handleApply = () => {
+    console.log("logging out");
+    handleShowNotification()
+    getApply(id).then(r => console.log("HI"));
+  };
+
 
   return (!isPostersPage) ?
       (
@@ -153,6 +178,9 @@ const JobSection = (props) => {
             </div>
             <div className="article-sub-head">
               <h4 className="article-sub-title">Salary Range: {posting.salaryRange}</h4>
+              <button className="navbar-btn" onClick={handleApply}>
+                Apply
+              </button>
             </div>
           </Card.Header>
           <Card.Body>
@@ -178,9 +206,14 @@ const PostingScreen = (props) => {
   if (id === undefined) id = "";
   const isPostersPage = id === "";
   const [show, setShow] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const [posting, setPosting] = useState({});
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setShowNotification(false)
+  }
   const handleShow = () => setShow(true);
+  const handleShowNotification = () => setShowNotification(true);
 
   useEffect(() => {
     if (id !== "") {
@@ -193,8 +226,9 @@ const PostingScreen = (props) => {
   return (
       <div>
         <AddNewPosting show={show} handleClose={handleClose} />
+        <ShowNotification showNotification={showNotification} handleClose={handleClose} />
         <div className="profile-screen-container">
-          <JobSection posting={posting} handleShow={handleShow} isPostersPage={isPostersPage} />
+          <JobSection id = {id} posting={posting} handleShow={handleShow} handleShowNotification={handleShowNotification} isPostersPage={isPostersPage} />
         </div>
       </div>
   );

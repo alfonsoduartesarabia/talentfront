@@ -188,40 +188,6 @@ const Registration = () => {
             }
         });
     };
-
-    // const handleSubmit = (event) => {
-    //   event.preventDefault()
-    //   const data = JSON.stringify({
-    //       "email": email,
-    //       "password": password,
-    //       "userType": userType,
-    //       "firstName": firstName,
-    //       "lastName": lastName
-    //   });
-
-    //   // const baseUrl = window.origin;
-    //   // const baseUrl = 'http://localhost';
-    //   const baseUrl = 'http://localhost:8080';
-
-    //   const config = {
-    //       method: 'post',
-    //       // withCredentials: true,
-    //       url: baseUrl + '/backend/api/register',
-    //       headers: {
-    //           'Content-Type': 'application/json'
-    //       },
-    //       data: data
-    //   };
-    //   axios(config)
-    //   .then( res => {
-    //       document.cookie = res.data.sessionCookie
-    //       history.push("/profile")
-    //   })
-    //   .catch( err => {
-    //       console.log(err)
-    //   });
-    // }
-
     return (
         <div>
             <div className="registration-container">
@@ -312,6 +278,18 @@ const Registration = () => {
                         in</Link>
                     </p>
                 </form>
+                <p className="terms-of-service">
+                    Terms of Service: All information provided to TalentFront will
+                    be displayed for any user, besides emails and passwords which
+                    are not displayed anywhere on TalentFront website. We use a
+                    standard salt and hash verification for saving passwords in
+                    the database. So in the database there are two columns for
+                    the password logic, the first being a salt the second being
+                    the hash of the salt and password. When a user tries to login
+                    we pull up the authentication record, grab the salt, add it
+                    to the password, hash it and verify that the hashes match.
+                    By using this approach we protect against rainbow table attacks.
+                </p>
             </div>
             {/* <Footer/> */}
         </div>

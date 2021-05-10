@@ -14,5 +14,6 @@ class Routes {
         const val USER_REVIEW = "/api/user/review"
         const val POSTING = "/api/posting"
         const val COMPANY = "/api/company"
+        const val APPLY = "/api/apply"
     }
 }

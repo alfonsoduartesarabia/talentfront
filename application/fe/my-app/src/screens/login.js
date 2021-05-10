@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import "./registration.css";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser, getUser } from "../utility/slices/user";
+import { Link } from "react-router-dom";
 import { postLogin } from "../utility/request";
 
 const Login = (props) => {
-  const dispatch = useDispatch();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,7 +19,7 @@ const Login = (props) => {
       if (res === undefined) {
         console.log("Error when logging in.");
       } else {
-        history.push("/profile");
+        window.location.assign("/profile");
       }
     });
   };
