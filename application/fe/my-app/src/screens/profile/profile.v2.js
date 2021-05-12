@@ -629,10 +629,10 @@ const ProfileScreen = (props) => {
     setShowReview(false);
     setShowCompany(false);
   };
-  let history = useHistory();
-  if (Object.entries(user).length === 0) {
-    history.push("/");
-  }
+  // let history = useHistory();
+  // if (Object.entries(user).length === 0) {
+  //   history.push("/");
+  // }
   const handleShowExperience = () => setShowAddExperience(true);
   const handleShowPosting = () => setShowAddPosting(true);
   const handleReview = () => setShowReview(true);
