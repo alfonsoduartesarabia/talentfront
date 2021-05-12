@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./profile.scss";
 import { Spinner } from "react-bootstrap";
 import { Button } from "react-bootstrap";
@@ -12,11 +12,13 @@ import {
   ListGroup,
   FormControl,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import {
   getImageLink,
-  getProfile, postCompany, postReview,
-  postUserImage
+  getProfile,
+  postCompany,
+  postReview,
+  postUserImage,
 } from "../../utility/request";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { BsFilePlus } from "react-icons/bs";
@@ -29,7 +31,7 @@ import {
   updateEducation,
   updateSkill,
 } from "../../utility/slices/user";
-import {AddNewPosting} from "../posting/posting";
+import { AddNewPosting } from "../posting/posting";
 
 const AddNewExperience = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +55,9 @@ const AddNewExperience = (props) => {
     };
     dispatch(addJob(job));
     dispatch(getUser());
-    setTimeout(function(){ window.location.reload(false); }, 1000);
+    setTimeout(function () {
+      window.location.reload(false);
+    }, 1000);
   };
 
   return (
@@ -150,7 +154,7 @@ const AddNewReview = (props) => {
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(5);
-  const revieweeId = props.id
+  const revieweeId = props.id;
 
   const handleSave = () => {
     setLoading(true);
@@ -159,59 +163,63 @@ const AddNewReview = (props) => {
       review,
       score,
     };
-    postReview(reviewData).then(res => console.log(res.data));
-    setTimeout(function(){ window.location.reload(false); }, 500);
+    postReview(reviewData).then((res) => console.log(res.data));
+    setTimeout(function () {
+      window.location.reload(false);
+    }, 500);
   };
 
   return (
-      <Modal
-          backdrop="static"
-          keyboard={false}
-          show={show}
-          onHide={handleClose}
-          size="lg"
-          centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>New Review for {user.firstName} {user.lastName}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>Rate them out of 5</Form.Label>
-              <Form.Control
-                  onChange={(event) => setScore(parseInt(event.target.value))}
-                  as="select"
-              >
-                <option>5</option>
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>1</option>
-              </Form.Control>
-            </Form.Group>
-          </Form>
-          <Form>
-            <Form.Group>
-              <Form.Label>Review</Form.Label>
-              <Form.Control
-                  onChange={(event) => setReview(event.target.value)}
-                  as="textarea"
-                  rows={4}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          {loading ? <Spinner animation="border" variant="primary" /> : null}
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    <Modal
+      backdrop="static"
+      keyboard={false}
+      show={show}
+      onHide={handleClose}
+      size="lg"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>
+          New Review for {user.firstName} {user.lastName}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group>
+            <Form.Label>Rate them out of 5</Form.Label>
+            <Form.Control
+              onChange={(event) => setScore(parseInt(event.target.value))}
+              as="select"
+            >
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
+        <Form>
+          <Form.Group>
+            <Form.Label>Review</Form.Label>
+            <Form.Control
+              onChange={(event) => setReview(event.target.value)}
+              as="textarea"
+              rows={4}
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        {loading ? <Spinner animation="border" variant="primary" /> : null}
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSave}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
@@ -231,80 +239,83 @@ const AddCompanyPage = (props) => {
       numberEmployees,
       locations,
     };
-    postCompany(companyData).then(res => window.location.assign(`/company/${res?.data?.companyId}`));
+    postCompany(companyData).then((res) =>
+      window.location.assign(`/company/${res?.data?.companyId}`)
+    );
   };
 
   return (
-      <Modal
-          backdrop="static"
-          keyboard={false}
-          show={show}
-          onHide={handleClose}
-          size="lg"
-          centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Create a New Company Page</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Row>
-              <Form.Group as={Col}>
-                <Form.Label>Company Name</Form.Label>
-                <Form.Control
-                    onChange={(event) => setCompanyName(event.target.value)}
-                    placeholder="Enter Company Name"
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Number of Employees</Form.Label>
-                <Form.Control
-                    onChange={(event) => setNumberEmployees(parseInt(event.target.value))}
-                    placeholder="Enter Number of Employees"
-                />
-              </Form.Group>
-            </Form.Row>
-            <Form.Group>
-              <Form.Label>Product</Form.Label>
+    <Modal
+      backdrop="static"
+      keyboard={false}
+      show={show}
+      onHide={handleClose}
+      size="lg"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Create a New Company Page</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Company Name</Form.Label>
               <Form.Control
-                  onChange={(event) => setProduct(event.target.value)}
-                  as="textarea"
-                  rows={3}
-                  placeholder="Describe your Product"
+                onChange={(event) => setCompanyName(event.target.value)}
+                placeholder="Enter Company Name"
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Mission</Form.Label>
+            <Form.Group as={Col}>
+              <Form.Label>Number of Employees</Form.Label>
               <Form.Control
-                  onChange={(event) => setMission(event.target.value)}
-                  as="textarea"
-                  rows={3}
-                  placeholder="Describe your company's mission"
+                onChange={(event) =>
+                  setNumberEmployees(parseInt(event.target.value))
+                }
+                placeholder="Enter Number of Employees"
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Locations</Form.Label>
-              <Form.Control
-                  onChange={(event) => setLocations(event.target.value.split(','))}
-                  as="textarea"
-                  placeholder="Enter Your Company's Locations"
-                  rows={1}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          </Form.Row>
+          <Form.Group>
+            <Form.Label>Product</Form.Label>
+            <Form.Control
+              onChange={(event) => setProduct(event.target.value)}
+              as="textarea"
+              rows={3}
+              placeholder="Describe your Product"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Mission</Form.Label>
+            <Form.Control
+              onChange={(event) => setMission(event.target.value)}
+              as="textarea"
+              rows={3}
+              placeholder="Describe your company's mission"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Locations</Form.Label>
+            <Form.Control
+              onChange={(event) => setLocations(event.target.value.split(","))}
+              as="textarea"
+              placeholder="Enter Your Company's Locations"
+              rows={1}
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSave}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
-
 
 const LeftSection = (props) => {
   const dispatch = useDispatch();
@@ -339,7 +350,9 @@ const LeftSection = (props) => {
     );
     setNewSkill("");
     dispatch(getUser());
-    setTimeout(function(){ window.location.reload(false); }, 500);
+    setTimeout(function () {
+      window.location.reload(false);
+    }, 500);
   };
 
   const handleRemoveSkill = (skill) => {
@@ -357,7 +370,9 @@ const LeftSection = (props) => {
     const formData = new FormData(form);
     formData.append("image", file);
     postUserImage(formData);
-    setTimeout(function(){ window.location.reload(false); }, 500);
+    setTimeout(function () {
+      window.location.reload(false);
+    }, 500);
   };
 
   const RenderedSkills = user.skills?.map((skill, index) => {
@@ -378,19 +393,29 @@ const LeftSection = (props) => {
     <div className="personals">
       <Card className="profile-details">
         <div className="edit-profile">
-          {props.isUsersPage ? (isEditing ? (<FaCheck onClick={toggleEdit}/>) : (<BiPencil onClick={toggleEdit}/>)) : <div />}
+          {props.isUsersPage ? (
+            isEditing ? (
+              <FaCheck onClick={toggleEdit} />
+            ) : (
+              <BiPencil onClick={toggleEdit} />
+            )
+          ) : (
+            <div />
+          )}
         </div>
         <img className="profile-image" src={imageLink} alt="profile" />
-        {props.isUsersPage ?
-            <Form className="profile-image-upload" style={{padding: "2%"}}>
-              <Form.File
-                  id="custom-file"
-                  label="upload image"
-                  onChange={(event) => handleImageSubmit(event.target.files[0])}
-                  custom
-              />
-            </Form>
-            : <div></div>}
+        {props.isUsersPage ? (
+          <Form className="profile-image-upload" style={{ padding: "2%" }}>
+            <Form.File
+              id="custom-file"
+              label="upload image"
+              onChange={(event) => handleImageSubmit(event.target.files[0])}
+              custom
+            />
+          </Form>
+        ) : (
+          <div></div>
+        )}
         <div className="profile-name">
           {user.firstName + " " + user.lastName}
         </div>
@@ -433,13 +458,25 @@ const LeftSection = (props) => {
           ) : (
             <>
               <div className="text-muted">
-                {degree !== "" ? degree : (props.isUsersPage ? "Add a Degree" : "Degree - Not Available")}
+                {degree !== ""
+                  ? degree
+                  : props.isUsersPage
+                  ? "Add a Degree"
+                  : "Degree - Not Available"}
               </div>
               <div className="text-muted">
-                {school ? school : (props.isUsersPage ? "Add a School" : "School - Not Available")}
+                {school
+                  ? school
+                  : props.isUsersPage
+                  ? "Add a School"
+                  : "School - Not Available"}
               </div>
               <div className="text-muted">
-                {major ? major : (props.isUsersPage ? "Add a Major" : "Major - Not Available")}
+                {major
+                  ? major
+                  : props.isUsersPage
+                  ? "Add a Major"
+                  : "Major - Not Available"}
               </div>
             </>
           )}
@@ -452,7 +489,7 @@ const LeftSection = (props) => {
             RenderedSkills
           ) : (
             <ListGroup.Item className="individual-skill">
-              {props.isUsersPage ? ("Add your first skill") : ""}
+              {props.isUsersPage ? "Add your first skill" : ""}
             </ListGroup.Item>
           )}
           {isEditing ? (
@@ -475,7 +512,13 @@ const LeftSection = (props) => {
 };
 
 const RightSection = (props) => {
-  const { handleShow, handlePosting, user, handleReview, handleCompany } = props;
+  const {
+    handleShow,
+    handlePosting,
+    user,
+    handleReview,
+    handleCompany,
+  } = props;
   let experiences = user.experiences;
   if (experiences === undefined) experiences = [];
   const RenderedExperiences = experiences.map((experience, index) => {
@@ -483,7 +526,9 @@ const RightSection = (props) => {
       <Card key={index} className="article">
         <Card.Header className="card-head">
           <div className="article-head">
-            <h2 className="article-title">{experience.company} - {experience.title}</h2>
+            <h2 className="article-title">
+              {experience.company} - {experience.title}
+            </h2>
             {experience.endDt === "null" ? (
               <h2 className="article-date">
                 {experience.startDt + " to present"}
@@ -505,53 +550,65 @@ const RightSection = (props) => {
   if (reviews === undefined) reviews = [];
   const RenderedReviews = reviews.map((review, index) => {
     return (
-        <Card key={index} className="article">
-          <Card.Header className="card-head">
-            <div className="article-head">
-              <h5 className="article-title">Review from {review.reviewerName}</h5>
-              <h5 className="article-date">
-                {review.stars}
-              </h5>
-              <button className="link-btn" onClick={() => {
-                window.location.assign(review.link)
-              }}> Reviewer </button>
-            </div>
-          </Card.Header>
-          <Card.Body>
-            <Card.Text>{review.review}</Card.Text>
-          </Card.Body>
-        </Card>
+      <Card key={index} className="article">
+        <Card.Header className="card-head">
+          <div className="article-head">
+            <h5 className="article-title">Review from {review.reviewerName}</h5>
+            <h5 className="article-date">{review.stars}</h5>
+            <button
+              className="link-btn"
+              onClick={() => {
+                window.location.assign(review.link);
+              }}
+            >
+              {" "}
+              Reviewer{" "}
+            </button>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <Card.Text>{review.review}</Card.Text>
+        </Card.Body>
+      </Card>
     );
   });
   return (
     <div className="right-section">
       {RenderedExperiences.length ? RenderedExperiences : null}
       {RenderedReviews.length ? RenderedReviews : null}
-      {props.isUsersPage ?
-          (<div className="add-experience" onClick={handleShow}>
-        <div>Add Experience</div> <BsFilePlus />
-      </div>) : <div /> }
-      {props.isUsersPage && ("recruiter" === props.user?.userType || "company" === props.user?.userType) ?
-          <div className="add-experience" onClick={handlePosting}>
-            <div>Create a Job Posting</div>
-            <BsFilePlus/>
-          </div>
-          : <div/>
-      }
-      {props.isUsersPage && "company" === props.user?.userType ?
-          <div className="add-experience" onClick={handleCompany}>
-            <div>Create a Company Page</div>
-            <BsFilePlus/>
-          </div>
-          : <div/>
-      }
-      {props.user?.isProfessor ?
-          <div className="add-experience" onClick={handleReview}>
-            <div>Add a review</div>
-            <BsFilePlus/>
-          </div>
-          : <div/>
-      }
+      {props.isUsersPage ? (
+        <div className="add-experience" onClick={handleShow}>
+          <div>Add Experience</div> <BsFilePlus />
+        </div>
+      ) : (
+        <div />
+      )}
+      {props.isUsersPage &&
+      ("recruiter" === props.user?.userType ||
+        "company" === props.user?.userType) ? (
+        <div className="add-experience" onClick={handlePosting}>
+          <div>Create a Job Posting</div>
+          <BsFilePlus />
+        </div>
+      ) : (
+        <div />
+      )}
+      {props.isUsersPage && "company" === props.user?.userType ? (
+        <div className="add-experience" onClick={handleCompany}>
+          <div>Create a Company Page</div>
+          <BsFilePlus />
+        </div>
+      ) : (
+        <div />
+      )}
+      {props.user?.isProfessor ? (
+        <div className="add-experience" onClick={handleReview}>
+          <div>Add a review</div>
+          <BsFilePlus />
+        </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
@@ -571,6 +628,10 @@ const ProfileScreen = (props) => {
     setShowAddPosting(false);
     setShowReview(false);
     setShowCompany(false);
+  };
+  let history = useHistory();
+  if (Object.entries(user).length === 0) {
+    history.push("/");
   }
   const handleShowExperience = () => setShowAddExperience(true);
   const handleShowPosting = () => setShowAddPosting(true);
@@ -589,11 +650,27 @@ const ProfileScreen = (props) => {
     <div>
       <AddNewExperience show={showAddExperience} handleClose={handleClose} />
       <AddNewPosting show={showAddPosting} handleClose={handleClose} />
-      <AddNewReview show={showReview} handleClose={handleClose} id={id} user={user}/>
-      <AddCompanyPage show={showCompany} handleClose={handleClose}/>
+      <AddNewReview
+        show={showReview}
+        handleClose={handleClose}
+        id={id}
+        user={user}
+      />
+      <AddCompanyPage show={showCompany} handleClose={handleClose} />
       <div className="profile-screen-container">
-        <LeftSection user={user} imageLink={imageLink} isUsersPage={isUsersPage} />
-        <RightSection user={user} handleShow={handleShowExperience} handlePosting={handleShowPosting} handleReview = {handleReview} handleCompany = {handleShowCompany} isUsersPage={isUsersPage} />
+        <LeftSection
+          user={user}
+          imageLink={imageLink}
+          isUsersPage={isUsersPage}
+        />
+        <RightSection
+          user={user}
+          handleShow={handleShowExperience}
+          handlePosting={handleShowPosting}
+          handleReview={handleReview}
+          handleCompany={handleShowCompany}
+          isUsersPage={isUsersPage}
+        />
       </div>
     </div>
   );

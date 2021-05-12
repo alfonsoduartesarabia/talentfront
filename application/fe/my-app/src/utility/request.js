@@ -86,23 +86,31 @@ export const postRegister = (data) => {
 
 export const getImageLink = (isUsersPage, id) => {
   return isUsersPage
-      ? `${BASE_URL}/backend/api/user-image/?cookie=${cookies.get(
-          "talentfront-session")}`
-      : `${BASE_URL}/backend/api/user-image/${id}`;
+    ? `${BASE_URL}/backend/api/user-image/?cookie=${cookies.get(
+        "talentfront-session"
+      )}`
+    : `${BASE_URL}/backend/api/user-image/${id}`;
 };
 
 export const postUserImage = (formData) => {
   axios
-  .post(BASE_URL + `/backend/api/user-image/upload?cookie=${cookies.get("talentfront-session")}`, formData, {
-    "Content-Type": "Multipart-FormData",
-  })
-  .then((res) => {
-    console.log("RECEIVED IMAGE URL", res.config.url);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
+    .post(
+      BASE_URL +
+        `/backend/api/user-image/upload?cookie=${cookies.get(
+          "talentfront-session"
+        )}`,
+      formData,
+      {
+        "Content-Type": "Multipart-FormData",
+      }
+    )
+    .then((res) => {
+      console.log("RECEIVED IMAGE URL", res.config.url);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const getProfile = (id) => {
   console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
@@ -124,67 +132,66 @@ export const getProfile = (id) => {
 export const getPosting = (id) => {
   console.log("SESSION COOKIE WE HAVE IS:", cookies.get("talentfront-session"));
   return createRequest()
-  .get("backend/api/posting/" + id)
-  .then((res) => {
-    console.log("RESPONSE FROM", BASE_URL + "/backend/api/posting/" + id);
-    console.log(res);
-    return res;
-  })
-  .catch((err) => {
-    console.log("Get posting request failed: /backend/api/posting/" + id);
-    console.log(err);
-    source.cancel();
-    return "err";
-  });
+    .get("backend/api/posting/" + id)
+    .then((res) => {
+      console.log("RESPONSE FROM", BASE_URL + "/backend/api/posting/" + id);
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log("Get posting request failed: /backend/api/posting/" + id);
+      console.log(err);
+      source.cancel();
+      return "err";
+    });
 };
 
 export const getCompany = (id) => {
   return createRequest()
-  .get("backend/api/company/" + id)
-  .then((res) => {
-    return res;
-  })
-  .catch((err) => {
-    return "err";
-  });
-}
+    .get("backend/api/company/" + id)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return "err";
+    });
+};
 
 export const postPosting = (postingData) => {
   return createRequest()
-  .post("/backend/api/posting", postingData)
-  .then((res) => {
-    console.log(res);
-    return res;
-  });
-}
+    .post("/backend/api/posting", postingData)
+    .then((res) => {
+      console.log(res);
+      return res;
+    });
+};
 
 export const postReview = (reviewData) => {
   return createRequest()
-  .post("/backend/api/user/review", reviewData)
-  .then((res) => {
-    console.log(res);
-    return res;
-  });
-}
+    .post("/backend/api/user/review", reviewData)
+    .then((res) => {
+      console.log(res);
+      return res;
+    });
+};
 
 export const getApply = (id) => {
   return createRequest()
-  .get(`/backend/api/apply/${id}`)
-  .then((res) => {
-    console.log(res.data);
-    return res;
-  });
-}
+    .get(`/backend/api/apply/${id}`)
+    .then((res) => {
+      console.log(res.data);
+      return res;
+    });
+};
 
 export const postCompany = (companyData) => {
   return createRequest()
-  .post("/backend/api/company", companyData)
-  .then((res) => {
-    console.log(res);
-    return res;
-  });
-}
-
+    .post("/backend/api/company", companyData)
+    .then((res) => {
+      console.log(res);
+      return res;
+    });
+};
 
 export const postAddJob = (job) => {
   return createRequest()
