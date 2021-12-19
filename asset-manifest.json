@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/talentfront/static/css/main.a63466a7.chunk.css",
+    "main.js": "/talentfront/static/js/main.c702e8e9.chunk.js",
+    "main.js.map": "/talentfront/static/js/main.c702e8e9.chunk.js.map",
+    "runtime-main.js": "/talentfront/static/js/runtime-main.50933d10.js",
+    "runtime-main.js.map": "/talentfront/static/js/runtime-main.50933d10.js.map",
+    "static/css/2.76dade5f.chunk.css": "/talentfront/static/css/2.76dade5f.chunk.css",
+    "static/js/2.d19db071.chunk.js": "/talentfront/static/js/2.d19db071.chunk.js",
+    "static/js/2.d19db071.chunk.js.map": "/talentfront/static/js/2.d19db071.chunk.js.map",
+    "index.html": "/talentfront/index.html",
+    "static/css/2.76dade5f.chunk.css.map": "/talentfront/static/css/2.76dade5f.chunk.css.map",
+    "static/css/main.a63466a7.chunk.css.map": "/talentfront/static/css/main.a63466a7.chunk.css.map",
+    "static/js/2.d19db071.chunk.js.LICENSE.txt": "/talentfront/static/js/2.d19db071.chunk.js.LICENSE.txt",
+    "static/media/classroom.ebc4d459.jpg": "/talentfront/static/media/classroom.ebc4d459.jpg",
+    "static/media/hiring-pipeline.0f06241d.jpg": "/talentfront/static/media/hiring-pipeline.0f06241d.jpg",
+    "static/media/office.30610680.jpg": "/talentfront/static/media/office.30610680.jpg",
+    "static/media/professor.112b615c.jpg": "/talentfront/static/media/professor.112b615c.jpg",
+    "static/media/student.c25f582f.jpg": "/talentfront/static/media/student.c25f582f.jpg",
+    "static/media/talent_front_logo.dc6309a8.bmp": "/talentfront/static/media/talent_front_logo.dc6309a8.bmp",
+    "static/media/talk.a9c5be67.jpg": "/talentfront/static/media/talk.a9c5be67.jpg",
+    "static/media/worker-clipart.58b9e131.png": "/talentfront/static/media/worker-clipart.58b9e131.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.50933d10.js",
+    "static/css/2.76dade5f.chunk.css",
+    "static/js/2.d19db071.chunk.js",
+    "static/css/main.a63466a7.chunk.css",
+    "static/js/main.c702e8e9.chunk.js"
+  ]
+}
