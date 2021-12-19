@@ -1,4 +1,6 @@
+
 {
+  "homepage": "https://alfonsoduartesarabia.github.io/talentfront",
   "name": "my-app",
   "version": "0.1.1",
   "private": true,
@@ -28,6 +30,8 @@
     "universal-cookie": "^4.0.4"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^3.2.3",
     "prettier": "^2.2.1"
   }
 }
