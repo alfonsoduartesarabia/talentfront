@@ -1,3 +1,15 @@
+# Final Project for CSC 648
+Project description - Built a full stack website that connects SFSU students or graduates with potential employers, teachers, and other students. The website would make it easier for employers to find talented graduates and students, where professors can recommend students to employers, and make it easier for students and graduates with their job search. We titled our website Talent Front.
+
+Github pages
+https://alfonsoduartesarabia.github.io/talentfront/
+
+Since github pages is serverless then I cannot demonstrate each functionality of the webiste. Rather I will showcase the UI/UX design of the homepage, login, and sign-up page.
+
+Tools used:
+React, Redux, React-Bootstrap, Tailwind CSS, and Sass. 
+
+
 # csc648 Repository
 
 ## Please when ready add your teams application URL or IP to the repository description. This will help with grading. Teams are expected to keep this value up to date.
